@@ -3,68 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Name - Game Developer Portfolio</title> <!-- TODO: Replace Your Name -->
-    <meta name="description" content="Portfolio website for [Your Name], showcasing game development projects and skills."> <!-- TODO: Replace Your Name -->
+    <title>Berke Kaya - Game Developer Portfolio</title>
+    <meta name="description" content="Portfolio website for Berke Kaya, showcasing game development projects and skills.">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- TODO: Consider adding a CSS Reset or Normalize.css -->
+
+
     <!-- Favicon links (optional but recommended) -->
     <!-- <link rel="icon" href="/favicon.ico" sizes="any"> -->
     <!-- <link rel="icon" href="/icon.svg" type="image/svg+xml"> -->
     <!-- <link rel="apple-touch-icon" href="/apple-touch-icon.png"> -->
 </head>
 <body>
-    <header>
-        <h1><a href="/">Your Name</a></h1> <!-- TODO: Replace Your Name -->
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <!-- Optional: <li><a href="/resume.pdf" target="_blank">Resume</a></li> -->
-            </ul>
-            <!-- TODO: Implement mobile menu toggle button later -->
-        </nav>
-    </header>
+    <div id="intro-screen">
+        <!-- Optional: Placeholder for visual element -->
+        <!-- <div class="intro-visual"></div> -->
+        <div id="intro-prompt"> <!-- Class hidden removed -->
+             <p>Press any button or click to continue</p>
+        </div>
+    </div>
+    <div id="main-content-wrapper">
+        <header>
+            <h1><a href="/">Berke Kaya</a></h1>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <!-- Optional: <li><a href="/resume.pdf" target="_blank">Resume</a></li> -->
+                </ul>
+                <!-- TODO: Implement mobile menu toggle button later -->
+            </nav>
+        </header>
 
-    <main>
-        <section id="home">
-            <h2>Welcome!</h2>
-            <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
-            <!-- TODO: Add highlight reel/best project preview -->
-            <a href="#projects" class="cta-button">View My Projects</a>
-            <a href="#contact" class="cta-button">Get In Touch</a>
-        </section>
+        <main>
+            <section id="home">
+                <h2>Welcome!</h2>
+                <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
+                <!-- TODO: Add highlight reel/best project preview -->
+                <a href="#projects" class="cta-button">View My Projects</a>
+                <a href="#contact" class="cta-button">Get In Touch</a>
+            </section>
 
-        <section id="projects">
-            <h2>My Projects</h2>
-            <p>This is where the gallery of game development projects will go.</p>
-            <!-- TODO: Add project items (screenshots, descriptions, links) -->
-        </section>
+            <section id="projects">
+                <h2>My Projects</h2>
+                <p>This is where the gallery of game development projects will go.</p>
+                <!-- TODO: Add project items (screenshots, descriptions, links) -->
+            </section>
 
-        <section id="about">
-            <h2>About Me</h2>
-            <p>This section will contain information about your background, passion for game development, and skills.</p>
-            <!-- TODO: Add bio, skills list, maybe a photo -->
-        </section>
+            <section id="about">
+                <h2>About Me</h2>
+                <p>This section will contain information about your background, passion for game development, and skills.</p>
+                <!-- TODO: Add bio, skills list, maybe a photo -->
+            </section>
 
-        <section id="contact">
-            <h2>Get In Touch</h2>
-            <p>Information on how to contact you will go here. This could be a contact form or direct links.</p>
-            <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
-        </section>
-    </main>
+            <section id="contact">
+                <h2>Get In Touch</h2>
+                <p>Information on how to contact you will go here. This could be a contact form or direct links.</p>
+                <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
+            </section>
+        </main>
 
-    <footer>
-        <p>&copy; <span id="current-year"></span> Your Name. All rights reserved.</p> <!-- TODO: Replace Your Name -->
-        <!-- TODO: Add links to social/professional profiles (GitHub, LinkedIn, Itch.io) -->
-    </footer>
+        <footer>
+            <p>&copy; <span id="current-year"></span> Berke Kaya. All rights reserved.</p>
+            <!-- TODO: Add links to social/professional profiles (GitHub, LinkedIn, Itch.io) -->
+        </footer>
+    </div>
 
     <script src="js/main.js"></script>
     <!-- Simple script to update the year in the footer -->
+
+
     <script>
-        document.getElementById('current-year').textContent = new Date().getFullYear();
     </script>
 </body>
 </html>

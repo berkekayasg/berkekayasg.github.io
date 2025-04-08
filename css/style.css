@@ -70,19 +70,19 @@ nav ul {
   list-style: none;
   padding: 0;
   margin: 10px 0 0 0; /* Add some space above nav */
-  text-align: center; /* Center nav items */
+  /* text-align: center; /* Centering handled by parent (header) */
 }
 
 nav li {
-  display: inline-block; /* Arrange items horizontally */
-  margin: 0 10px; /* Space between nav items */
+  display: block; /* Arrange items vertically */
+  margin: 0 0 10px 0; /* Remove horizontal margin, add bottom margin */
 }
 
 nav a {
   font-family: var(--font-family-pixel);
   color: var(--color-text);
   text-decoration: none;
-  padding: 8px 15px;
+  padding: 10px 20px; /* Slightly larger padding */
   border: var(--border-pixel);
   background-color: var(--color-background); /* Button background */
   display: inline-block; /* Needed for padding/border */
@@ -106,6 +106,7 @@ nav a[href="#contact"].active {
     background-color: var(--color-primary);
     color: var(--color-background);
     border-color: var(--color-primary);
+} /* <-- Added missing closing brace */
 /* --- Main Content Section Styling --- */
 
 main {
@@ -121,7 +122,7 @@ main > section {
 }
 
 main > section.active-section {
-  /* Keep existing display: block; rule */
+  display: block; /* Show the active section */
 }
 
 main h2 {
@@ -170,7 +171,67 @@ main a:hover {
   border-color: var(--color-primary);
 }
 
+/* .hidden class removed as intro logic uses direct style manipulation */
+
+/* --- Intro Screen Styles --- */
+#intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-background); /* Use existing background */
+    z-index: 1000; /* Ensure it's on top */
+    display: flex;
+    flex-direction: column; /* Stack visual and text if needed */
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer; /* Indicate it's clickable */
 }
+
+#intro-screen p {
+    font-family: var(--font-family-pixel);
+    color: var(--color-primary); /* Or var(--color-text) */
+    font-size: 1.2em; /* Adjust as needed */
+    padding: 20px;
+    /* Add animation/glow effect if desired */
+}
+
+/* --- New Intro Prompt Styling --- */
+#intro-prompt {
+    display: inline-block; /* Allow padding/border */
+    padding: 15px 30px;
+    font-family: var(--font-family-pixel);
+    color: var(--color-background);
+    background-color: var(--color-primary);
+    border: var(--border-pixel);
+    border-color: var(--color-text);
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 1.1em;
+    /* Apply transition directly */
+    opacity: 0; /* Start hidden */
+    visibility: hidden; /* Start hidden */
+    transition: opacity 0.5s ease-in; /* Fade-in transition */
+}
+
+#intro-prompt:hover {
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    border-color: var(--color-accent);
+}
+
+#intro-prompt p {
+    margin: 0; /* Remove default paragraph margin */
+    padding: 0;
+    font-size: inherit; /* Inherit font size from parent */
+    color: inherit; /* Inherit color from parent */
+    font-family: inherit; /* Inherit font family */
+}
+
+
 
 /* --- Footer Styling --- */
 
