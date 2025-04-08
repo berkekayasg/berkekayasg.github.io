@@ -1,0 +1,10 @@
+/* Main CSS styles */
+
+/* --- Single Page App Section Visibility --- */
+main > section {
+    display: none; /* Hide all sections by default */
+}
+
+main > section.active-section {
+    display: block; /* Show the active section */
+}
