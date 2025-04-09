@@ -104,7 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (quitButton) {
         quitButton.addEventListener('click', (e) => {
             e.preventDefault();
-            document.getElementById('screen-wrapper').style.display = 'none';
+            const screenWrapper = document.getElementById('screen-wrapper');
+            if (screenWrapper) {
+                screenWrapper.classList.add('powering-off');
+                setTimeout(() => {
+                    screenWrapper.style.display = 'none';
+                }, 1000);
+            }
         });
     }
 });

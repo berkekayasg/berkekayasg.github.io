@@ -9,77 +9,92 @@
     <link rel="stylesheet" href="css/style.css">
     <!-- TODO: Consider adding a CSS Reset or Normalize.css -->
 </head>
-<body>
-    <div id="screen-wrapper">
-    <nav id="main-menu">
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#" id="quit-button">Quit</a></li>
-        </ul>
-    </nav>
-    <div id="intro-screen">
-        <div class="crt-flicker"></div>
-        <div class="scanlines"></div>
-        <div class="vignette-overlay"></div>
-        <div class="noise-overlay"></div>
-        <!-- Optional: Placeholder for visual element -->
-        <!-- <div class="intro-visual"></div> -->
-        <div id="intro-prompt" class="pixel-border"> <!-- Class hidden removed -->
-             <p>Press any button or click to continue</p>
+<body onresize="posWindows();">
+    <!-- CRT Overlay Image -->
+    <img class="crt-frame" src="images/frame.png" alt="CRT Overlay">
+    <div id="screen-wrapper" style="filter: url(#SphereMapTest) url(#contrast) url(#brightness) url(#colorfill);">
+    <div id="screen-content">
+        <!-- scanline-overlay moved outside screen-content -->
+        <nav id="main-menu">
+            <ul>
+                <li><a href="#home"><span class="crt-flicker-text">Home</span></a></li>
+                <li><a href="#projects"><span class="crt-flicker-text">Projects</span></a></li>
+                <li><a href="#about"><span class="crt-flicker-text">About</span></a></li>
+                <li><a href="#contact"><span class="crt-flicker-text">Contact</span></a></li>
+    <script>
+    (function animateCRTDistortion() {
+      const dispMap = document.getElementById('despMap');
+      let t = 0;
+      function animate() {
+        t += 0.05;
+        const scale = 100 + 10 * Math.sin(t); // oscillate between 90 and 110
+        if(dispMap) dispMap.setAttribute('scale', scale.toString());
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+    </script>
+                <li><a href="#" id="quit-button"><span class="crt-flicker-text">Quit</span></a></li>
+            </ul>
+        </nav>
+        <div id="intro-screen">
+            <!-- Overlays moved outside screen-content -->
+            <!-- Optional: Placeholder for visual element -->
+            <!-- <div class="intro-visual"></div> -->
+            <div id="intro-prompt" class="pixel-border"> <!-- Class hidden removed -->
+                 <p>Press any button or click to continue</p>
+            </div>
         </div>
-    </div>
-    <div id="main-content-wrapper">
-        <header>
-            <h1><a href="/" class="glow">Berke Kaya</a></h1>
-        </header>
+        <div id="main-content-wrapper">
+            <header>
+                <h1><a href="/" class="glow">Berke Kaya</a></h1>
+            </header>
 
-        <main>
-            <section id="home">
-                <h2>Welcome!</h2>
-                <button class="back-button">Back</button>
-                <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
-                <!-- TODO: Add highlight reel/best project preview -->
-            </section>
+            <main>
+                <section id="home">
+                    <h2>Welcome!</h2>
+                    <button class="back-button">Back</button>
+                    <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
+                    <!-- TODO: Add highlight reel/best project preview -->
+                </section>
 
-            <section id="projects">
-                <button class="back-button">Back</button>
-                <h2>My Projects</h2>
-                <p>This is where the gallery of game development projects will go.</p>
-                <!-- TODO: Add project items (screenshots, descriptions, links) -->
-            </section>
+                <section id="projects">
+                    <button class="back-button">Back</button>
+                    <h2>My Projects</h2>
+                    <p>This is where the gallery of game development projects will go.</p>
+                    <!-- TODO: Add project items (screenshots, descriptions, links) -->
+                </section>
 
-            <section id="about">
-                <button class="back-button">Back</button>
-                <h2>About Me</h2>
-                <p>This section will contain information about your background, passion for game development, and skills.</p>
-                <!-- TODO: Add bio, skills list, maybe a photo -->
-            </section>
+                <section id="about">
+                    <button class="back-button">Back</button>
+                    <h2>About Me</h2>
+                    <p>This section will contain information about your background, passion for game development, and skills.</p>
+                    <!-- TODO: Add bio, skills list, maybe a photo -->
+                </section>
 
-            <section id="contact">
-                <h2>Get In Touch</h2>
-                <button class="back-button">Back</button>
-                <p>Information on how to contact you will go here. This could be a contact form or direct links.</p>
-                <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
-            </section>
-        </main>
+                <section id="contact">
+                    <h2>Get In Touch</h2>
+                    <button class="back-button">Back</button>
+                    <p>Information on how to contact you will go here. This could be a contact form or direct links.</p>
+                    <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
+                </section>
+            </main>
 
-        <footer>
-            <!-- TODO: Add links to social/professional profiles (GitHub, LinkedIn, Itch.io) -->
-        </footer>
-    </div>
+            <footer>
+                <!-- TODO: Add links to social/professional profiles (GitHub, LinkedIn, Itch.io) -->
+            </footer>
+        </div>
 
-        <!-- Effect Overlays -->
-        <div class="crt-flicker"></div>
-        <div class="scanlines"></div>
-        <div class="noise-overlay"></div>
-        <div class="vignette-overlay"></div>
-
-    </div> <!-- Closing screen-wrapper -->
+            <!-- Overlays moved outside screen-content -->
+    </div> <!-- Close screen-content -->
+    <!-- Effect Overlays (Now direct children of screen-wrapper) -->
+    <div class="scanline-overlay"></div>
+    <div class="crt-flicker"></div>
+    <div class="scanlines"></div> <!-- Assuming this is different from scanline-overlay or intended -->
+    <div class="noise-overlay"></div>
+    <div class="vignette-overlay"></div>
+    <div class="vignette-overlay"></div>
     <script src="js/main.js"></script>
-    <!-- Simple script to update the year in the footer -->
 
 
 </body>
