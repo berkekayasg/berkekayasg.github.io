@@ -13,41 +13,65 @@
 
   /* Basic Retro Color Palette (Example) */
   --color-background: #0d0d2e; /* Dark Blue/Purple */
+  --color-page-background: #01010e; /* Placeholder bright magenta for outside box */
   --color-text: #ffffff; /* White */
   --color-primary: #00ffff; /* Cyan */
   --color-accent: #ffff00; /* Yellow */
   --color-border: #ffffff; /* White border */
+
+  /* Expanded Retro Colors */
+  --color-magenta: #ff00ff;
+  --color-green: #00ff00;
+  --color-red: #ff0000;
+  --color-orange: #ff9900;
 
   --border-pixel: 2px solid var(--color-border);
 }
 
 body {
   font-family: var(--font-family-base); /* Use readable font for body text */
-  background-color: var(--color-background);
+  background-color: var(--color-page-background); /* Different color outside the box */
   color: var(--color-text);
   margin: 0; /* Reset default margin */
   padding: 0; /* Reset default padding */
   line-height: 1.6; /* Improve readability */
 }
 
+/* --- Screen Wrapper for Box Effect --- */
+#screen-wrapper {
+  position: relative; /* Contains absolutely positioned children */
+  max-width: 90vmin;  /* Max width based on smaller viewport dimension */
+  width: 100%;        /* Take available width up to max */
+  aspect-ratio: 1.2 / 1; /* Enforce square shape */
+  margin: auto;       /* Centers the block horizontally */
+  overflow: hidden;   /* Clips content */
+  border-radius: 25px; /* Rounded corners */
+  /* Center vertically using absolute positioning relative to viewport (requires body height 100vh) */
+  position: absolute; /* Position relative to viewport for centering */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Precise centering */
+  background-color: var(--color-background); /* Ensure background always visible */
+}
+
 /* Main CSS styles */
 
-/* --- Single Page App Section Visibility --- */
-main > section {
-    display: none; /* Hide all sections by default */
-}
-
-main > section.active-section {
-    display: block; /* Show the active section */
-}
+/* --- Full Screen Section Visibility (New Approach) --- */
+/* Sections are now controlled by position:absolute and visibility/opacity */
 
 /* --- Header & Navigation Styling --- */
 
 header {
-  background-color: var(--color-background); /* Match body or could be different */
+  position: absolute; /* Position relative to screen-wrapper */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of wrapper */
+  background-color: var(--color-background); /* Ensure background */
   padding: 10px 20px;
-  border-bottom: var(--border-pixel);
-  text-align: center; /* Center header content */
+  text-align: center;
+  z-index: 750; /* Above menu (600) and active section (700) */
+  box-sizing: border-box; /* Include padding in width */
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Add transition */
 }
 
 header h1 {
@@ -66,63 +90,34 @@ header h1 a:hover {
   color: var(--color-accent);
 }
 
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 0 0; /* Add some space above nav */
-  /* text-align: center; /* Centering handled by parent (header) */
-}
-
-nav li {
-  display: block; /* Arrange items vertically */
-  margin: 0 0 10px 0; /* Remove horizontal margin, add bottom margin */
-}
-
-nav a {
-  font-family: var(--font-family-pixel);
-  color: var(--color-text);
-  text-decoration: none;
-  padding: 10px 20px; /* Slightly larger padding */
-  border: var(--border-pixel);
-  background-color: var(--color-background); /* Button background */
-  display: inline-block; /* Needed for padding/border */
-  text-transform: uppercase;
-  font-size: 0.9em; /* Slightly smaller than header */
-}
-
-nav a:hover,
-nav a.active { /* Style for active link */
-  background-color: var(--color-primary);
-  color: var(--color-background); /* Invert colors on hover/active */
-  border-color: var(--color-primary);
-}
-
-/* Add a specific class for the active link via JS later if needed,
-   or rely on the hash change for basic styling */
-nav a[href="#home"].active,
-nav a[href="#projects"].active,
-nav a[href="#about"].active,
-nav a[href="#contact"].active {
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-color: var(--color-primary);
-} /* <-- Added missing closing brace */
 /* --- Main Content Section Styling --- */
 
 main {
-  padding: 20px; /* Add padding around the main content area */
+  /* Padding removed - applied within full-screen sections now */
 }
 
+/* --- Full Screen Section Styling --- */
 main > section {
-  /* Keep existing display: none; rule from earlier */
-  padding: 20px;
-  margin-bottom: 20px; /* Space between sections if ever displayed simultaneously (unlikely in SPA) */
-  border: var(--border-pixel);
-  background-color: rgba(0, 0, 0, 0.2); /* Slight dark overlay for sections */
+  position: absolute; /* Position relative to screen-wrapper */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of wrapper */
+  height: 100%; /* Full height of wrapper */
+  padding: 60px 40px 40px 40px; /* Add padding inside section (more top for back button) */
+  box-sizing: border-box; /* Include padding in width/height */
+  background-color: var(--color-background);
+  overflow-y: auto; /* Allow scrolling within section */
+  z-index: 500; /* Default z-index for inactive sections */
+
+  /* Initial state & transition */
+  visibility: hidden;
+  opacity: 0;
 }
 
 main > section.active-section {
-  display: block; /* Show the active section */
+  visibility: visible;
+  opacity: 1;
+  z-index: 700; /* Active section above menu */
 }
 
 main h2 {
@@ -151,35 +146,21 @@ main a:hover {
 }
 
 /* Call-to-Action Button Styling */
-.cta-button {
-  display: inline-block;
-  padding: 10px 20px;
-  font-family: var(--font-family-pixel);
-  color: var(--color-background);
-  background-color: var(--color-accent);
-  border: var(--border-pixel);
-  border-color: var(--color-text); /* Contrast border */
-  text-decoration: none;
-  text-transform: uppercase;
-  cursor: pointer;
-  font-size: 1em;
-}
 
-.cta-button:hover {
-  background-color: var(--color-primary);
-  color: var(--color-background);
-  border-color: var(--color-primary);
+.hidden {
+  visibility: hidden !important; /* Ensure it overrides */
+  opacity: 0 !important;
+  pointer-events: none !important; /* Prevent interaction when hidden */
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
-
-/* .hidden class removed as intro logic uses direct style manipulation */
 
 /* --- Intro Screen Styles --- */
 #intro-screen {
-    position: fixed;
+    position: absolute; /* Position relative to screen-wrapper */
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100%; /* Full width of wrapper */
+    height: 100%; /* Full height of wrapper */
     background-color: var(--color-background); /* Use existing background */
     z-index: 1000; /* Ensure it's on top */
     display: flex;
@@ -236,14 +217,244 @@ main a:hover {
 /* --- Footer Styling --- */
 
 footer {
+  position: absolute; /* Position relative to screen-wrapper */
+  bottom: 0;
+  left: 0;
+  width: 100%; /* Full width of wrapper */
   text-align: center;
-  padding: 15px 20px;
-  margin-top: 30px; /* Space above the footer */
-  border-top: var(--border-pixel);
+  padding: 10px 20px;
   font-size: 0.8em;
-  color: var(--color-text); /* Use standard text color or maybe accent */
+  color: var(--color-text);
+  background-color: var(--color-background); /* Ensure it has background */
+  z-index: 10; /* Low z-index */
+  /* Initially hidden, shown by JS potentially */
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+footer.visible {
+    visibility: visible;
+    opacity: 1;
 }
 
 footer p {
   margin: 0;
+}
+/* === Retro Enhancements === */
+
+.scanlines {
+  position: absolute; /* Position relative to screen-wrapper */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of wrapper */
+  height: 100%; /* Full height of wrapper */
+  pointer-events: none; /* Allow clicks through */
+  z-index: 800; /* Adjusted Z-Index: Effects above sections/menu */
+  overflow: hidden; /* Hide the overflowing pseudo-element */
+}
+
+.scanlines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200%; /* Double height for seamless looping */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.03) 3px,
+    transparent 6px,
+    transparent 9px
+  );
+  /* Animate using transform for better performance */
+  /* Use downward tilty animation */
+  animation: scanlineDownTilty 15s linear infinite; /* Use linear for consistent speed */
+}
+
+@keyframes scanlineDownTilty {
+  0% { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+
+.pixel-border {
+  border: 4px solid var(--color-border);
+  image-rendering: pixelated;
+}
+
+.glow {
+  /* Original glow + subtle chromatic aberration */
+  text-shadow:
+    0 0 5px var(--color-primary),
+    0 0 10px var(--color-primary),
+    1px 1px 1px var(--color-red),   /* Red offset */
+    -1px -1px 1px var(--color-green); /* Green offset */
+  animation: glowPulse 2s infinite ease-in-out; /* Keep pulsing */
+}
+
+.cta-button:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  box-shadow: 0 0 5px var(--color-primary);
+}
+
+
+#intro-screen {
+  transition: opacity 0.5s ease;
+}
+
+#intro-screen.fade-out {
+  opacity: 0;
+}
+
+
+/* === Animated Glow Effect (More Intense) === */
+@keyframes glowPulse {
+  0%, 100% {
+    /* Base state with chromatic aberration */
+    text-shadow:
+      0 0 5px var(--color-primary),
+      0 0 10px var(--color-primary),
+      1px 1px 1px var(--color-red),
+      -1px -1px 1px var(--color-green);
+  }
+  50% {
+    /* Pulsed state with larger glow and aberration */
+    text-shadow:
+      0 0 15px var(--color-primary), /* Larger glow */
+      0 0 25px var(--color-primary), /* Larger glow */
+      2px 2px 2px var(--color-red),   /* More offset */
+      -2px -2px 2px var(--color-green); /* More offset */
+  }
+}
+
+/* .glow animation is now combined with text-shadow definition above */
+
+/* === CRT Flicker Overlay (Refined) === */
+.crt-flicker {
+  position: absolute; /* Position relative to screen-wrapper */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of wrapper */
+  height: 100%; /* Full height of wrapper */
+  pointer-events: none; /* Allow clicks through */
+  z-index: 800; /* Adjusted Z-Index: Effects above sections/menu */
+  background-color: var(--color-background);
+  opacity: 0.1; /* More visible base for testing */
+  animation: flicker 0.5s infinite; /* Slower for testing */
+}
+
+/* Flicker animation (More Intense) */
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 0.1; /* Higher base opacity */
+  }
+  20%, 22%, 24%, 55% {
+    opacity: 0.3; /* Much higher peaks */
+  }
+}
+
+/* === Noise Overlay === */
+.noise-overlay {
+  position: absolute; /* Position relative to screen-wrapper */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width of wrapper */
+  height: 100%; /* Full height of wrapper */
+  pointer-events: none; /* Allow clicks through */
+  z-index: 800; /* Adjusted Z-Index: Effects above sections/menu */
+  opacity: 0.05; /* Very subtle noise */
+  background-image: repeating-linear-gradient(transparent, rgba(0,0,0,0.1) 1px),
+                    repeating-linear-gradient(90deg, rgba(255,255,255,0.1), rgba(0,0,0,0.1) 1px);
+  background-size: 2px 2px; /* Small pixel noise */
+}
+
+/* === Full Screen Menu & Back Button Styles === */
+
+#main-menu {
+    position: absolute; /* Position relative to screen-wrapper */
+    top: 0;
+    left: 0;
+    width: 100%; /* Full width of wrapper */
+    height: 100%; /* Full height of wrapper */
+    background-color: var(--color-background); /* Ensure background */
+    z-index: 600; /* Below active section (700), above inactive (500) */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Initial state & transition */
+    visibility: visible; /* Start visible after intro */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+#main-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+#main-menu li {
+    margin-bottom: 20px; /* Space between menu items */
+}
+
+/* === Vignette Overlay === */
+.vignette-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 800;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50% ,rgba(0,0,0,0.3) 75%, rgba(0,0,0,0.5) 100%);
+}
+#main-menu a {
+    font-family: var(--font-family-pixel);
+    color: var(--color-text);
+    text-decoration: none;
+    padding: 15px 30px;
+    border: var(--border-pixel);
+    background-color: transparent; /* Or a subtle background */
+    display: inline-block;
+    text-transform: uppercase;
+    font-size: 1.2em;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, bottom 0.2s ease, left 0.2s ease;
+}
+
+#main-menu a:hover {
+    background-color: var(--color-primary);
+    color: var(--color-background);
+    border-color: var(--color-primary);
+    transform: scale(1.1);
+    box-shadow: 0 0 8px var(--color-primary);
+}
+
+.back-button {
+    position: absolute; /* Position relative to screen-wrapper */
+    top: auto;
+    bottom: 20px;
+    right: 20px;
+    z-index: 900; /* High z-index to ensure visibility */
+    padding: 8px 15px;
+    font-family: var(--font-family-pixel);
+    color: var(--color-background);
+    background-color: var(--color-accent);
+    border: var(--border-pixel);
+    border-color: var(--color-text);
+    text-transform: uppercase;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.back-button:hover {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    transform: scale(1.1);
 }
