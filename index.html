@@ -14,33 +14,17 @@
     <img class="crt-frame" src="images/frame.png" alt="CRT Overlay">
     <div id="screen-wrapper" style="filter: url(#SphereMapTest) url(#contrast) url(#brightness) url(#colorfill);">
     <div id="screen-content">
-        <!-- scanline-overlay moved outside screen-content -->
         <nav id="main-menu">
             <ul>
                 <li><a href="#home"><span class="crt-flicker-text">Home</span></a></li>
                 <li><a href="#projects"><span class="crt-flicker-text">Projects</span></a></li>
                 <li><a href="#about"><span class="crt-flicker-text">About</span></a></li>
                 <li><a href="#contact"><span class="crt-flicker-text">Contact</span></a></li>
-    <script>
-    (function animateCRTDistortion() {
-      const dispMap = document.getElementById('despMap');
-      let t = 0;
-      function animate() {
-        t += 0.05;
-        const scale = 100 + 10 * Math.sin(t); // oscillate between 90 and 110
-        if(dispMap) dispMap.setAttribute('scale', scale.toString());
-        requestAnimationFrame(animate);
-      }
-      animate();
-    })();
-    </script>
                 <li><a href="#" id="quit-button"><span class="crt-flicker-text">Quit</span></a></li>
             </ul>
         </nav>
         <div id="intro-screen">
-            <!-- Overlays moved outside screen-content -->
             <!-- Optional: Placeholder for visual element -->
-            <!-- <div class="intro-visual"></div> -->
             <div id="intro-prompt" class="pixel-border"> <!-- Class hidden removed -->
                  <p>Press any button or click to continue</p>
             </div>
@@ -85,7 +69,6 @@
             </footer>
         </div>
 
-            <!-- Overlays moved outside screen-content -->
     </div> <!-- Close screen-content -->
     <!-- Effect Overlays (Now direct children of screen-wrapper) -->
     <div class="scanline-overlay"></div>

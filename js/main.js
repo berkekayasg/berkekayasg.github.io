@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (header) header.classList.remove('hidden');
                 if (mainMenu) mainMenu.classList.remove('hidden');
                 if (footer) footer.classList.add('visible');
-            }, 500);
+            }, 0);
         }
         window.removeEventListener('keydown', handleIntroInteraction);
         if (introPrompt) {
@@ -39,8 +39,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const handleIntroInteraction = () => {
-        if (introScreen && window.getComputedStyle(introScreen).display !== 'none') {
-            hideIntroAndShowMenu();
+        if (introScreen && window.getComputedStyle(introScreen).display !== 'none' && introPrompt) {
+
+            introPrompt.classList.add('button-active');
+
+
+            setTimeout(() => {
+                introPrompt.classList.remove('button-active');
+                hideIntroAndShowMenu();
+            }, 800);
+
+
+            window.removeEventListener('keydown', handleIntroInteraction);
         }
     };
 
@@ -53,7 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
             introPrompt.style.opacity = '1';
         });
         window.addEventListener('keydown', handleIntroInteraction, { once: true });
-        introPrompt.addEventListener('click', handleIntroInteraction, { once: true });
+
+        const introClickListener = (event) => {
+            event.preventDefault();
+            handleIntroInteraction();
+
+            introPrompt.removeEventListener('click', introClickListener);
+        };
+        introPrompt.addEventListener('click', introClickListener, { once: true });
     }
 
     // --- Full-Screen Navigation Logic ---
@@ -80,37 +97,51 @@ document.addEventListener('DOMContentLoaded', () => {
     menuLinks.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
-            const targetSectionId = link.getAttribute('href');
+            const button = event.currentTarget;
+            const targetSectionId = button.getAttribute('href');
+
             if (targetSectionId && targetSectionId !== '#') {
-                showSection(targetSectionId);
+                button.classList.add('button-active');
+                setTimeout(() => {
+                    button.classList.remove('button-active');
+                    showSection(targetSectionId);
+                }, 800);
             }
         });
     });
 
     backButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            showMenu();
+        button.addEventListener('click', (event) => {
+             event.preventDefault();
+             const btn = event.currentTarget;
+             btn.classList.add('button-active');
+             setTimeout(() => {
+                 btn.classList.remove('button-active');
+                 showMenu();
+             }, 800);
         });
     });
 
-    // --- Footer Year Update ---
-    const yearSpan = document.getElementById('current-year');
-    if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
 
-    // Quit button closes the tab
+
     const quitButton = document.getElementById('quit-button');
     if (quitButton) {
-        quitButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            const screenWrapper = document.getElementById('screen-wrapper');
-            if (screenWrapper) {
-                screenWrapper.classList.add('powering-off');
-                setTimeout(() => {
-                    screenWrapper.style.display = 'none';
-                }, 1000);
-            }
+        quitButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            const button = event.currentTarget;
+            button.classList.add('button-active');
+
+            setTimeout(() => {
+                button.classList.remove('button-active');
+
+                const screenWrapper = document.getElementById('screen-wrapper');
+                if (screenWrapper) {
+                    screenWrapper.classList.add('powering-off');
+                    setTimeout(() => {
+                        screenWrapper.style.display = 'none';
+                    }, 750);
+                }
+            }, 800);
         });
     }
 });

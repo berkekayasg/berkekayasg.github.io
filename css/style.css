@@ -12,12 +12,12 @@
   --font-family-base: sans-serif; /* Keep a readable fallback */
 
   /* Basic Retro Color Palette (Example) */
-  --color-background: #0d0d2e; /* Dark Blue/Purple */
-  --color-page-background: #01010e; /* Placeholder bright magenta for outside box */
-  --color-text: #ffffff; /* White */
-  --color-primary: #00ffff; /* Cyan */
-  --color-accent: #ffff00; /* Yellow */
-  --color-border: #ffffff; /* White border */
+  --color-background: #0d0d2e;
+  --color-page-background: #01010e;
+  --color-text: #ffffff;
+  --color-primary: #00ffff;
+  --color-accent: #fffb00;
+  --color-border: #ffffff;
 
   /* Expanded Retro Colors */
   --color-magenta: #ff00ff;
@@ -27,27 +27,25 @@
 
   --border-pixel: 2px solid var(--color-border);
 
-  --color-test: #ff9900;
 }
 
 body {
-  font-family: var(--font-family-base); /* Use readable font for body text */
+  font-family: var(--font-family-pixel); /* Use pixel font for body text */
   background-color: var(--color-page-background); /* Different color outside the box */
   color: var(--color-text);
-  margin: 0; /* Reset default margin */
-  padding: 0; /* Reset default padding */
+  margin: 0;
+  padding: 0;
   line-height: 1.6; /* Improve readability */
 }
 
 /* --- Screen Wrapper for Box Effect --- */
 #screen-wrapper {
-  position: relative; /* Contains absolutely positioned children */
   max-width: 90vmin;  /* Max width based on smaller viewport dimension */
   width: 100%;        /* Take available width up to max */
-  aspect-ratio: 1.2 / 1; /* Enforce square shape */
+  aspect-ratio: 1.2 / 1;
   margin: auto;       /* Centers the block horizontally */
   overflow: hidden;   /* Clips content */
-  border-radius: 25px; /* Rounded corners */
+  border-radius: 0; /* No rounded corners */
   /* Center vertically using absolute positioning relative to viewport (requires body height 100vh) */
   position: absolute; /* Position relative to viewport for centering */
   top: 50%;
@@ -56,7 +54,7 @@ body {
   background-color: var(--color-background);
 }
 
-/* Main CSS styles */
+
 
 /* --- Full Screen Section Visibility (New Approach) --- */
 /* Sections are now controlled by position:absolute and visibility/opacity */
@@ -72,12 +70,11 @@ header {
   text-align: center;
   z-index: 1000;
   box-sizing: border-box; /* Include padding in width */
-  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out; /* Add transition */
 }
 
 header h1 {
   margin: 0;
-  font-size: 1.8em; /* Adjust size as needed */
+  font-size: 1.8em;
 }
 
 header h1 a {
@@ -106,12 +103,10 @@ main > section {
 
   /* Initial state & transition */
   visibility: hidden;
-  opacity: 0;
 }
 
 main > section.active-section {
   visibility: visible;
-  opacity: 1;
   z-index: 700; /* Active section above menu */
 }
 
@@ -126,7 +121,7 @@ main h2 {
 }
 
 main p {
-  font-family: var(--font-family-base); /* Use readable font for paragraphs */
+  font-family: var(--font-family-pixel); /* Use pixel font for paragraphs */
   color: var(--color-text);
   line-height: 1.6;
   margin-bottom: 15px;
@@ -146,7 +141,6 @@ main a:hover {
   visibility: hidden !important; /* Ensure it overrides */
   opacity: 0 !important;
   pointer-events: none !important; /* Prevent interaction when hidden */
-  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
 }
 
 /* --- Intro Screen Styles --- */
@@ -170,7 +164,6 @@ main a:hover {
     color: var(--color-primary); /* Or var(--color-text) */
     font-size: 1.2em; /* Adjust as needed */
     padding: 20px;
-    /* Add animation/glow effect if desired */
 }
 
 /* --- New Intro Prompt Styling --- */
@@ -178,10 +171,9 @@ main a:hover {
     display: inline-block; /* Allow padding/border */
     padding: 15px 30px;
     font-family: var(--font-family-pixel);
-    color: var(--color-background);
-    background-color: var(--color-primary);
-    border: var(--border-pixel);
-    border-color: var(--color-text);
+    color: var(--color-text); /* Changed initial text color */
+    background-color: transparent; /* Removed base background */
+    border: none; /* Border removed */
     text-decoration: none;
     text-transform: uppercase;
     cursor: pointer;
@@ -189,13 +181,10 @@ main a:hover {
     /* Apply transition directly */
     opacity: 0; /* Start hidden */
     visibility: hidden; /* Start hidden */
-    transition: opacity 0.5s ease-in; /* Fade-in transition */
 }
 
 #intro-prompt:hover {
-    background-color: var(--color-accent);
-    color: var(--color-background);
-    border-color: var(--color-accent);
+    color: var(--color-accent); /* Keep text color change on hover */
 }
 
 #intro-prompt p {
@@ -223,7 +212,6 @@ footer {
   /* Initially hidden, shown by JS potentially */
   visibility: hidden;
   opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
 footer.visible {
@@ -293,10 +281,6 @@ footer p {
 }
 
 
-#intro-screen {
-  transition: opacity 0.5s ease;
-}
-
 #intro-screen.fade-out {
   opacity: 0;
 }
@@ -322,7 +306,6 @@ footer p {
   }
 }
 
-/* .glow animation is now combined with text-shadow definition above */
 
 /* === CRT Flicker Overlay (Refined) === */
 .crt-flicker {
@@ -381,7 +364,6 @@ footer p {
     /* Initial state & transition */
     visibility: visible; /* Start visible after intro */
     opacity: 1;
-    transition: opacity 0.5s ease-in-out, visibility 0s ease-in-out;
 }
 
 #main-menu ul {
@@ -411,19 +393,14 @@ footer p {
     color: var(--color-text);
     text-decoration: none;
     padding: 15px 30px;
-    border: var(--border-pixel);
+    border: none;
     display: inline-block;
     text-transform: uppercase;
     font-size: 1.2em;
-    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, bottom 0.2s ease, left 0.2s ease;
 }
 
 #main-menu a:hover {
-    background-color: var(--color-primary);
-    color: var(--color-background);
-    border-color: var(--color-primary);
-    transform: scale(1.1);
-    box-shadow: 0 0 8px var(--color-primary);
+    color: var(--color-accent); /* Change text color on hover instead */
 }
 
 .back-button {
@@ -434,23 +411,19 @@ footer p {
     z-index: 900; /* High z-index to ensure visibility */
     padding: 8px 15px;
     font-family: var(--font-family-pixel);
-    color: var(--color-background);
-    background-color: var(--color-accent);
-    border: var(--border-pixel);
-    border-color: var(--color-text);
+    color: var(--color-text); /* Changed initial text color */
+    background-color: transparent; /* Removed base background */
+    border: none;
     text-transform: uppercase;
     cursor: pointer;
-    font-size: 0.9em;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    font-size: 1.3em;
 }
 
 .back-button:hover {
-    background-color: var(--color-primary);
-    border-color: var(--color-primary);
-    transform: scale(1.1);
+    color: var(--color-accent); /* Changed initial text color */
 }
-/* === Enhanced CRT Effects === */
 
+/* === Enhanced CRT Effects === */
 .scanline-overlay {
   position: fixed;
   top: 0; left: 0;
@@ -587,16 +560,19 @@ h1, h2, h3, p, .crt-flicker-text, button {
 
 .crt-frame {
   position: absolute;
+  max-width: 155vmin;
+  width: 100%;  
+  aspect-ratio: 1 / 1; 
+  margin: auto;   
+  overflow: hidden;
+  border-radius: 25px;
   top: 55%;
   left: 50%;
-  transform: translate(-50%, -50%);  /* Centers the image */
-  width: 70%;
-  height: 150%;
-  z-index: 10;
-  opacity: 0.3;
+  transform: translate(-50%, -50%);
+  z-index: 100;
+  opacity: 0;
 pointer-events: none;
 }
-
 
 /* === Screen Content Container === */
 #screen-content {
@@ -604,10 +580,10 @@ pointer-events: none;
   height: 100%;
   position: relative; /* For potential absolute children if needed */
   transform-origin: center; /* Apply transform origin here */
-  background-color: var(--color-background); /* Add background color */
+  background-color: var(--color-background);
 }
 
-/* === Power Off Effect (Inspired by Example) === */
+/* === Power Off Effect === */
 @keyframes powerOff {
   0% {
     transform: scale(1, 1);
@@ -645,4 +621,17 @@ pointer-events: none;
   animation-delay: 0.45s; /* Start after powerOff animation finishes */
   /* Ensure overlays stay on top during fade */
   z-index: 850; /* Example: Higher than content, adjust if needed */
+}
+
+
+/* === Button Active State (Color Cycling) === */
+@keyframes textColorCycle {
+  0%, 100% { color: var(--color-text); } /* Flash to white */
+  50%      { color: var(--color-accent); } /* Flash to yellow */
+}
+
+.button-active {
+  /* Apply the animation when the class is added */
+  animation: textColorCycle 0.3s linear infinite !important;
+  transform: scale(1.1);
 }
