@@ -1,0 +1,16 @@
+[
+  {
+    "id": "project-1",
+    "title": "Example Project 1",
+    "thumbnail": "images/placeholder-thumb.png",
+    "description": "This is the first example project description. Replace with real details.",
+    "youtubeId": "Od4ipg_NaqY"
+  },
+  {
+    "id": "project-2",
+    "title": "Another Cool Game",
+    "thumbnail": "images/placeholder-thumb.png",
+    "description": "Details about the second project go here. Replace with real details.",
+    "youtubeId": "VIDEO_ID_HERE"
+  }
+]

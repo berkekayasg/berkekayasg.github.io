@@ -103,7 +103,7 @@ main > section {
 
 main > section.active-section {
   visibility: visible;
-  z-index: 700; /* Active section above menu */
+  z-index: 700; 
 }
 
 main h2 {
@@ -163,20 +163,14 @@ main a:hover {
 }
 
 /* --- New Intro Prompt Styling --- */
+/* Inherits from .retro-button now */
 #intro-prompt {
-    display: inline-block; /* Allow padding/border */
-    padding: 15px 30px;
-    font-family: var(--font-family-pixel);
-    color: var(--color-text); /* Changed initial text color */
-    background-color: transparent; /* Removed base background */
-    border: none; /* Border removed */
-    text-decoration: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-size: 1.1em;
-    /* Apply transition directly */
-    opacity: 0; /* Start hidden */
-    visibility: hidden; /* Start hidden */
+    /* Specific styles */
+    padding: 15px 30px; /* Keep specific padding */
+    font-size: 1.1em;   /* Keep specific font size */
+    opacity: 0;         /* Keep initial state */
+    visibility: hidden; /* Keep initial state */
+    /* Common styles removed, now in .retro-button */
 }
 
 #intro-prompt:hover {
@@ -227,7 +221,7 @@ footer p {
   width: 100%; /* Full width of wrapper */
   height: 100%; /* Full height of wrapper */
   pointer-events: none; /* Allow clicks through */
-  z-index: 100; /* Adjusted Z-Index: Effects above sections/menu */
+  z-index: 800; /* Adjusted Z-Index: Effects above sections/menu */
   overflow: hidden; /* Hide the overflowing pseudo-element */
 }
 
@@ -240,8 +234,8 @@ footer p {
   height: 200%; /* Double height for seamless looping */
   background-image: repeating-linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 0.03),
-    rgba(255, 255, 255, 0.03) 3px,
+    rgba(255, 255, 255, 0.05),
+    rgba(255, 255, 255, 0.053) 3px,
     transparent 6px,
     transparent 9px
   );
@@ -335,11 +329,30 @@ footer p {
   width: 100%; /* Full width of wrapper */
   height: 100%; /* Full height of wrapper */
   pointer-events: none; /* Allow clicks through */
-  z-index: 800; /* Adjusted Z-Index: Effects above sections/menu */
-  opacity: 0.05; /* Very subtle noise */
-  background-image: repeating-linear-gradient(transparent, rgba(0,0,0,0.1) 1px),
-                    repeating-linear-gradient(90deg, rgba(255,255,255,0.1), rgba(0,0,0,0.1) 1px);
-  background-size: 2px 2px; /* Small pixel noise */
+  z-index: 100; /* Adjusted Z-Index: Effects above sections/menu */
+  opacity: 0.15; /* Very subtle noise */
+  background-image: repeating-linear-gradient(transparent, rgb(41, 41, 41) 4px),
+                    repeating-linear-gradient(90deg, var(--color-background), rgb(36, 36, 36) 6px);
+  background-size: 20px 20px; /* Small pixel noise */
+}
+
+/* === Base Retro Button Style === */
+.retro-button {
+    display: inline-block; /* Good default for buttons/links */
+    padding: 15px 25px; /* Base padding */
+    font-family: var(--font-family-pixel);
+    color: var(--color-text);
+    background-color: transparent;
+    border: none; /* Default to no border */
+    text-decoration: none; /* For 'a' tags used as buttons */
+    text-transform: uppercase;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.2s; /* Base hover transition */
+}
+
+.retro-button:hover {
+    color: var(--color-accent); /* Default hover effect */
 }
 
 /* === Full Screen Menu & Back Button Styles === */
@@ -384,40 +397,30 @@ footer p {
   z-index: 200;
   background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50% ,rgba(0,0,0,0.3) 75%, rgba(0,0,0,0.5) 100%);
 }
-#main-menu a {
-    font-family: var(--font-family-pixel);
-    color: var(--color-text);
-    text-decoration: none;
-    padding: 15px 30px;
-    border: none;
-    display: inline-block;
-    text-transform: uppercase;
-    font-size: 1.2em;
+/* Inherits from .retro-button now */
+#main-menu a.retro-button {
+    /* Specific styles */
+    padding: 15px 30px; /* Override base padding */
+    font-size: 1.2em;   /* Specific font size */
+    /* Common styles removed */
 }
 
-#main-menu a:hover {
-    color: var(--color-accent); /* Change text color on hover instead */
-}
+/* Hover handled by .retro-button:hover */
 
-.back-button {
-    position: absolute; /* Position relative to screen-wrapper */
+/* Inherits from .retro-button now */
+.back-button.retro-button {
+    /* Specific styles */
+    position: absolute;
     top: auto;
     bottom: 20px;
     right: 20px;
-    z-index: 900; /* High z-index to ensure visibility */
-    padding: 8px 15px;
-    font-family: var(--font-family-pixel);
-    color: var(--color-text); /* Changed initial text color */
-    background-color: transparent; /* Removed base background */
-    border: none;
-    text-transform: uppercase;
-    cursor: pointer;
-    font-size: 1.3em;
+    z-index: 900;
+    padding: 8px 15px; /* Override base padding */
+    font-size: 1.3em;   /* Specific font size */
+    /* Common styles removed */
 }
 
-.back-button:hover {
-    color: var(--color-accent); /* Changed initial text color */
-}
+/* Hover handled by .retro-button:hover */
 
 /* === Enhanced CRT Effects === */
 .scanline-overlay {
@@ -442,7 +445,8 @@ footer p {
 }
 
 h1, h2, h3, p, .crt-flicker-text, button {
-  animation: textShadow 3s infinite !important;
+  /* Removed !important to allow other button animations like button-active */
+  animation: textShadow 3s infinite;
 }
 
 
@@ -636,4 +640,110 @@ h1, h2, h3, p, .crt-flicker-text, button {
   /* Apply the animation when the class is added */
   animation: textColorCycle 0.3s linear infinite !important;
   transform: scale(1.1);
+}
+
+/* --- Project Section Styles --- */
+
+#projects-section {
+    /* Ensure it fills the space if needed, but main section styles handle this */
+    position: relative; /* Needed for absolute positioning of children like video view */
+}
+
+#project-select-view {
+    display: flex; /* Use flexbox for layout */
+    flex-wrap: wrap; /* Allow items to wrap */
+    gap: 20px; /* Space between project buttons */
+    justify-content: center; /* Center items */
+    padding: 20px 0; /* Add some padding */
+}
+
+/* Inherits from .retro-button now */
+.project-select-button.retro-button {
+    /* Specific styles */
+    border: var(--border-pixel); /* Add border specifically here */
+    font-size: 1em;              /* Specific font size */
+    min-width: 150px;            /* Specific min-width */
+    transition: color 0.2s, border-color 0.2s; /* Add border transition */
+    /* Common styles removed */
+}
+
+/* Extend base hover */
+.project-select-button.retro-button:hover {
+    border-color: var(--color-accent); /* Add border color change */
+}
+
+#project-detail-view {
+    /* Hidden by default using .hidden class */
+    padding: 20px; /* Add padding */
+}
+
+#project-detail-view h3 {
+    font-family: var(--font-family-pixel);
+    color: var(--color-accent); /* Use accent for detail title */
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    text-transform: uppercase;
+}
+
+#project-detail-view p {
+    margin-bottom: 25px;
+}
+
+.project-detail-buttons {
+    text-align: center; /* Center the play button */
+    margin-top: 20px;
+}
+
+/* Style for Play button */
+/* Inherits fully from .retro-button, no specific styles needed currently */
+#project-play-button.retro-button { }
+
+
+#project-video-view {
+    position: absolute; /* Cover the project section area */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 1); /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000; /* Above section content and header */
+    padding: 40px; /* Generous padding around the video */
+    box-sizing: border-box;
+}
+
+/* Inherits from .retro-button now */
+#project-close-video-button.retro-button {
+    /* Specific styles */
+    position: absolute;
+    top: 80px; /* Keep specific positioning */
+    right: 40px;
+    z-index: 1110; /* CORRECTED z-index */
+    font-size: 1.5em; /* Keep specific font size */
+    padding: 5px 10px; /* Keep specific padding */
+    line-height: 1; /* Keep specific line height */
+    /* Common styles removed */
+}
+
+#youtube-player {
+    width: 100%; /* Take full width within padding */
+    height: auto; /* Height determined by aspect ratio */
+    max-width: 960px; /* Max width for large screens */
+    aspect-ratio: 1.2 / 1;
+    background-color: #000; /* Black background while loading */
+}
+
+#youtube-player iframe {
+    display: block; /* Remove extra space below iframe */
+    width: 100%;
+    height: 100%;
+    border: none; /* Remove iframe border */
+}
+
+/* Ensure .hidden works as expected */
+/* Overwrite previous definition if necessary */
+.hidden {
+  display: none !important; /* Use display none for layout changes */
 }

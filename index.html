@@ -16,16 +16,16 @@
     <div id="screen-content">
         <nav id="main-menu">
             <ul>
-                <li><a href="#home"><span class="crt-flicker-text">Home</span></a></li>
-                <li><a href="#projects"><span class="crt-flicker-text">Projects</span></a></li>
-                <li><a href="#about"><span class="crt-flicker-text">About</span></a></li>
-                <li><a href="#contact"><span class="crt-flicker-text">Contact</span></a></li>
-                <li><a href="#" id="quit-button"><span class="crt-flicker-text">Quit</span></a></li>
+                <li><a href="#home" class="retro-button"><span class="crt-flicker-text">Home</span></a></li>
+                <li><a href="#projects" class="retro-button"><span class="crt-flicker-text">Projects</span></a></li>
+                <li><a href="#about" class="retro-button"><span class="crt-flicker-text">About</span></a></li>
+                <li><a href="#contact" class="retro-button"><span class="crt-flicker-text">Contact</span></a></li>
+                <li><a href="#" id="quit-button" class="retro-button"><span class="crt-flicker-text">Quit</span></a></li>
             </ul>
         </nav>
         <div id="intro-screen">
             <!-- Optional: Placeholder for visual element -->
-            <div id="intro-prompt" class="pixel-border"> <!-- Class hidden removed -->
+            <div id="intro-prompt" class="pixel-border retro-button"> <!-- Added retro-button -->
                  <p>Press any button or click to continue</p>
             </div>
         </div>
@@ -37,20 +37,42 @@
             <main>
                 <section id="home">
                     <h2>Welcome!</h2>
-                    <button class="back-button">Back</button>
+                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
                     <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
                     <!-- TODO: Add highlight reel/best project preview -->
                 </section>
 
                 <section id="projects">
-                    <button class="back-button">Back</button>
                     <h2>My Projects</h2>
-                    <p>This is where the gallery of game development projects will go.</p>
-                    <!-- TODO: Add project items (screenshots, descriptions, links) -->
+
+                    <!-- 1. Project Selection View -->
+                    <div id="project-select-view">
+                        <!-- Project buttons/thumbnails will be generated here by JS -->
+                        <p>Loading projects...</p> <!-- Temporary placeholder -->
+                    </div>
+
+                    <!-- 2. Project Detail View (Initially Hidden) -->
+                    <div id="project-detail-view" class="hidden">
+                        <h3 id="project-detail-title"></h3>
+                        <p id="project-detail-description"></p>
+                        <div class="project-detail-buttons">
+                             <button id="project-play-button" class="retro-button">PLAY</button>
+                             <!-- The main 'Back' button below will handle going back from details -->
+                        </div>
+                    </div>
+
+                    <!-- 3. YouTube Video View (Initially Hidden) -->
+                    <div id="project-video-view" class="hidden">
+                        <button id="project-close-video-button" class="retro-button close-button">X</button>
+                        <div id="youtube-player"></div> <!-- YouTube IFrame will be injected here -->
+                    </div>
+
+                    <!-- Existing Back Button -->
+                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
                 </section>
 
                 <section id="about">
-                    <button class="back-button">Back</button>
+                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
                     <h2>About Me</h2>
                     <p>This section will contain information about your background, passion for game development, and skills.</p>
                     <!-- TODO: Add bio, skills list, maybe a photo -->
@@ -58,7 +80,7 @@
 
                 <section id="contact">
                     <h2>Get In Touch</h2>
-                    <button class="back-button">Back</button>
+                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
                     <p>Information on how to contact you will go here. This could be a contact form or direct links.</p>
                     <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
                 </section>
