@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const introScreen = document.getElementById('intro-screen');
     const introPrompt = document.getElementById('intro-prompt');
     const header = document.querySelector('header');
+    const mainHeading = document.querySelector('header h1'); // Added for dynamic heading
     const mainMenu = document.getElementById('main-menu');
     const menuLinks = document.querySelectorAll('#main-menu a[href^="#"]');
     const sections = document.querySelectorAll('main > section');
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (header) header.classList.remove('hidden');
                 if (mainMenu) mainMenu.classList.remove('hidden');
                 if (footer) footer.classList.add('visible');
+                updateMainHeading(null); // Set heading to default when menu appears
             }, 0);
         }
         window.removeEventListener('keydown', handleIntroInteraction);
@@ -108,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 section.classList.remove('active-section');
             }
         });
+            updateMainHeading(targetId);
     }
 
     function showMenu() {
@@ -125,8 +128,36 @@ document.addEventListener('DOMContentLoaded', () => {
         if (footer) footer.classList.add('visible');
 
         // Stop video if playing when returning to menu
+        updateMainHeading(null); // Reset heading to default
         stopAndDestroyVideoPlayer();
     }
+
+    // --- Header Update Logic ---
+    function updateMainHeading(targetSectionId, explicitTitle = null) {
+        if (!mainHeading) return; // Exit if heading element not found
+
+        if (explicitTitle) { // If an explicit title is given, use it directly
+            mainHeading.textContent = explicitTitle;
+            return;
+        }
+
+        if (targetSectionId) { // If a specific section ID is provided
+            const activeSection = document.querySelector(targetSectionId);
+            if (activeSection) {
+                const sectionTitleElement = activeSection.querySelector('h2');
+                if (sectionTitleElement) {
+                    mainHeading.textContent = sectionTitleElement.textContent; // Use section's H2 text
+                } else {
+                    mainHeading.textContent = "Berke Kaya"; // Fallback if H2 is missing
+                }
+            } else {
+                 mainHeading.textContent = "Berke Kaya"; // Fallback if section not found
+            }
+        } else { // If no section ID (means menu/intro is active)
+            mainHeading.textContent = "Berke Kaya"; // Default text
+        }
+    }
+
 
     menuLinks.forEach(link => {
         link.addEventListener('click', (event) => {
@@ -165,12 +196,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Specific Back Button for Projects Section
     if (projectsBackButton) {
         projectsBackButton.addEventListener('click', (event) => {
+            console.log("Back button clicked in projects section");
             event.preventDefault();
             const btn = event.currentTarget;
             btn.classList.add('button-active');
 
             setTimeout(() => {
                 btn.classList.remove('button-active');
+                updateMainHeading('#projects'); // Reset heading to 'My Projects'
 
                 // Check which view is active within projects
                 if (projectVideoView && !projectVideoView.classList.contains('hidden')) {
@@ -266,6 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
             projectPlayButton.dataset.youtubeId = project.youtubeId;
         }
 
+        updateMainHeading(null, project.title); // Update header with specific project title
 
         projectSelectView.classList.add('hidden');
         projectDetailView.classList.remove('hidden');
@@ -341,6 +375,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show detail view again
         if (projectDetailView) projectDetailView.classList.remove('hidden');
         const activeSection = document.querySelector('main > section.active-section');
+        updateMainHeading(null, projectDetailTitle.textContent); // Restore project title in header
         activeSection.style.zIndex = '';
     }
 

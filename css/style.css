@@ -41,11 +41,11 @@ body {
 /* --- Screen Wrapper for Box Effect --- */
 #screen-wrapper {
   position: absolute;
-  top: 45%;
-  left: 45%;
+  top: 37.3%;
+  left: 41.65%;
   transform: translate(-50%, -50%);
-  width: 45%;
-  height: 70%; 
+  width: 45.3%;
+  height: 60%; 
   background-color: var(--color-background);
   overflow: hidden;
 }
@@ -64,8 +64,9 @@ header {
   width: 100%; /* Full width of wrapper */
   padding: 10px 20px;
   text-align: center;
-  z-index: 1000;
+  z-index: 850;
   box-sizing: border-box; /* Include padding in width */
+  pointer-events: none;
 }
 
 header h1 {
@@ -114,6 +115,7 @@ main h2 {
   padding-bottom: 5px;
   margin-bottom: 15px;
   font-size: 1.4em;
+  display: none;
 }
 
 main p {
@@ -260,6 +262,10 @@ footer p {
     1px 1px 1px var(--color-red),   /* Red offset */
     -1px -1px 1px var(--color-green); /* Green offset */
   animation: glowPulse 2s infinite ease-in-out; /* Keep pulsing */
+  color: var(--color-primary);
+  text-transform: uppercase;
+  border-bottom: var(--border-pixel);
+  padding-bottom: 10px;
 }
 
 .cta-button:hover {
@@ -550,15 +556,14 @@ h1, h2, h3, p, .crt-flicker-text, button {
 
 .crt-frame {
   position: absolute;
-  top: 40%;
+  top: 42.5%;
   left: 50%;
   transform: translate(-50%, -50%);  /* Centers the image */
-  width: 100%;
-  height: 120%; 
+  width: 90%;
+  height: 115%;
   z-index: 8000;
   opacity: 1;
   pointer-events: none;
-
 }
 
 /* === Screen Content Container === */
@@ -691,26 +696,18 @@ h1, h2, h3, p, .crt-flicker-text, button {
     align-items: center;
     justify-content: center;
     z-index: 1000; /* Above section content and header */
-    padding: 40px; /* Generous padding around the video */
+    padding: 25px 1px; /* Generous padding around the video */
     box-sizing: border-box;
 }
 
 #project-close-video-button.retro-button {
     position: absolute;
-    top: 80px; /* Keep specific positioning */
-    right: 40px;
-    z-index: 1110; /* CORRECTED z-index */
-    font-size: 1.5em; /* Keep specific font size */
+    top: 40px; /* Keep specific positioning */
+    right: 20px;
+    z-index: 1110;
+    font-size: 2em; /* Keep specific font size */
     padding: 5px 10px; /* Keep specific padding */
     line-height: 1; /* Keep specific line height */
-}
-
-#youtube-player {
-    width: 100%; /* Take full width within padding */
-    height: auto; /* Height determined by aspect ratio */
-    max-width: 960px; /* Max width for large screens */
-    aspect-ratio: 1.2 / 1;
-    background-color: #000; /* Black background while loading */
 }
 
 #youtube-player iframe {
