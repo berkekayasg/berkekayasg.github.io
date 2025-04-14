@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     'playsinline': 1, // Important for mobile
                     'autoplay': 1,    // Autoplay when loaded
                     'controls': 1,    // Show controls
-                    'rel': 0,          // Don't show related videos
+                    'rel': 0,         // Don't show related videos
                 },
                 events: {
                     'onReady': onPlayerReady,
@@ -340,6 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
         stopAndDestroyVideoPlayer();
         // Show detail view again
         if (projectDetailView) projectDetailView.classList.remove('hidden');
+        const activeSection = document.querySelector('main > section.active-section');
+        activeSection.style.zIndex = '';
     }
 
     // Event listeners moved to the end of DOMContentLoaded
@@ -391,6 +393,7 @@ document.addEventListener('DOMContentLoaded', () => {
         projectPlayButton.addEventListener('click', (event) => {
             const button = event.currentTarget;
             const youtubeId = button.dataset.youtubeId;
+            const activeSection = document.querySelector('main > section.active-section');
             button.classList.add('button-active');
 
             setTimeout(() => {
@@ -402,6 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  } else {
                     console.error("No YouTube ID found for this project.");
                  }
+                 activeSection.style.zIndex = '900';
             }, 800);
         });
     }

@@ -163,14 +163,12 @@ main a:hover {
 }
 
 /* --- New Intro Prompt Styling --- */
-/* Inherits from .retro-button now */
 #intro-prompt {
     /* Specific styles */
     padding: 15px 30px; /* Keep specific padding */
     font-size: 1.1em;   /* Keep specific font size */
     opacity: 0;         /* Keep initial state */
     visibility: hidden; /* Keep initial state */
-    /* Common styles removed, now in .retro-button */
 }
 
 #intro-prompt:hover {
@@ -397,17 +395,12 @@ footer p {
   z-index: 200;
   background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50% ,rgba(0,0,0,0.3) 75%, rgba(0,0,0,0.5) 100%);
 }
-/* Inherits from .retro-button now */
+
 #main-menu a.retro-button {
-    /* Specific styles */
     padding: 15px 30px; /* Override base padding */
     font-size: 1.2em;   /* Specific font size */
-    /* Common styles removed */
 }
 
-/* Hover handled by .retro-button:hover */
-
-/* Inherits from .retro-button now */
 .back-button.retro-button {
     /* Specific styles */
     position: absolute;
@@ -417,10 +410,7 @@ footer p {
     z-index: 900;
     padding: 8px 15px; /* Override base padding */
     font-size: 1.3em;   /* Specific font size */
-    /* Common styles removed */
 }
-
-/* Hover handled by .retro-button:hover */
 
 /* === Enhanced CRT Effects === */
 .scanline-overlay {
@@ -657,19 +647,15 @@ h1, h2, h3, p, .crt-flicker-text, button {
     padding: 20px 0; /* Add some padding */
 }
 
-/* Inherits from .retro-button now */
 .project-select-button.retro-button {
-    /* Specific styles */
-    border: var(--border-pixel); /* Add border specifically here */
     font-size: 1em;              /* Specific font size */
     min-width: 150px;            /* Specific min-width */
     transition: color 0.2s, border-color 0.2s; /* Add border transition */
-    /* Common styles removed */
 }
 
 /* Extend base hover */
 .project-select-button.retro-button:hover {
-    border-color: var(--color-accent); /* Add border color change */
+    color: var(--color-accent); /* Add border color change */
 }
 
 #project-detail-view {
@@ -694,11 +680,6 @@ h1, h2, h3, p, .crt-flicker-text, button {
     margin-top: 20px;
 }
 
-/* Style for Play button */
-/* Inherits fully from .retro-button, no specific styles needed currently */
-#project-play-button.retro-button { }
-
-
 #project-video-view {
     position: absolute; /* Cover the project section area */
     top: 0;
@@ -714,9 +695,7 @@ h1, h2, h3, p, .crt-flicker-text, button {
     box-sizing: border-box;
 }
 
-/* Inherits from .retro-button now */
 #project-close-video-button.retro-button {
-    /* Specific styles */
     position: absolute;
     top: 80px; /* Keep specific positioning */
     right: 40px;
@@ -724,7 +703,6 @@ h1, h2, h3, p, .crt-flicker-text, button {
     font-size: 1.5em; /* Keep specific font size */
     padding: 5px 10px; /* Keep specific padding */
     line-height: 1; /* Keep specific line height */
-    /* Common styles removed */
 }
 
 #youtube-player {
