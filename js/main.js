@@ -135,8 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.classList.remove('button-active');
 
                 const screenWrapper = document.getElementById('screen-wrapper');
+                const crtFrame = document.getElementsByClassName('crt-frame')[0];
                 if (screenWrapper) {
                     screenWrapper.classList.add('powering-off');
+                    crtFrame.classList.add('powering-off');
                     setTimeout(() => {
                         screenWrapper.style.display = 'none';
                     }, 750);
