@@ -55,18 +55,26 @@ body {
 /* --- Full Screen Section Visibility (New Approach) --- */
 /* Sections are now controlled by position:absolute and visibility/opacity */
 
-/* --- Header & Navigation Styling --- */
+/* --- Main Layout, Header & Navigation Styling --- */
+
+/* Wrapper for header and main content area */
+#main-content-wrapper {
+    display: flex;
+    flex-direction: column; /* Stack header and main vertically */
+    height: 100%; /* Ensure it fills its container (#screen-content) */
+    position: relative; /* Needed for absolute positioning of sections inside 'main' */
+}
 
 header {
-  position: absolute; /* Position relative to screen-wrapper */
-  top: 20px;
-  left: 0;
+  position: relative; /* Position relative to main-content-wrapper */
+  top: 10px; /* Align to top of wrapper */
   width: 100%; /* Full width of wrapper */
-  padding: 10px 20px;
+  padding: 10px 10px;
   text-align: center;
-  z-index: 850;
+  z-index: 850; /* Keep above sections */
   box-sizing: border-box; /* Include padding in width */
-  pointer-events: none;
+  pointer-events: none; /* Keep this if header shouldn't intercept clicks */
+  flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 header h1 {
@@ -86,14 +94,22 @@ header h1 a:hover {
 }
 
 
+/* --- Main Content Area (holds sections) --- */
+main {
+    flex-grow: 1; /* Allow main to take up remaining vertical space */
+    position: relative; /* Crucial for the absolutely positioned sections inside it */
+    overflow: hidden; /* Prevent content spillover, sections handle their own scroll */
+}
+
 /* --- Full Screen Section Styling --- */
 main > section {
-  position: absolute; /* Position relative to screen-wrapper */
+  position: absolute; /* Position relative to main */
   top: 0;
   left: 0;
-  width: 100%; /* Full width of wrapper */
-  height: 100%; /* Full height of wrapper */
-  padding: 60px 40px 40px 40px; /* Add padding inside section (more top for back button) */
+  width: 100%; /* Full width of main */
+  height: 100%; /* Full height of main */
+  /* Removed fixed top padding, using flex layout now */
+  padding: 5px 40px 40px 40px; /* Consistent padding (adjust as needed) */
   box-sizing: border-box; /* Include padding in width/height */
   overflow-y: auto; /* Allow scrolling within section */
   z-index: 500; /* Default z-index for inactive sections */
@@ -362,49 +378,40 @@ footer p {
 /* === Full Screen Menu & Back Button Styles === */
 
 #main-menu {
-    position: absolute; /* Position relative to screen-wrapper */
-    top: 0;
-    left: 0;
-    width: 100%; /* Full width of wrapper */
-    height: 100%; /* Full height of wrapper */
-    z-index: 600; /* Below active section (700), above inactive (500) */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    box-sizing: border-box;
-    /* Initial state & transition */
-    visibility: visible; /* Start visible after intro */
-    opacity: 1;
-}
-
-#main-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-}
-
-#main-menu li {
-    margin-bottom: 20px; /* Space between menu items */
-}
-
-/* === Vignette Overlay === */
-.vignette-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none;
-  z-index: 200;
-  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50% ,rgba(0,0,0,0.3) 75%, rgba(0,0,0,0.5) 100%);
+  z-index: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
+  visibility: visible;
+  opacity: 1;
+  min-height: 250px; /* Ensure minimum height even on small screens */
+}
+
+#main-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+  justify-content: center;
+}
+
+#main-menu li {
+  margin-bottom: max(10px, min(20px, 4vh)); /* Responsive margins */
+  flex-shrink: 0; /* Prevent items from shrinking too much */
 }
 
 #main-menu a.retro-button {
-    padding: 15px 30px; /* Override base padding */
-    font-size: 1.2em;   /* Specific font size */
+  padding: max(px, min(15px, 2vh)) max(10px, min(30px, 4vw));
+  font-size: max(0.7em, min(1.2em, 2.5vh));
 }
 
 .back-button.retro-button {
@@ -566,6 +573,18 @@ h1, h2, h3, p, .crt-flicker-text, button {
   pointer-events: none;
 }
 
+/* === Vignette Overlay === */
+.vignette-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 200;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 50% ,rgba(0,0,0,0.3) 75%, rgba(0,0,0,0.5) 100%);
+}
+
 /* === Screen Content Container === */
 #screen-content {
   width: 100%;
@@ -647,9 +666,8 @@ h1, h2, h3, p, .crt-flicker-text, button {
 #project-select-view {
     display: flex; /* Use flexbox for layout */
     flex-wrap: wrap; /* Allow items to wrap */
-    gap: 20px; /* Space between project buttons */
     justify-content: center; /* Center items */
-    padding: 20px 0; /* Add some padding */
+    padding: 5px 0; /* Add some padding */
 }
 
 .project-select-button.retro-button {
@@ -665,7 +683,7 @@ h1, h2, h3, p, .crt-flicker-text, button {
 
 #project-detail-view {
     /* Hidden by default using .hidden class */
-    padding: 20px; /* Add padding */
+    padding: 0px; /* Add padding */
 }
 
 #project-detail-view h3 {
@@ -721,4 +739,11 @@ h1, h2, h3, p, .crt-flicker-text, button {
 /* Overwrite previous definition if necessary */
 .hidden {
   display: none !important; /* Use display none for layout changes */
+}
+
+.empty {
+  text-transform: uppercase;
+  border-bottom: var(--border-pixel);
+  padding-bottom: 10px;
+  opacity: 0;
 }

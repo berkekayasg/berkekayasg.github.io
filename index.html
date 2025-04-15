@@ -1,106 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Berke Kaya - Game Developer Portfolio</title>
-    <meta name="description" content="Portfolio website for Berke Kaya, showcasing game development projects and skills.">
+    <meta name="description"
+        content="Portfolio website for Berke Kaya, showcasing game development projects and skills.">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- TODO: Consider adding a CSS Reset or Normalize.css -->
 </head>
+
 <body onresize="posWindows();">
     <!-- CRT Overlay Image -->
     <img class="crt-frame" src="images/frame.png" alt="CRT Overlay">
     <div id="screen-wrapper" style="filter: url(#SphereMapTest) url(#contrast) url(#brightness) url(#colorfill);">
-    <div id="screen-content">
-        <nav id="main-menu">
-            <ul>
-                <li><a href="#home" class="retro-button"><span class="crt-flicker-text">Home</span></a></li>
-                <li><a href="#projects" class="retro-button"><span class="crt-flicker-text">Projects</span></a></li>
-                <li><a href="#about" class="retro-button"><span class="crt-flicker-text">About</span></a></li>
-                <li><a href="#contact" class="retro-button"><span class="crt-flicker-text">Contact</span></a></li>
-                <li><a href="#" id="quit-button" class="retro-button"><span class="crt-flicker-text">Quit</span></a></li>
-            </ul>
-        </nav>
-        <div id="intro-screen">
-            <!-- Optional: Placeholder for visual element -->
-            <div id="intro-prompt" class="pixel-border retro-button"> <!-- Added retro-button -->
-                 <p>Press any button or click to continue</p>
+        <div id="screen-content">
+            <nav id="main-menu">
+                <div id="main-content-wrapper">
+                    <header>
+                        <h1 class="empty"></h1>
+                    </header>
+                    <ul>
+                        <li><a href="#home" class="retro-button"><span class="crt-flicker-text">Home</span></a></li>
+                        <li><a href="#projects" class="retro-button"><span class="crt-flicker-text">Projects</span></a>
+                        </li>
+                        <li><a href="#about" class="retro-button"><span class="crt-flicker-text">About</span></a></li>
+                        <li><a href="#contact" class="retro-button"><span class="crt-flicker-text">Contact</span></a>
+                        </li>
+                        <li><a href="#" id="quit-button" class="retro-button"><span
+                                    class="crt-flicker-text">Quit</span></a></li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="intro-screen">
+                <!-- Optional: Placeholder for visual element -->
+                <div id="intro-prompt" class="pixel-border retro-button"> <!-- Added retro-button -->
+                    <p>Press any button or click to continue</p>
+                </div>
             </div>
-        </div>
-        <div id="main-content-wrapper">
-            <header>
-                <h1 class="glow">Berke Kaya</h1>
-            </header>
+            <div id="main-content-wrapper">
+                <header>
+                    <h1 class="glow">Berke Kaya</h1>
+                </header>
 
-            <main>
-                <section id="home">
-                    <h2>Welcome!</h2>
-                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
-                    <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
-                    <!-- TODO: Add highlight reel/best project preview -->
-                </section>
+                <main>
+                    <section id="home">
+                        <h2>Welcome!</h2>
+                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
+                        <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
+                        <!-- TODO: Add highlight reel/best project preview -->
+                    </section>
 
-                <section id="projects">
-                    <h2>My Projects</h2>
+                    <section id="projects">
+                        <h2>My Projects</h2>
 
-                    <!-- 1. Project Selection View -->
-                    <div id="project-select-view">
-                        <!-- Project buttons/thumbnails will be generated here by JS -->
-                        <p>Loading projects...</p> <!-- Temporary placeholder -->
-                    </div>
-
-                    <!-- 2. Project Detail View (Initially Hidden) -->
-                    <div id="project-detail-view" class="hidden">
-                        <h2 id="project-detail-title"></h2>
-                        <p id="project-detail-description"></p>
-                        <div class="project-detail-buttons">
-                             <button id="project-play-button" class="retro-button">PLAY</button>
-                             <!-- The main 'Back' button below will handle going back from details -->
+                        <!-- 1. Project Selection View -->
+                        <div id="project-select-view">
+                            <!-- Project buttons/thumbnails will be generated here by JS -->
+                            <p>Loading projects...</p> <!-- Temporary placeholder -->
                         </div>
-                    </div>
 
-                    <!-- 3. YouTube Video View (Initially Hidden) -->
-                    <div id="project-video-view" class="hidden">
-                        <button id="project-close-video-button" class="retro-button close-button">X</button>
-                        <div id="youtube-player"></div> <!-- YouTube IFrame will be injected here -->
-                    </div>
+                        <!-- 2. Project Detail View (Initially Hidden) -->
+                        <div id="project-detail-view" class="hidden">
+                            <h2 id="project-detail-title"></h2>
+                            <p id="project-detail-description"></p>
+                            <div class="project-detail-buttons">
+                                <button id="project-play-button" class="retro-button">PLAY</button>
+                                <!-- The main 'Back' button below will handle going back from details -->
+                            </div>
+                        </div>
 
-                    <!-- Existing Back Button -->
-                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
-                </section>
+                        <!-- Existing Back Button -->
+                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
+                    </section>
 
-                <section id="about">
-                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
-                    <h2>About Me</h2>
-                    <p>This section will contain information about your background, passion for game development, and skills.</p>
-                    <!-- TODO: Add bio, skills list, maybe a photo -->
-                </section>
+                    <section id="about">
+                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
+                        <h2>About Me</h2>
+                        <p>This section will contain information about your background, passion for game development,
+                            and skills.</p>
+                        <!-- TODO: Add bio, skills list, maybe a photo -->
+                    </section>
 
-                <section id="contact">
-                    <h2>Get In Touch</h2>
-                    <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
-                    <p>Information on how to contact you will go here. This could be a contact form or direct links.</p>
-                    <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
-                </section>
-            </main>
+                    <section id="contact">
+                        <h2>Get In Touch</h2>
+                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
+                        <p>Information on how to contact you will go here. This could be a contact form or direct links.
+                        </p>
+                        <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
+                    </section>
+                </main>
 
-            <footer>
-                <!-- TODO: Add links to social/professional profiles (GitHub, LinkedIn, Itch.io) -->
-            </footer>
+                <footer>
+                    <!-- TODO: Add links to social/professional profiles (GitHub, LinkedIn, Itch.io) -->
+                </footer>
+            </div>
+        </div> <!-- Close screen-content -->
+        <!-- 3. YouTube Video View (Initially Hidden) -->
+        <div id="project-video-view" class="hidden">
+            <button id="project-close-video-button" class="retro-button close-button">X</button>
+            <div id="youtube-player"></div> <!-- YouTube IFrame will be injected here -->
         </div>
-
-    </div> <!-- Close screen-content -->
-    <!-- Effect Overlays (Now direct children of screen-wrapper) -->
-    <div class="scanline-overlay"></div>
-    <div class="crt-flicker"></div>
-    <div class="scanlines"></div> <!-- Assuming this is different from scanline-overlay or intended -->
-    <div class="noise-overlay"></div>
-    <div class="vignette-overlay"></div>
-    <div class="vignette-overlay"></div>
-    <script src="js/main.js"></script>
+        <!-- Effect Overlays (Now direct children of screen-wrapper) -->
+        <div class="scanline-overlay"></div>
+        <div class="crt-flicker"></div>
+        <div class="scanlines"></div> <!-- Assuming this is different from scanline-overlay or intended -->
+        <div class="noise-overlay"></div>
+        <div class="vignette-overlay"></div>
+        <div class="vignette-overlay"></div>
+        <script src="js/main.js"></script>
 
 
 </body>
+
 </html>
