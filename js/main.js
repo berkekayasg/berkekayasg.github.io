@@ -28,6 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const youtubePlayerDiv = document.getElementById('youtube-player'); // The div for the iframe
     const projectsBackButton = projectsSection ? projectsSection.querySelector('.back-button') : null; // Specific back button for projects
 
+    // --- Audio Element References ---
+    const audioCrtHum = document.getElementById('audio-crt-hum');
+    const audioIntroConfirm = document.getElementById('audio-intro-confirm');
+    const audioButtonClick = document.getElementById('audio-button-click');
+    const audioButtonBack = document.getElementById('audio-button-back');
+    const audioProjectPlay = document.getElementById('audio-project-play');
+    const audioPowerOff = document.getElementById('audio-power-off');
+    const audioPowerOn = document.getElementById('audio-power-on');
     // --- YouTube Player API ---
     let ytPlayer = null; // Variable to hold the YouTube player instance
     let youtubeApiReady = false;
@@ -35,6 +43,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initial State ---
     sections.forEach(section => section.classList.remove('active-section'));
+
+    // --- Sound Playback Helper ---
+    function playSound(audioElement) {
+        if (audioElement) {
+            audioElement.currentTime = 0; // Reset playback
+            audioElement.play().catch(error => console.error("Audio play failed:", error));
+        }
+    }
+    // --- Power On Effect ---
+    function powerOnEffect() {
+        console.log("Executing Power On Effect...");
+        if (screenWrapper && crtFrame && audioPowerOn && audioCrtHum) {
+            // 1. Reset display style set by powerOff
+            screenWrapper.style.display = '';
+
+            // 2. Remove power-off visual class (if present)
+            screenWrapper.classList.remove('powering-off');
+            crtFrame.classList.remove('powering-off');
+
+            screenWrapper.classList.add('powering-on');
+                    crtFrame.classList.add('powering-on');
+                    setTimeout(() => {
+                        screenWrapper.classList.remove('powering-on');
+                    crtFrame.classList.remove('powering-on');
+                    }, 800); // Keep visual delay
+
+            // 3. Play sounds
+            playSound(audioPowerOn);
+            playSound(audioCrtHum);
+        } else {
+            console.error("Power On Effect: Missing required elements (screenWrapper, crtFrame, audioPowerOn, or audioCrtHum).");
+        }
+    }
+
+
     if (introScreen) {
         if (mainMenu) mainMenu.classList.add('hidden');
         if (footer) footer.classList.remove('visible');
@@ -44,6 +87,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (footer) footer.classList.add('visible');
         showMenu();
     }
+
+    // --- Initial Power On ---
+    screenWrapper.style.display = 'none'
+    crtFrame.style.filter = 'brightness(0.5)';
+    setTimeout(() => {
+    powerOnEffect(); // Call the centralized power on function
+    }, 1000); // Call immediately to ensure hum starts
 
     // --- Intro Screen Logic ---
     function hideIntroAndShowMenu() {
@@ -69,8 +119,10 @@ document.addEventListener('DOMContentLoaded', () => {
             introPrompt.classList.add('button-active');
 
 
+            playSound(audioIntroConfirm); // Play sound immediately
             setTimeout(() => {
                 introPrompt.classList.remove('button-active');
+                // CRT Hum is now started by powerOnEffect()
                 hideIntroAndShowMenu();
             }, 800);
 
@@ -167,6 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (targetSectionId && targetSectionId !== '#') {
                 button.classList.add('button-active');
+                playSound(audioButtonClick); // Play sound immediately
                 setTimeout(() => {
                     button.classList.remove('button-active');
                     showSection(targetSectionId);
@@ -186,6 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const btn = event.currentTarget;
             btn.classList.add('button-active');
+            playSound(audioButtonBack); // Play sound immediately
             setTimeout(() => {
                 btn.classList.remove('button-active');
                 showMenu(); // General back buttons always go to main menu
@@ -200,6 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const btn = event.currentTarget;
             btn.classList.add('button-active');
+            playSound(audioButtonBack); // Play sound immediately
 
             setTimeout(() => {
                 btn.classList.remove('button-active');
@@ -229,6 +284,8 @@ document.addEventListener('DOMContentLoaded', () => {
             event.preventDefault();
             const button = event.currentTarget;
             button.classList.add('button-active');
+            playSound(audioPowerOff); // Play sound immediately
+            if (audioCrtHum) audioCrtHum.pause(); // Stop hum immediately
 
             setTimeout(() => {
                 button.classList.remove('button-active');
@@ -239,9 +296,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     crtFrame.classList.add('powering-off'); // Apply to frame too if needed
                     setTimeout(() => {
                         screenWrapper.style.display = 'none';
-                    }, 750);
+                    }, 750); // Keep visual delay
                 }
-            }, 800);
+            }, 800); // Keep button animation delay
         });
     }
     // --- Project Section Logic ---
@@ -271,6 +328,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const btn = event.currentTarget;
                 const projectId = btn.dataset.projectId;
                 btn.classList.add('button-active');
+                playSound(audioButtonClick); // Play sound immediately
                 setTimeout(() => {
                     btn.classList.remove('button-active');
                     if (projectId) {
@@ -430,6 +488,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const youtubeId = button.dataset.youtubeId;
             const activeSection = document.querySelector('main > section.active-section');
             button.classList.add('button-active');
+            playSound(audioProjectPlay); // Play sound immediately
 
             setTimeout(() => {
                  button.classList.remove('button-active');
@@ -449,6 +508,7 @@ document.addEventListener('DOMContentLoaded', () => {
         projectCloseVideoButton.addEventListener('click', (event) => {
              const button = event.currentTarget;
              button.classList.add('button-active');
+             playSound(audioButtonBack); // Play sound immediately
              setTimeout(() => {
                  button.classList.remove('button-active');
                  closeVideoPlayer();
