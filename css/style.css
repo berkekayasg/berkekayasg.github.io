@@ -774,3 +774,9 @@ h1, h2, h3, p, .crt-flicker-text, button {
   padding-bottom: 10px;
   opacity: 0;
 }
+
+#power-on-button {
+  position: absolute;
+  z-index: 10000; /* Keep specific z-index */
+  font-size: 1.5em; /* Keep specific font size */
+}

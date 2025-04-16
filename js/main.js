@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioProjectPlay = document.getElementById('audio-project-play');
     const audioPowerOff = document.getElementById('audio-power-off');
     const audioPowerOn = document.getElementById('audio-power-on');
+    const audioPowerOnOff = document.getElementById('audio-power-on-off');
     // --- YouTube Player API ---
     let ytPlayer = null; // Variable to hold the YouTube player instance
     let youtubeApiReady = false;
@@ -67,11 +68,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(() => {
                         screenWrapper.classList.remove('powering-on');
                     crtFrame.classList.remove('powering-on');
+                    crtFrame.style.filter = 'brightness(1)';
                     }, 800); // Keep visual delay
 
             // 3. Play sounds
             playSound(audioPowerOn);
             playSound(audioCrtHum);
+            setTimeout(() => { playSound(audioPowerOnOff); }, 400);
         } else {
             console.error("Power On Effect: Missing required elements (screenWrapper, crtFrame, audioPowerOn, or audioCrtHum).");
         }
@@ -91,9 +94,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Power On ---
     screenWrapper.style.display = 'none'
     crtFrame.style.filter = 'brightness(0.5)';
-    setTimeout(() => {
-    powerOnEffect(); // Call the centralized power on function
-    }, 1000); // Call immediately to ensure hum starts
 
     // --- Intro Screen Logic ---
     function hideIntroAndShowMenu() {
@@ -285,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = event.currentTarget;
             button.classList.add('button-active');
             playSound(audioPowerOff); // Play sound immediately
+            setTimeout(() => { playSound(audioPowerOnOff); }, 600);
             if (audioCrtHum) audioCrtHum.pause(); // Stop hum immediately
 
             setTimeout(() => {
@@ -478,6 +479,49 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initial Calls ---
     loadProjectData(); // Load project data first, which then calls renderProjectSelection
     loadYouTubeAPI(); // Start loading the YouTube API
+
+
+    // --- Power On Button Listener ---
+    const powerOnButton = document.getElementById('power-on-button');
+    // center the poweronbutton position to the screen
+    function centerButtonInWrapper() {  
+        screenWrapper.style.display = 'block'; // Ensure wrapper is visible for calculations  
+        const wrapperRect = screenWrapper.getBoundingClientRect(); // Gets position relative to viewport
+        const buttonRect = powerOnButton.getBoundingClientRect();
+    
+        // Calculate desired top-left position relative to viewport
+        // Adjust if wrapperRect coordinates are not relative to the same origin as button positioning
+        const buttonTop = wrapperRect.top + window.scrollY + (wrapperRect.height / 2) - (buttonRect.height / 2);
+        const buttonLeft = wrapperRect.left + window.scrollX + (wrapperRect.width / 2) - (buttonRect.width / 2);
+    
+        // Apply styles (ensure button has position: absolute or fixed in CSS)
+        powerOnButton.style.position = 'absolute'; // Or 'fixed' - needs testing based on scroll behavior
+        powerOnButton.style.left = `${buttonLeft}px`;
+        powerOnButton.style.top = `${buttonTop}px`;
+        powerOnButton.style.transform = ''; // Clear previous transform if it was used
+        screenWrapper.style.display = 'none'; // Hide wrapper again after positioning
+    }
+    
+    // Run on load and resize
+    window.addEventListener('load', centerButtonInWrapper);
+    window.addEventListener('resize', centerButtonInWrapper);
+
+// Might need to run it after initial animations/transitions complete too
+// setTimeout(centerButtonInWrapper, 1000); // Example delay
+    //
+
+    if (powerOnButton) {
+        powerOnButton.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent default button behavior
+            const button = event.currentTarget;
+            button.classList.add('button-active');
+            powerOnEffect(); // Call the power on function
+            setTimeout(() => {
+                button.classList.remove('button-active');
+                powerOnButton.style.display = 'none'; // Hide the button after clicking
+            }, 400); // Shorter delay for responsiveness
+        });
+    }
 
 
     // --- Event Listeners for Project Buttons ---
