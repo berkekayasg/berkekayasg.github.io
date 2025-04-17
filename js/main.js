@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 introPrompt.classList.remove('button-active');
                 // CRT Hum is now started by powerOnEffect()
                 hideIntroAndShowMenu();
-            }, 800);
+            }, 1200);
 
 
             window.removeEventListener('keydown', handleIntroInteraction);
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 btn.classList.remove('button-active');
-                updateMainHeading('#projects'); // Reset heading to 'My Projects'
+                updateMainHeading(null, 'level select');
 
                 // Check which view is active within projects
                 if (projectVideoView && !projectVideoView.classList.contains('hidden')) {
@@ -275,7 +275,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Otherwise (select view is showing), go back to main menu
                     showMenu();
                 }
-            }, 800);
+            }, 500);
         });
     }
 
@@ -339,7 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (projectId) {
                         showProjectDetails(projectId);
                     }
-                }, 800);
+                }, 500);
             });
 
             projectSelectView.appendChild(button);
