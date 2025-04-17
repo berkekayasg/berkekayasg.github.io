@@ -64,16 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
             crtFrame.classList.remove('powering-off');
 
             screenWrapper.classList.add('powering-on');
-                    crtFrame.classList.add('powering-on');
-                    setTimeout(() => {
-                        screenWrapper.classList.remove('powering-on');
-                    crtFrame.classList.remove('powering-on');
-                    crtFrame.style.filter = 'brightness(1)';
-                    }, 800); // Keep visual delay
-
+            crtFrame.classList.add('powering-on');
+            setTimeout(() => {
+                screenWrapper.classList.remove('powering-on');
+                crtFrame.classList.remove('powering-on');
+                crtFrame.style.filter = 'brightness(1)';
+            }, 800); // Keep visual delay
+            
+            mainMenu.classList.add('hidden');
+            footer.classList.remove('visible');
+            introScreen.classList.remove('fade-out');
+            introScreen.style.display = '';
+            
             // 3. Play sounds
             playSound(audioPowerOn);
-            playSound(audioCrtHum);
+            setTimeout(() => { playSound(audioCrtHum); }, 800);
             setTimeout(() => { playSound(audioPowerOnOff); }, 400);
         } else {
             console.error("Power On Effect: Missing required elements (screenWrapper, crtFrame, audioPowerOn, or audioCrtHum).");
@@ -144,10 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const introClickListener = (event) => {
             event.preventDefault();
             handleIntroInteraction();
-
-            introPrompt.removeEventListener('click', introClickListener);
         };
-        introPrompt.addEventListener('click', introClickListener, { once: true });
+        introPrompt.addEventListener('click', introClickListener);
     }
 
     // --- Full-Screen Navigation Logic ---
@@ -162,7 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 section.classList.remove('active-section');
             }
         });
-            updateMainHeading(targetId);
+        updateMainHeading(targetId);
     }
 
     function showMenu() {
@@ -203,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     mainHeading.textContent = "Berke Kaya"; // Fallback if H2 is missing
                 }
             } else {
-                 mainHeading.textContent = "Berke Kaya"; // Fallback if section not found
+                mainHeading.textContent = "Berke Kaya"; // Fallback if section not found
             }
         } else { // If no section ID (means menu/intro is active)
             mainHeading.textContent = "Berke Kaya"; // Default text
@@ -223,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     button.classList.remove('button-active');
                     showSection(targetSectionId);
-                }, 800);
+                }, 500);
             }
         });
     });
@@ -243,7 +246,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 btn.classList.remove('button-active');
                 showMenu(); // General back buttons always go to main menu
-            }, 800);
+            }, 500);
         });
     });
 
@@ -285,8 +288,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const button = event.currentTarget;
             button.classList.add('button-active');
             playSound(audioPowerOff); // Play sound immediately
+            setTimeout(() => { if (audioCrtHum) audioCrtHum.pause(); }, 1150);
             setTimeout(() => { playSound(audioPowerOnOff); }, 600);
-            if (audioCrtHum) audioCrtHum.pause(); // Stop hum immediately
 
             setTimeout(() => {
                 button.classList.remove('button-active');
@@ -297,7 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     crtFrame.classList.add('powering-off'); // Apply to frame too if needed
                     setTimeout(() => {
                         screenWrapper.style.display = 'none';
-                    }, 750); // Keep visual delay
+                        powerOnButton.style.display = 'block'; // Show the power on button again
+                    }, 750);
                 }
             }, 800); // Keep button animation delay
         });
@@ -382,7 +386,7 @@ document.addEventListener('DOMContentLoaded', () => {
         stopAndDestroyVideoPlayer();
 
         try {
-             ytPlayer = new YT.Player(youtubePlayerDiv.id, { // Use the div ID
+            ytPlayer = new YT.Player(youtubePlayerDiv.id, { // Use the div ID
                 height: '100%', // Let CSS handle sizing via aspect-ratio
                 width: '100%',
                 videoId: youtubeId,
@@ -399,12 +403,12 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } catch (error) {
             console.error("Error creating YouTube player:", error);
-             if (projectVideoView) projectVideoView.classList.add('hidden'); // Hide if error
-             if (projectDetailView) projectDetailView.classList.remove('hidden'); // Show details again
+            if (projectVideoView) projectVideoView.classList.add('hidden'); // Hide if error
+            if (projectDetailView) projectDetailView.classList.remove('hidden'); // Show details again
         }
     }
 
-     function onPlayerReady(event) {
+    function onPlayerReady(event) {
         console.log("YouTube Player Ready");
         event.target.playVideo(); // Start playing
     }
@@ -425,7 +429,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         ytPlayer = null;
         // Clear the div content in case the API didn't clean up fully
-         if (youtubePlayerDiv) youtubePlayerDiv.innerHTML = '';
+        if (youtubePlayerDiv) youtubePlayerDiv.innerHTML = '';
     }
 
     function closeVideoPlayer() {
@@ -447,7 +451,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // This function is called by the YouTube API script once loaded
-    window.onYouTubeIframeAPIReady = function() {
+    window.onYouTubeIframeAPIReady = function () {
         console.log("YouTube IFrame API Ready");
         youtubeApiReady = true;
         // If a video was queued, load it now
@@ -484,30 +488,31 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Power On Button Listener ---
     const powerOnButton = document.getElementById('power-on-button');
     // center the poweronbutton position to the screen
-    function centerButtonInWrapper() {  
+    function centerButtonInWrapper() {
+        isScreenVisible = screenWrapper.style.display !== 'none';
         screenWrapper.style.display = 'block'; // Ensure wrapper is visible for calculations  
         const wrapperRect = screenWrapper.getBoundingClientRect(); // Gets position relative to viewport
         const buttonRect = powerOnButton.getBoundingClientRect();
-    
+
         // Calculate desired top-left position relative to viewport
         // Adjust if wrapperRect coordinates are not relative to the same origin as button positioning
         const buttonTop = wrapperRect.top + window.scrollY + (wrapperRect.height / 2) - (buttonRect.height / 2);
         const buttonLeft = wrapperRect.left + window.scrollX + (wrapperRect.width / 2) - (buttonRect.width / 2);
-    
+
         // Apply styles (ensure button has position: absolute or fixed in CSS)
         powerOnButton.style.position = 'absolute'; // Or 'fixed' - needs testing based on scroll behavior
         powerOnButton.style.left = `${buttonLeft}px`;
         powerOnButton.style.top = `${buttonTop}px`;
         powerOnButton.style.transform = ''; // Clear previous transform if it was used
-        screenWrapper.style.display = 'none'; // Hide wrapper again after positioning
+        screenWrapper.style.display = isScreenVisible ? 'block': 'none'; // Hide wrapper again after positioning
     }
-    
+
     // Run on load and resize
     window.addEventListener('load', centerButtonInWrapper);
     window.addEventListener('resize', centerButtonInWrapper);
 
-// Might need to run it after initial animations/transitions complete too
-// setTimeout(centerButtonInWrapper, 1000); // Example delay
+    // Might need to run it after initial animations/transitions complete too
+    // setTimeout(centerButtonInWrapper, 1000); // Example delay
     //
 
     if (powerOnButton) {
@@ -535,28 +540,28 @@ document.addEventListener('DOMContentLoaded', () => {
             playSound(audioProjectPlay); // Play sound immediately
 
             setTimeout(() => {
-                 button.classList.remove('button-active');
-                 if (youtubeId) {
+                button.classList.remove('button-active');
+                if (youtubeId) {
                     if (projectDetailView) projectDetailView.classList.add('hidden');
                     if (projectVideoView) projectVideoView.classList.remove('hidden');
                     loadAndPlayVideo(youtubeId);
-                 } else {
+                } else {
                     console.error("No YouTube ID found for this project.");
-                 }
-                 activeSection.style.zIndex = '900';
-            }, 800);
+                }
+                activeSection.style.zIndex = '900';
+            }, 1000);
         });
     }
 
     if (projectCloseVideoButton) {
         projectCloseVideoButton.addEventListener('click', (event) => {
-             const button = event.currentTarget;
-             button.classList.add('button-active');
-             playSound(audioButtonBack); // Play sound immediately
-             setTimeout(() => {
-                 button.classList.remove('button-active');
-                 closeVideoPlayer();
-             }, 800);
+            const button = event.currentTarget;
+            button.classList.add('button-active');
+            playSound(audioButtonBack); // Play sound immediately
+            setTimeout(() => {
+                button.classList.remove('button-active');
+                closeVideoPlayer();
+            }, 800);
         });
     }
 });

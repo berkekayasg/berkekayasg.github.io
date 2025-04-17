@@ -780,3 +780,125 @@ h1, h2, h3, p, .crt-flicker-text, button {
   z-index: 10000; /* Keep specific z-index */
   font-size: 1.5em; /* Keep specific font size */
 }
+
+
+/* === Responsive Design Enhancements === */
+@media (max-width: 767px) {
+  .crt-frame {
+    display: none;
+  }
+
+  #screen-wrapper {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+}
+
+/* Handle landscape orientation on devices with limited height */
+@media (max-height: 600px) and (orientation: landscape) {
+  /* --- Hide frame and make wrapper full screen --- */
+  .crt-frame {
+    display: none;
+  }
+
+  #screen-wrapper {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+
+  /* --- Adjust element sizes using viewport units --- */
+
+  /* General Text */
+  p {
+    font-size: 1.8vmin; /* Slightly reduce base paragraph size */
+    line-height: 1.5; /* Adjust line height accordingly */
+    margin-bottom: 1.5vh;
+  }
+
+  /* Header */
+  header h1 {
+    font-size: 3vh;
+    padding-bottom: 1vh;
+  }
+
+  /* Main Menu */
+  #main-menu a.retro-button {
+    font-size: 2.5vmin;
+    padding: 1vh 1.5vh;
+  }
+
+  #main-menu li {
+    margin-bottom: 1.5vh;
+  }
+
+  /* Sections */
+  main > section {
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-left: 5vw; /* Adjust horizontal padding too if needed */
+    padding-right: 5vw;
+  }
+  main h2 { /* Section titles */
+      font-size: 2.8vmin;
+      padding-bottom: 0.5vh;
+      margin-bottom: 1.5vh;
+  }
+
+
+  /* Intro Prompt */
+  #intro-prompt {
+    font-size: 2.2vmin;
+    padding: 1.5vh 2vh;
+  }
+
+  /* Project Selection */
+  #project-select-view {
+      padding: 1vh 0; /* Reduce vertical padding */
+  }
+  .project-select-button.retro-button {
+    font-size: 2.2vmin;
+    padding: 1vh 1.5vh;
+    min-width: 25vw; /* Adjust min-width based on viewport width */
+    margin: 0.5vh; /* Add small margin for spacing */
+  }
+
+  /* Project Detail */
+   #project-detail-view h3 { /* Title inside detail view */
+      font-size: 2.5vmin;
+      margin-bottom: 1vh;
+  }
+  #project-detail-view p { /* Description inside detail view */
+      font-size: 1.8vmin; /* Match base paragraph size */
+      margin-bottom: 1.5vh;
+  }
+  .project-detail-buttons {
+      margin-top: 1.5vh;
+  }
+  #project-play-button { /* Play button inside detail view */
+      font-size: 2.2vmin;
+      padding: 1vh 1.5vh;
+  }
+
+
+  /* Back Button */
+  .back-button.retro-button {
+      font-size: 2vmin;
+      padding: 0.8vh 1.2vh;
+      bottom: 1vh;
+      right: 1vh;
+  }
+
+  /* Video Close Button */
+   #project-close-video-button.retro-button {
+      font-size: 3vmin; /* Adjust size */
+      padding: 0.5vh 1vh; /* Adjust padding */
+      top: 1vh; /* Adjust position */
+      right: 1vh;
+   }
+}
