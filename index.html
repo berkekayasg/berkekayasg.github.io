@@ -65,16 +65,38 @@
 
                         <!-- 2. Project Detail View (Initially Hidden) -->
                         <div id="project-detail-view" class="hidden">
-                            <h2 id="project-detail-title"></h2>
-                            <p id="project-detail-description"></p>
-                            <div class="project-detail-buttons">
-                                <button id="project-play-button" class="retro-button">PLAY</button>
-                                <!-- The main 'Back' button below will handle going back from details -->
+                            <!-- Container for Pages -->
+                            <div class="project-pages-container">
+                                <!-- Page 1: Overview -->
+                                <div class="project-page active-page" id="page-overview">
+                                    <h2 id="project-detail-title"></h2>
+                                    <p id="project-detail-description"></p>
+                                    <p>Status: <span id="project-detail-status"></span></p>
+                                </div>
+                                <!-- Page 2: Details -->
+                                <div class="project-page" id="page-details">
+                                    <h3>Details</h3>
+                                    <p>Platform(s): <span id="project-detail-platform"></span></p>
+                                    <p>Technologies: <span id="project-detail-tech"></span></p>
+                                    <p>Features: <span id="project-detail-features"></span></p>
+                                </div>
+                                <!-- Page 3: Links & Media -->
+                                <div class="project-page" id="page-links-media">
+                                    <h3>Links & Media</h3>
+                                    <button id="project-play-button" class="retro-button">PLAY VIDEO</button>
+                                    <div id="project-detail-links">
+                                        <!-- Links will be added here by JS -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Navigation Footer -->
+                            <div id="project-page-nav">
+                                <button id="prev-page-button" class="retro-button" disabled>< Prev</button>
+                                <span id="page-indicator">Page 1 / 3</span>
+                                <button id="next-page-button" class="retro-button">Next ></button>
+                                <button class="back-button retro-button">Back</button> <!-- Moved here -->
                             </div>
                         </div>
-
-                        <!-- Existing Back Button -->
-                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
                     </section>
 
                     <section id="about">
@@ -126,3 +148,5 @@
 </body>
 
 </html>
+
+//TODO Fix project Back button. all back buttons will be same position. play button in project detail view will be bottom.

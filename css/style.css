@@ -853,30 +853,35 @@ h1, h2, h3, p, .crt-flicker-text, button {
     margin: 0.5vh; /* Add small margin for spacing */
   }
 
-  /* Project Detail */
-   #project-detail-view h3 { /* Title inside detail view */
+  /* --- NEW: Project Detail Pagination Responsive Styles --- */
+  .project-page h2 { /* Main title on page 1 */
+      font-size: 5.5vmin; /* Larger responsive title */
+  }
+  .project-page h3 { /* Subheadings on pages 2 & 3 */
       font-size: 5vmin;
-      margin-bottom: 1vh;
   }
-  #project-detail-view p { /* Description inside detail view */
-      font-size: 3.6vmin; /* Match base paragraph size */
-      margin-bottom: 1.5vh;
+  .project-page p { /* Text within pages */
+      font-size: 3.8vmin; /* Slightly larger responsive text */
   }
-  .project-detail-buttons {
-      margin-top: 1.5vh;
+  #project-detail-links a.retro-button.external-link { /* Links on page 3 */
+      font-size: 4vmin;
+      padding: 1vh 1.5vh;
   }
-  #project-play-button { /* Play button inside detail view */
+   #project-play-button { /* Play button on page 3 */
       font-size: 4.4vmin;
       padding: 1vh 1.5vh;
   }
 
-
-  /* Back Button */
-  .back-button.retro-button {
+  /* Pagination Navigation Footer Responsive */
+  #project-page-nav {
+      padding: 1vh 2vw; /* Adjust padding */
+  }
+  #project-page-nav .retro-button { /* Prev/Next/Back buttons */
       font-size: 4vmin;
       padding: 0.8vh 1.2vh;
-      bottom: 1vh;
-      right: 1vh;
+  }
+  #page-indicator {
+      font-size: 3.5vmin;
   }
 
   /* Video Close Button */
@@ -886,4 +891,118 @@ h1, h2, h3, p, .crt-flicker-text, button {
       top: 1vh; /* Adjust position */
       right: 1vh;
    }
+}
+/* --- Project Detail View Pagination Styles --- */
+
+#project-detail-view {
+    display: flex; /* Use flexbox to manage layout */
+    flex-direction: column; /* Stack pages container and nav footer */
+    height: 100%; /* Ensure it fills the section height */
+    box-sizing: border-box;
+}
+
+.project-pages-container {
+    flex-grow: 1; /* Allow page content to take available space */
+    position: relative; /* Needed for absolute positioning if pages used it (they don't here) */
+    overflow-y: auto; /* Allow scrolling within the page content area if needed */
+    padding: 10px 20px; /* Padding for page content */
+}
+
+.project-page {
+    display: none; /* Hide pages by default */
+    /* Removed fadeIn animation */
+}
+
+.project-page.active-page {
+    display: block; /* Show the active page */
+}
+
+/* Style headings and paragraphs within pages */
+.project-page h2, /* Existing title */
+.project-page h3 { /* New subheadings */
+    font-family: var(--font-family-pixel);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    border-bottom: var(--border-pixel);
+    padding-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    font-size: 1.3em; /* Increased base size */
+}
+.project-page h2 { /* Keep main title slightly larger */
+    font-size: 1.5em; /* Increased base size */
+    margin-top: 0; /* No top margin for the main title */
+}
+
+
+.project-page p {
+    font-family: var(--font-family-pixel);
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: 12px; /* Increased margin */
+    font-size: 1em; /* Increased base size */
+}
+
+.project-page p span { /* Style the spans holding the data */
+    color: var(--color-accent); /* Highlight the data */
+}
+
+/* Style the links container and links */
+#project-detail-links {
+    margin-top: 20px;
+}
+
+#project-detail-links a.retro-button.external-link {
+    display: block; /* Display links as block elements */
+    margin-bottom: 12px; /* Increased space between links */
+    padding: 12px 18px; /* Increased padding for links */
+    font-size: 1.1em; /* Increased base font size */
+    text-align: left; /* Align text left */
+    border: 2px solid var(--color-border); /* Add border */
+    background-color: rgba(0, 255, 255, 0.1); /* Subtle background */
+}
+
+#project-detail-links a.retro-button.external-link:hover {
+    background-color: rgba(0, 255, 255, 0.2);
+    color: var(--color-accent);
+}
+
+
+/* Navigation Footer */
+#project-page-nav {
+    flex-shrink: 0; /* Prevent footer from shrinking */
+    padding: 15px 20px;
+    border-top: var(--border-pixel);
+    display: flex;
+    justify-content: space-between; /* Space out buttons */
+    align-items: center;
+    margin-top: auto; /* Push to bottom if content is short */
+}
+
+#project-page-nav .retro-button {
+    padding: 10px 15px; /* Increased padding for nav buttons */
+    font-size: 1.1em; /* Increased base font size */
+    margin: 0 8px; /* Increased horizontal spacing */
+}
+
+#page-indicator {
+    font-size: 1em; /* Increased base font size */
+    color: var(--color-text);
+}
+
+/* Disabled button state */
+.retro-button:disabled {
+    color: #555; /* Greyed out text */
+    cursor: default; /* Default cursor */
+    opacity: 0.6;
+}
+.retro-button:disabled:hover {
+    color: #555; /* Ensure hover doesn't change color */
+    background-color: transparent; /* Ensure hover doesn't change background */
+}
+
+/* Ensure back button positioning is correct within the flex container */
+#project-page-nav .back-button {
+    position: static; /* Override absolute positioning from general .back-button */
+    /* Adjust margins if needed */
 }

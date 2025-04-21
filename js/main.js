@@ -22,11 +22,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectDetailView = document.getElementById('project-detail-view');
     const projectDetailTitle = document.getElementById('project-detail-title');
     const projectDetailDescription = document.getElementById('project-detail-description');
-    const projectPlayButton = document.getElementById('project-play-button');
+    // New Detail View Elements
+    const projectPageOverview = document.getElementById('page-overview');
+    const projectPageDetails = document.getElementById('page-details');
+    const projectPageLinksMedia = document.getElementById('page-links-media');
+    const projectDetailStatus = document.getElementById('project-detail-status');
+    const projectDetailPlatform = document.getElementById('project-detail-platform');
+    const projectDetailTech = document.getElementById('project-detail-tech');
+    const projectDetailFeatures = document.getElementById('project-detail-features');
+    const projectDetailLinks = document.getElementById('project-detail-links');
+    const projectPlayButton = document.getElementById('project-play-button'); // Still needed for video
+    // Pagination Elements
+    const projectPageNav = document.getElementById('project-page-nav');
+    const prevPageButton = document.getElementById('prev-page-button');
+    const nextPageButton = document.getElementById('next-page-button');
+    const pageIndicator = document.getElementById('page-indicator');
+    const projectsBackButton = projectPageNav ? projectPageNav.querySelector('.back-button') : null; // Back button is now in the nav footer
+
+    // Video View Elements (remain the same)
     const projectVideoView = document.getElementById('project-video-view');
     const projectCloseVideoButton = document.getElementById('project-close-video-button');
     const youtubePlayerDiv = document.getElementById('youtube-player'); // The div for the iframe
-    const projectsBackButton = projectsSection ? projectsSection.querySelector('.back-button') : null; // Specific back button for projects
+
+    // --- Pagination State ---
+    let currentPage = 1;
+    const totalPages = 3; // Overview, Details, Links/Media
 
     // --- Audio Element References ---
     const audioCrtHum = document.getElementById('audio-crt-hum');
@@ -112,7 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateMainHeading(null); // Set heading to default when menu appears
             }, 0);
         }
-        window.removeEventListener('keydown', handleIntroInteraction);
         if (introPrompt) {
             introPrompt.removeEventListener('click', handleIntroInteraction);
         }
@@ -130,9 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 // CRT Hum is now started by powerOnEffect()
                 hideIntroAndShowMenu();
             }, 1200);
-
-
-            window.removeEventListener('keydown', handleIntroInteraction);
         }
     };
 
@@ -144,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
             introPrompt.style.visibility = 'visible';
             introPrompt.style.opacity = '1';
         });
-        window.addEventListener('keydown', handleIntroInteraction, { once: true });
 
         const introClickListener = (event) => {
             event.preventDefault();
@@ -250,10 +265,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Specific Back Button for Projects Section
+    // Specific Back Button for Projects Section (Now in Detail View Footer)
     if (projectsBackButton) {
         projectsBackButton.addEventListener('click', (event) => {
-            console.log("Back button clicked in projects section");
+            console.log("Back button clicked in project detail footer");
             event.preventDefault();
             const btn = event.currentTarget;
             btn.classList.add('button-active');
@@ -261,20 +276,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 btn.classList.remove('button-active');
-                updateMainHeading(null, 'level select');
-
-                // Check which view is active within projects
-                if (projectVideoView && !projectVideoView.classList.contains('hidden')) {
-                    // If video is showing, act like close button
-                    closeVideoPlayer();
-                } else if (projectDetailView && !projectDetailView.classList.contains('hidden')) {
-                    // If detail view is showing, go back to select view
-                    projectDetailView.classList.add('hidden');
-                    if (projectSelectView) projectSelectView.classList.remove('hidden');
-                } else {
-                    // Otherwise (select view is showing), go back to main menu
-                    showMenu();
-                }
+                // Always go back to the project selection view from the detail view
+                if (projectDetailView) projectDetailView.classList.add('hidden');
+                if (projectSelectView) projectSelectView.classList.remove('hidden');
+                updateMainHeading(null, 'Level Select'); // Update header
+                // Reset pagination for next time
+                currentPage = 1;
+                updatePageView(); // Ensure page 1 is active visually if detail view is reopened
             }, 500);
         });
     }
@@ -346,6 +354,69 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Pagination Logic ---
+    function updatePageView() {
+        // Hide all pages
+        [projectPageOverview, projectPageDetails, projectPageLinksMedia].forEach(page => {
+            if (page) page.classList.remove('active-page');
+        });
+
+        // Show the current page
+        let activePageElement;
+        switch (currentPage) {
+            case 1: activePageElement = projectPageOverview; break;
+            case 2: activePageElement = projectPageDetails; break;
+            case 3: activePageElement = projectPageLinksMedia; break;
+        }
+        if (activePageElement) {
+            activePageElement.classList.add('active-page');
+        }
+
+        // Update indicator
+        if (pageIndicator) {
+            pageIndicator.textContent = `Page ${currentPage} / ${totalPages}`;
+        }
+
+        // Update button states
+        if (prevPageButton) {
+            prevPageButton.disabled = (currentPage === 1);
+        }
+        if (nextPageButton) {
+            nextPageButton.disabled = (currentPage === totalPages);
+        }
+    }
+
+    if (nextPageButton) {
+        nextPageButton.addEventListener('click', (event) => {
+            if (currentPage < totalPages) {
+                const btn = event.currentTarget;
+                btn.classList.add('button-active');
+                playSound(audioButtonClick); // Use standard click sound
+                setTimeout(() => {
+                     btn.classList.remove('button-active');
+                     currentPage++;
+                     updatePageView();
+                }, 200); // Shorter delay for page turns
+            }
+        });
+    }
+
+    if (prevPageButton) {
+        prevPageButton.addEventListener('click', (event) => {
+            if (currentPage > 1) {
+                 const btn = event.currentTarget;
+                 btn.classList.add('button-active');
+                 playSound(audioButtonClick); // Use back sound for previous
+                 setTimeout(() => {
+                     btn.classList.remove('button-active');
+                     currentPage--;
+                     updatePageView();
+                 }, 200); // Shorter delay for page turns
+            }
+        });
+    }
+
+
     function showProjectDetails(projectId) {
         // Access the globally loaded projectsData
         const project = projectsData.find(p => p.id === projectId);
@@ -353,16 +424,49 @@ document.addEventListener('DOMContentLoaded', () => {
             console.error(`Project with ID ${projectId} not found in loaded data.`);
             return;
         }
-        if (!projectDetailView || !projectSelectView || !projectDetailTitle || !projectDetailDescription) return;
-
-        projectDetailTitle.textContent = project.title;
-        projectDetailDescription.textContent = project.description;
-        // Store youtubeId for the play button
-        if (projectPlayButton) {
-            projectPlayButton.dataset.youtubeId = project.youtubeId;
+        // Ensure all required elements exist
+        if (!projectDetailView || !projectSelectView || !projectDetailTitle || !projectDetailDescription ||
+            !projectDetailStatus || !projectDetailPlatform || !projectDetailTech || !projectDetailFeatures ||
+            !projectDetailLinks || !projectPlayButton || !projectPageNav) {
+            console.error("Missing required elements for project detail view.");
+            return;
         }
 
+        // --- Populate Page 1: Overview ---
+        projectDetailTitle.textContent = project.title || 'N/A';
+        projectDetailDescription.textContent = project.description || 'No description available.';
+        projectDetailStatus.textContent = project.status || 'N/A';
+
+        // --- Populate Page 2: Details ---
+        projectDetailPlatform.textContent = Array.isArray(project.platform) ? project.platform.join(', ') : 'N/A';
+        projectDetailTech.textContent = Array.isArray(project.technologies) ? project.technologies.join(', ') : 'N/A';
+        projectDetailFeatures.textContent = Array.isArray(project.features) ? project.features.join(', ') : 'N/A';
+
+        // --- Populate Page 3: Links & Media ---
+        // Clear previous links
+        projectDetailLinks.innerHTML = '';
+        if (Array.isArray(project.links) && project.links.length > 0) {
+            project.links.forEach(link => {
+                const linkElement = document.createElement('a');
+                linkElement.href = link.url || '#';
+                linkElement.textContent = link.name || 'Link';
+                linkElement.target = '_blank'; // Open in new tab
+                linkElement.rel = 'noopener noreferrer';
+                linkElement.classList.add('retro-button', 'external-link'); // Add classes for styling
+                projectDetailLinks.appendChild(linkElement);
+                // Add spacing or breaks if needed, e.g., projectDetailLinks.appendChild(document.createElement('br'));
+            });
+        } else {
+            projectDetailLinks.innerHTML = '<p>No additional links available.</p>';
+        }
+
+        // Store youtubeId for the play button
+        projectPlayButton.dataset.youtubeId = project.youtubeId || '';
+
+        // --- Setup Initial View ---
         updateMainHeading(null, project.title); // Update header with specific project title
+        currentPage = 1; // Reset to first page
+        updatePageView(); // Set initial page visibility and button states
 
         projectSelectView.classList.add('hidden');
         projectDetailView.classList.remove('hidden');

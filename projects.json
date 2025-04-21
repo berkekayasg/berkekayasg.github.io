@@ -4,13 +4,28 @@
     "title": "Example Project 1",
     "thumbnail": "images/placeholder-thumb.png",
     "description": "This is the first example project description. Replace with real details.",
-    "youtubeId": "Od4ipg_NaqY"
+    "youtubeId": "Od4ipg_NaqY",
+    "status": "Completed",
+    "platform": ["PC", "Web"],
+    "technologies": ["Engine", "Language"],
+    "features": ["Feature 1", "Feature 2"],
+    "links": [
+      {"name": "GitHub", "url": "#"},
+      {"name": "Itch.io", "url": "#"}
+    ]
   },
   {
     "id": "project-2",
     "title": "Another Cool Game",
     "thumbnail": "images/placeholder-thumb.png",
     "description": "Details about the second project go here. Replace with real details.",
-    "youtubeId": "VIDEO_ID_HERE"
+    "youtubeId": "VIDEO_ID_HERE",
+    "status": "In Progress",
+    "platform": ["PC"],
+    "technologies": ["Another Engine", "Another Language"],
+    "features": ["Cool Feature", "Online Multiplayer"],
+    "links": [
+      {"name": "Dev Blog", "url": "#"}
+    ]
   }
 ]
