@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const prevPageButton = document.getElementById('prev-page-button');
     const nextPageButton = document.getElementById('next-page-button');
     const pageIndicator = document.getElementById('page-indicator');
-    const projectsBackButton = projectPageNav ? projectPageNav.querySelector('.back-button') : null; // Back button is now in the nav footer
-
+    const projectsBackButton = projectsSection ? projectsSection.querySelector('.back-button') : null;
+    const projectsNavBackButton = projectsSection ? projectsSection.querySelectorAll('.back-button')[1] : null; // For the detail view footer
     // Video View Elements (remain the same)
     const projectVideoView = document.getElementById('project-video-view');
     const projectCloseVideoButton = document.getElementById('project-close-video-button');
@@ -273,13 +273,35 @@ document.addEventListener('DOMContentLoaded', () => {
             const btn = event.currentTarget;
             btn.classList.add('button-active');
             playSound(audioButtonBack); // Play sound immediately
+                setTimeout(() => {
+                    btn.classList.remove('button-active');
+                    showMenu();
+            }, 500);
+        });
+    }
 
+    if (projectsNavBackButton) {
+        projectsNavBackButton.addEventListener('click', (event) => {
+            console.log("Back button clicked in project detail footer");
+            event.preventDefault();
+            const btn = event.currentTarget;
+            btn.classList.add('button-active');
+            playSound(audioButtonBack); // Play sound immediately
+            projectsBackButton.classList.remove('hidden'); 
             setTimeout(() => {
                 btn.classList.remove('button-active');
                 // Always go back to the project selection view from the detail view
-                if (projectDetailView) projectDetailView.classList.add('hidden');
-                if (projectSelectView) projectSelectView.classList.remove('hidden');
-                updateMainHeading(null, 'Level Select'); // Update header
+                updateMainHeading(null, 'level select');
+ 
+                 // Check which view is active within projects
+                 if (projectVideoView && !projectVideoView.classList.contains('hidden')) {
+                     // If video is showing, act like close button
+                     closeVideoPlayer();
+                 } else if (projectDetailView && !projectDetailView.classList.contains('hidden')) {
+                     // If detail view is showing, go back to select view
+                     projectDetailView.classList.add('hidden');
+                     if (projectSelectView) projectSelectView.classList.remove('hidden');
+                 }
                 // Reset pagination for next time
                 currentPage = 1;
                 updatePageView(); // Ensure page 1 is active visually if detail view is reopened
@@ -374,7 +396,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update indicator
         if (pageIndicator) {
-            pageIndicator.textContent = `Page ${currentPage} / ${totalPages}`;
+            pageIndicator.textContent = `${currentPage}`;
         }
 
         // Update button states
@@ -472,6 +494,8 @@ document.addEventListener('DOMContentLoaded', () => {
         projectDetailView.classList.remove('hidden');
         // Ensure video view is hidden
         if (projectVideoView) projectVideoView.classList.add('hidden');
+
+        projectsBackButton.classList.add('hidden'); // Hide the back button in the project selection view
     }
 
     // --- YouTube Video Handling ---

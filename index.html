@@ -37,7 +37,7 @@
             </nav>
             <div id="intro-screen">
                 <!-- Optional: Placeholder for visual element -->
-                <div id="intro-prompt" class="pixel-border retro-button"> <!-- Added retro-button -->
+                <div id="intro-prompt" class="pixel-border retro-button">
                     <p>Press any button or click to continue</p>
                 </div>
             </div>
@@ -49,14 +49,14 @@
                 <main>
                     <section id="home">
                         <h2>Welcome!</h2>
-                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
+                        <button class="back-button retro-button">Back</button>
                         <p>Brief intro about yourself as a game developer. [Your Key Message Here]</p>
                         <!-- TODO: Add highlight reel/best project preview -->
                     </section>
 
                     <section id="projects">
                         <h2>Level Select</h2>
-
+                        <button class="back-button retro-button">Back</button>
                         <!-- 1. Project Selection View -->
                         <div id="project-select-view">
                             <!-- Project buttons/thumbnails will be generated here by JS -->
@@ -83,7 +83,6 @@
                                 <!-- Page 3: Links & Media -->
                                 <div class="project-page" id="page-links-media">
                                     <h3>Links & Media</h3>
-                                    <button id="project-play-button" class="retro-button">PLAY VIDEO</button>
                                     <div id="project-detail-links">
                                         <!-- Links will be added here by JS -->
                                     </div>
@@ -91,16 +90,19 @@
                             </div>
                             <!-- Navigation Footer -->
                             <div id="project-page-nav">
-                                <button id="prev-page-button" class="retro-button" disabled>< Prev</button>
-                                <span id="page-indicator">Page 1 / 3</span>
-                                <button id="next-page-button" class="retro-button">Next ></button>
-                                <button class="back-button retro-button">Back</button> <!-- Moved here -->
+                                <button id="project-play-button" class="retro-button">PLAY</button>
+                                <div id = "page-nav-buttons">
+                                    <button id="prev-page-button" class="retro-button" disabled><</button>
+                                    <p><span id="page-indicator" >Page 1 / 3</span></p>
+                                    <button id="next-page-button" class="retro-button">></button>
+                                </div>
+                                <button class="back-button retro-button">Back</button>
                             </div>
                         </div>
                     </section>
 
                     <section id="about">
-                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
+                        <button class="back-button retro-button">Back</button>
                         <h2>About Me</h2>
                         <p>This section will contain information about your background, passion for game development,
                             and skills.</p>
@@ -109,7 +111,7 @@
 
                     <section id="contact">
                         <h2>Get In Touch</h2>
-                        <button class="back-button retro-button">Back</button> <!-- Added retro-button -->
+                        <button class="back-button retro-button">Back</button>
                         <p>Information on how to contact you will go here. This could be a contact form or direct links.
                         </p>
                         <!-- TODO: Add contact form (e.g., using Formspree) or direct contact details (Email, LinkedIn, etc.) -->
@@ -117,7 +119,6 @@
                 </main>
 
                 <footer>
-                    <!-- TODO: Add links to social/professional profiles (GitHub, LinkedIn, Itch.io) -->
                 </footer>
             </div>
         </div> <!-- Close screen-content -->
@@ -148,5 +149,3 @@
 </body>
 
 </html>
-
-//TODO Fix project Back button. all back buttons will be same position. play button in project detail view will be bottom.

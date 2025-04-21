@@ -419,8 +419,8 @@ footer p {
     /* Specific styles */
     position: absolute;
     top: auto;
-    bottom: 20px;
-    right: 20px;
+    bottom: 25px;
+    right: 40px;
     z-index: 900;
     padding: 8px 15px; /* Override base padding */
     font-size: 1.3em;   /* Specific font size */
@@ -708,11 +708,6 @@ h1, h2, h3, p, .crt-flicker-text, button {
     color: var(--color-accent); /* Add border color change */
 }
 
-#project-detail-view {
-    /* Hidden by default using .hidden class */
-    padding: 0px; /* Add padding */
-}
-
 #project-detail-view h3 {
     font-family: var(--font-family-pixel);
     color: var(--color-accent); /* Use accent for detail title */
@@ -867,7 +862,7 @@ h1, h2, h3, p, .crt-flicker-text, button {
       font-size: 4vmin;
       padding: 1vh 1.5vh;
   }
-   #project-play-button { /* Play button on page 3 */
+   #project-play-button {
       font-size: 4.4vmin;
       padding: 1vh 1.5vh;
   }
@@ -891,6 +886,10 @@ h1, h2, h3, p, .crt-flicker-text, button {
       top: 1vh; /* Adjust position */
       right: 1vh;
    }
+   .back-button.retro-button {
+    font-size: 4vmin;
+      padding: 0.8vh 1.2vh;
+  }
 }
 /* --- Project Detail View Pagination Styles --- */
 
@@ -970,23 +969,24 @@ h1, h2, h3, p, .crt-flicker-text, button {
 
 /* Navigation Footer */
 #project-page-nav {
-    flex-shrink: 0; /* Prevent footer from shrinking */
-    padding: 15px 20px;
+    position: absolute; /* Position at the bottom of the section */
+    bottom: 5px;
+    width: 90%; /* Full width of the section */
+    padding: 0px 0px;
     border-top: var(--border-pixel);
     display: flex;
-    justify-content: space-between; /* Space out buttons */
     align-items: center;
     margin-top: auto; /* Push to bottom if content is short */
+    justify-content: space-between; /* Space out buttons */
+    
 }
 
 #project-page-nav .retro-button {
-    padding: 10px 15px; /* Increased padding for nav buttons */
-    font-size: 1.1em; /* Increased base font size */
-    margin: 0 8px; /* Increased horizontal spacing */
+    padding: 0px 10px; /* Increased padding for nav buttons */
 }
 
 #page-indicator {
-    font-size: 1em; /* Increased base font size */
+    font-size: 1.3em; /* Increased base font size */
     color: var(--color-text);
 }
 
@@ -1001,8 +1001,15 @@ h1, h2, h3, p, .crt-flicker-text, button {
     background-color: transparent; /* Ensure hover doesn't change background */
 }
 
-/* Ensure back button positioning is correct within the flex container */
-#project-page-nav .back-button {
-    position: static; /* Override absolute positioning from general .back-button */
-    /* Adjust margins if needed */
+#page-nav-buttons {
+    display: flex;
+}
+
+#project-page-nav .back-button.retro-button {
+  /* Specific styles */
+  position: relative;
+  top: auto;
+  bottom: 4px;
+  right: 7px;
+  padding: 0px 0px; /* Override base padding */
 }
