@@ -22,10 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectDetailView = document.getElementById('project-detail-view');
     const projectDetailTitle = document.getElementById('project-detail-title');
     const projectDetailDescription = document.getElementById('project-detail-description');
+    const projectDetailSummary = document.getElementById('project-detail-summary'); // New summary element
     // New Detail View Elements
     const projectPageOverview = document.getElementById('page-overview');
     const projectPageDetails = document.getElementById('page-details');
     const projectPageLinksMedia = document.getElementById('page-links-media');
+    const projectPageFullDescription = document.getElementById('page-full-description'); // New description page
     const projectDetailStatus = document.getElementById('project-detail-status');
     const projectDetailPlatform = document.getElementById('project-detail-platform');
     const projectDetailTech = document.getElementById('project-detail-tech');
@@ -46,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Pagination State ---
     let currentPage = 1;
-    const totalPages = 3; // Overview, Details, Links/Media
+    const totalPages = 4; // Overview, Description, Details, Links/Media
 
     // --- Audio Element References ---
     const audioCrtHum = document.getElementById('audio-crt-hum');
@@ -379,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Pagination Logic ---
     function updatePageView() {
         // Hide all pages
-        [projectPageOverview, projectPageDetails, projectPageLinksMedia].forEach(page => {
+        [projectPageOverview, projectPageFullDescription, projectPageDetails, projectPageLinksMedia].forEach(page => {
             if (page) page.classList.remove('active-page');
         });
 
@@ -387,16 +389,17 @@ document.addEventListener('DOMContentLoaded', () => {
         let activePageElement;
         switch (currentPage) {
             case 1: activePageElement = projectPageOverview; break;
-            case 2: activePageElement = projectPageDetails; break;
-            case 3: activePageElement = projectPageLinksMedia; break;
+            case 2: activePageElement = projectPageFullDescription; break; // New Page 2
+            case 3: activePageElement = projectPageDetails; break; // Old Page 2 is now Page 3
+            case 4: activePageElement = projectPageLinksMedia; break; // Old Page 3 is now Page 4
         }
         if (activePageElement) {
             activePageElement.classList.add('active-page');
         }
 
-        // Update indicator
+        // Update indicator (dynamically using totalPages)
         if (pageIndicator) {
-            pageIndicator.textContent = `${currentPage}`;
+            pageIndicator.textContent = `Page ${currentPage} / ${totalPages}`;
         }
 
         // Update button states
@@ -447,19 +450,24 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         // Ensure all required elements exist
-        if (!projectDetailView || !projectSelectView || !projectDetailTitle || !projectDetailDescription ||
+        if (!projectDetailView || !projectSelectView || !projectDetailTitle || !projectDetailSummary || !projectDetailDescription ||
             !projectDetailStatus || !projectDetailPlatform || !projectDetailTech || !projectDetailFeatures ||
-            !projectDetailLinks || !projectPlayButton || !projectPageNav) {
-            console.error("Missing required elements for project detail view.");
+            !projectDetailLinks || !projectPlayButton || !projectPageNav || !projectPageOverview || !projectPageFullDescription ||
+            !projectPageDetails || !projectPageLinksMedia) {
+            console.error("Missing required elements for project detail view or its pages.");
             return;
         }
 
         // --- Populate Page 1: Overview ---
         projectDetailTitle.textContent = project.title || 'N/A';
-        projectDetailDescription.textContent = project.description || 'No description available.';
+        projectDetailSummary.textContent = project.summary || 'No summary available.'; // Populate new summary
         projectDetailStatus.textContent = project.status || 'N/A';
 
-        // --- Populate Page 2: Details ---
+        // --- Populate Page 2: Full Description ---
+        // The description element is now on this page, but the variable still points to it.
+        projectDetailDescription.textContent = project.description || 'No description available.';
+
+        // --- Populate Page 3: Details ---
         projectDetailPlatform.textContent = Array.isArray(project.platform) ? project.platform.join(', ') : 'N/A';
         projectDetailTech.textContent = Array.isArray(project.technologies) ? project.technologies.join(', ') : 'N/A';
         projectDetailFeatures.textContent = Array.isArray(project.features) ? project.features.join(', ') : 'N/A';
