@@ -289,8 +289,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const btn = event.currentTarget;
             btn.classList.add('button-active');
             playSound(audioButtonBack); // Play sound immediately
-            projectsBackButton.classList.remove('hidden'); 
             setTimeout(() => {
+                projectsBackButton.classList.remove('hidden'); 
                 btn.classList.remove('button-active');
                 // Always go back to the project selection view from the detail view
                 updateMainHeading(null, 'level select');
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update indicator (dynamically using totalPages)
         if (pageIndicator) {
-            pageIndicator.textContent = `Page ${currentPage} / ${totalPages}`;
+            pageIndicator.textContent = `${currentPage}/${totalPages}`;
         }
 
         // Update button states

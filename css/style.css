@@ -272,11 +272,6 @@ footer p {
 
 .glow {
   /* Original glow + subtle chromatic aberration */
-  text-shadow:
-    0 0 5px var(--color-primary),
-    0 0 10px var(--color-primary),
-    1px 1px 1px var(--color-red),   /* Red offset */
-    -1px -1px 1px var(--color-green); /* Green offset */
   animation: glowPulse 2s infinite ease-in-out; /* Keep pulsing */
   color: var(--color-primary);
   text-transform: uppercase;
@@ -316,6 +311,25 @@ footer p {
   }
 }
 
+/* === Animated Glow Effect (Title) === */
+@keyframes glowPulseTitle {
+  0%, 100% {
+    /* Base state with chromatic aberration */
+    text-shadow:
+      0 0 5px var(--color-accent),
+      0 0 10px var(--color-accent),
+      1px 1px 1px var(--color-red),
+      -1px -1px 1px var(--color-green);
+  }
+  50% {
+    /* Pulsed state with larger glow and aberration */
+    text-shadow:
+      0 0 10px var(--color-accent), /* Larger glow */
+      0 0 15px var(--color-accent), /* Larger glow */
+      2px 2px 2px var(--color-red),   /* More offset */
+      -2px -2px 2px var(--color-green); /* More offset */
+  }
+}
 
 /* === CRT Flicker Overlay (Refined) === */
 .crt-flicker {
@@ -712,7 +726,7 @@ h1, h2, h3, p, .crt-flicker-text, button {
     font-family: var(--font-family-pixel);
     color: var(--color-accent); /* Use accent for detail title */
     margin-bottom: 15px;
-    font-size: 1.2em;
+    font-size: 1.4em;
     text-transform: uppercase;
 }
 
@@ -916,19 +930,17 @@ h1, h2, h3, p, .crt-flicker-text, button {
     display: block; /* Show the active page */
 }
 
-/* Style headings and paragraphs within pages */
-.project-page h2, /* Existing title */
-.project-page h3 { /* New subheadings */
+.project-page h2,
+.project-page h3 {
     font-family: var(--font-family-pixel);
     color: var(--color-primary);
     text-transform: uppercase;
-    border-bottom: var(--border-pixel);
-    padding-bottom: 5px;
     margin-top: 10px;
     margin-bottom: 15px;
-    font-size: 1.3em; /* Increased base size */
+    font-size: 1.5em;
+    animation: glowPulseTitle 2s infinite ease-in-out;
 }
-.project-page h2 { /* Keep main title slightly larger */
+.project-page h2 {
     font-size: 1.5em; /* Increased base size */
     margin-top: 0; /* No top margin for the main title */
 }
@@ -1003,6 +1015,14 @@ h1, h2, h3, p, .crt-flicker-text, button {
 
 #page-nav-buttons {
     display: flex;
+}
+
+#page-nav-buttons .retro-button {
+  position: relative;
+  top: auto;
+  bottom: 4px;
+  padding: 0px 10px;
+  font-size: 1.8em;
 }
 
 #project-page-nav .back-button.retro-button {
