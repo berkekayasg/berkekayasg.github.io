@@ -46,6 +46,156 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectCloseVideoButton = document.getElementById('project-close-video-button');
     const youtubePlayerDiv = document.getElementById('youtube-player'); // The div for the iframe
 
+
+    // Settings Section Elements
+    const settingsSection = document.getElementById('settings');
+    const settingBrightnessSlider = document.getElementById('setting-brightness');
+    const settingContrastSlider = document.getElementById('setting-contrast');
+    const settingColorModeSelect = document.getElementById('setting-color-mode');
+    const settingMasterVolumeSlider = document.getElementById('setting-master-volume');
+    const settingSfxVolumeSlider = document.getElementById('setting-sfx-volume');
+    const settingSaveButton = document.getElementById('setting-save');
+    const settingResetButton = document.getElementById('setting-reset');
+    // Value display spans (optional, but good for immediate feedback)
+    const brightnessValueSpan = settingBrightnessSlider?.nextElementSibling;
+    const contrastValueSpan = settingContrastSlider?.nextElementSibling;
+    const masterVolumeValueSpan = settingMasterVolumeSlider?.nextElementSibling;
+    // Settings Navigation & View Elements
+    const settingsNavDisplay = document.getElementById('settings-nav-display');
+    const settingsNavAudio = document.getElementById('settings-nav-audio');
+    const settingsDisplayView = document.getElementById('settings-display-view');
+    const settingsAudioView = document.getElementById('settings-audio-view');
+    const allSettingsViews = [settingsDisplayView, settingsAudioView]; // Helper array
+    const allSettingsNavButtons = [settingsNavDisplay, settingsNavAudio]; // Helper array
+
+
+    // --- Settings Logic ---
+    const SETTINGS_STORAGE_KEY = 'berkeKayaPortfolioSettings';
+
+    const defaultSettings = {
+        brightness: 100,
+        contrast: 100,
+        colorMode: 'full-color',
+        masterVolume: 100,
+        sfxVolume: 100
+    };
+
+    let currentSettings = { ...defaultSettings }; // Working copy
+
+    // Function to apply settings visually and functionally
+    // Function to apply settings visually and functionally
+    function applySettings(settings) {
+        // --- Apply Visual Settings ---
+        // Color Mode (using body classes for CSS targeting)
+        document.body.classList.remove('color-mode-monochrome', 'color-mode-green-phosphor', 'color-mode-amber-phosphor');
+        let colorFilter = ''; // Base filter string for color mode
+        if (settings.colorMode === 'monochrome') {
+            document.body.classList.add('color-mode-monochrome');
+            colorFilter = 'grayscale(100%)';
+        } else if (settings.colorMode === 'green-phosphor') {
+            document.body.classList.add('color-mode-green-phosphor');
+            // Adjusted green phosphor filter values slightly
+            colorFilter = 'grayscale(100%) sepia(100%) hue-rotate(60deg) saturate(300%) brightness(90%)';
+        } else if (settings.colorMode === 'amber-phosphor') {
+            document.body.classList.add('color-mode-amber-phosphor');
+             // Adjusted amber phosphor filter values slightly
+            colorFilter = 'grayscale(100%) sepia(100%) hue-rotate(-35deg) saturate(400%) brightness(95%)';
+        }
+        // Else: full-color, no class, no base color filter
+
+        // Combine color filter with brightness and contrast
+        if (screenWrapper) {
+            // Construct the full filter string
+            const brightnessFilter = `brightness(${settings.brightness}%)`;
+            const contrastFilter = `contrast(${settings.contrast}%)`;
+            // Combine: color filter first, then brightness/contrast
+            const combinedFilter = `${colorFilter} ${brightnessFilter} ${contrastFilter}`.trim();
+            screenWrapper.style.filter = combinedFilter;
+        }
+
+
+        // --- Apply Audio Settings ---
+        // Master Volume
+        const masterVolValue = settings.masterVolume / 100;
+        [audioCrtHum, audioIntroConfirm, audioButtonClick, audioButtonBack, audioProjectPlay, audioPowerOff, audioPowerOn, audioPowerOnOff].forEach(audio => {
+            if (audio) {
+                // Store base volume if not already stored
+                if (audio.dataset.baseVolume === undefined) {
+                    // Use 1.0 as base if volume isn't set, otherwise use current volume
+                    audio.dataset.baseVolume = audio.volume > 0 ? audio.volume : 1.0;
+                }
+                // Apply master volume relative to base
+                let baseVol = parseFloat(audio.dataset.baseVolume);
+                // Ensure base volume is valid, default to 1 if not
+                if (isNaN(baseVol) || baseVol < 0 || baseVol > 1) {
+                    baseVol = 1.0;
+                }
+                audio.volume = Math.max(0, Math.min(1, baseVol * masterVolValue));
+            }
+        });
+
+        // SFX Volume is handled within playSound
+
+        console.log("Applied settings:", settings);
+    }
+
+    // Function to update the settings UI controls
+    function updateSettingControls(settings) {
+        if (settingBrightnessSlider) {
+            settingBrightnessSlider.value = settings.brightness;
+            if (brightnessValueSpan) brightnessValueSpan.textContent = `${settings.brightness}%`;
+        }
+        if (settingContrastSlider) {
+            settingContrastSlider.value = settings.contrast;
+            if (contrastValueSpan) contrastValueSpan.textContent = `${settings.contrast}%`;
+        }
+        if (settingColorModeSelect) {
+            settingColorModeSelect.value = settings.colorMode;
+        }
+        if (settingMasterVolumeSlider) {
+            settingMasterVolumeSlider.value = settings.masterVolume;
+            if (masterVolumeValueSpan) masterVolumeValueSpan.textContent = `${settings.masterVolume}%`;
+        }
+        if (settingSfxVolumeSlider) {
+            settingSfxVolumeSlider.value = settings.sfxVolume;
+            if (sfxVolumeValueSpan) sfxVolumeValueSpan.textContent = `${settings.sfxVolume}%`;
+        }
+    }
+
+    // Function to save settings to localStorage
+    function saveSettings(settings) {
+        try {
+            localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+            console.log("Settings saved:", settings);
+            // Optional: Play a confirmation sound - reusing button click for now
+            playSound(audioButtonClick, true); // Pass flag to ignore SFX volume for this sound
+        } catch (error) {
+            console.error("Failed to save settings:", error);
+        }
+    }
+
+    // Function to load settings from localStorage
+    function loadSettings() {
+        let loadedSettings = { ...defaultSettings }; // Start with defaults
+        try {
+            const savedSettings = localStorage.getItem(SETTINGS_STORAGE_KEY);
+            if (savedSettings) {
+                const parsedSettings = JSON.parse(savedSettings);
+                // Merge saved settings with defaults to ensure all keys exist
+                loadedSettings = { ...defaultSettings, ...parsedSettings };
+            }
+        } catch (error) {
+            console.error("Failed to load settings, using defaults:", error);
+        }
+        currentSettings = loadedSettings; // Update working copy
+        applySettings(currentSettings);
+        updateSettingControls(currentSettings);
+        console.log("Settings loaded:", currentSettings);
+    }
+
+
+    const sfxVolumeValueSpan = settingSfxVolumeSlider?.nextElementSibling;
+
     // --- Pagination State ---
     let currentPage = 1;
     const totalPages = 4; // Overview, Description, Details, Links/Media
@@ -68,10 +218,34 @@ document.addEventListener('DOMContentLoaded', () => {
     sections.forEach(section => section.classList.remove('active-section'));
 
     // --- Sound Playback Helper ---
-    function playSound(audioElement) {
-        if (audioElement) {
+    // Added ignoreSfxVolume flag for sounds like save confirmation
+    function playSound(audioElement, ignoreSfxVolume = false) {
+        if (audioElement && currentSettings) { // Check if currentSettings is available
             audioElement.currentTime = 0; // Reset playback
+
+            // Determine the volume to play at
+            const masterVol = currentSettings.masterVolume / 100;
+            let finalVolume = masterVol; // Start with master volume
+
+            // Apply SFX volume only if it's an SFX sound and not ignored
+            const sfxSounds = [audioIntroConfirm, audioButtonClick, audioButtonBack, audioProjectPlay, audioPowerOff, audioPowerOn, audioPowerOnOff];
+            if (!ignoreSfxVolume && sfxSounds.includes(audioElement)) {
+                const sfxVol = currentSettings.sfxVolume / 100;
+                // Make SFX volume relative to master volume
+                finalVolume = masterVol * sfxVol;
+            }
+
+            // Ensure volume is within the valid range [0.0, 1.0]
+            audioElement.volume = Math.max(0, Math.min(1, finalVolume));
+
             audioElement.play().catch(error => console.error("Audio play failed:", error));
+        } else if (!audioElement) {
+            console.warn("playSound called with null audioElement");
+        } else {
+            console.warn("playSound called before currentSettings initialized");
+            // Optionally play at default volume if settings aren't ready?
+            // audioElement.currentTime = 0;
+            // audioElement.play().catch(error => console.error("Audio play failed:", error));
         }
     }
     // --- Power On Effect ---
@@ -700,4 +874,132 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 800);
         });
     }
+    // --- Settings View Switching ---
+    function switchSettingsView(targetViewId) {
+        allSettingsViews.forEach(view => {
+            if (view) {
+                view.classList.toggle('active-settings-view', view.id === targetViewId);
+            }
+        });
+        allSettingsNavButtons.forEach(button => {
+             if (button) {
+                 // Check if the button's ID corresponds to the target view
+                 // Extract view type (e.g., 'display') from targetViewId
+                 const targetType = targetViewId.replace('settings-', '').replace('-view', '');
+                 const isActive = (button.id === `settings-nav-${targetType}`);
+                 button.classList.toggle('active-tab', isActive);
+             }
+        });
+         // Optional: Play tab switch sound
+         playSound(audioButtonClick); // Reuse button click sound
+    }
+
+    if (settingsNavDisplay) {
+        settingsNavDisplay.addEventListener('click', () => switchSettingsView('settings-display-view'));
+    }
+    if (settingsNavAudio) {
+        settingsNavAudio.addEventListener('click', () => switchSettingsView('settings-audio-view'));
+    }
+
+    // --- Settings View Switching ---
+    function switchSettingsView(targetViewId) {
+        allSettingsViews.forEach(view => {
+            if (view) {
+                view.classList.toggle('active-settings-view', view.id === targetViewId);
+            }
+        });
+        allSettingsNavButtons.forEach(button => {
+             if (button) {
+                 // Check if the button's ID corresponds to the target view
+                 // Extract view type (e.g., 'display') from targetViewId
+                 const targetType = targetViewId.replace('settings-', '').replace('-view', '');
+                 const isActive = (button.id === `settings-nav-${targetType}`);
+                 button.classList.toggle('active-tab', isActive);
+             }
+        });
+         // Optional: Play tab switch sound
+         playSound(audioButtonClick); // Reuse button click sound
+    }
+    // --- Settings Event Listeners ---
+
+    // Function to handle slider input and update display
+    function handleSliderInput(slider, settingKey, valueSpan) {
+        if (slider && currentSettings) {
+            const newValue = parseInt(slider.value, 10);
+            currentSettings[settingKey] = newValue;
+            if (valueSpan) valueSpan.textContent = `${newValue}%`;
+            // Apply *some* settings immediately for feedback (e.g., volume, maybe brightness/contrast)
+            if (settingKey === 'masterVolume' || settingKey === 'sfxVolume') {
+                applySettings(currentSettings); // Apply audio changes live
+            }
+             if (settingKey === 'brightness' || settingKey === 'contrast') {
+                 applySettings(currentSettings); // Apply visual changes live
+             }
+        }
+    }
+
+    if (settingBrightnessSlider) {
+        settingBrightnessSlider.addEventListener('input', () => handleSliderInput(settingBrightnessSlider, 'brightness', brightnessValueSpan));
+    }
+    if (settingContrastSlider) {
+        settingContrastSlider.addEventListener('input', () => handleSliderInput(settingContrastSlider, 'contrast', contrastValueSpan));
+    }
+    if (settingMasterVolumeSlider) {
+        settingMasterVolumeSlider.addEventListener('input', () => handleSliderInput(settingMasterVolumeSlider, 'masterVolume', masterVolumeValueSpan));
+    }
+    if (settingSfxVolumeSlider) {
+        settingSfxVolumeSlider.addEventListener('input', () => handleSliderInput(settingSfxVolumeSlider, 'sfxVolume', sfxVolumeValueSpan));
+    }
+
+    // Color Mode Select
+    if (settingColorModeSelect) {
+        settingColorModeSelect.addEventListener('change', () => {
+            if (currentSettings) {
+                currentSettings.colorMode = settingColorModeSelect.value;
+                 applySettings(currentSettings); // Apply color mode change live
+            }
+        });
+    }
+
+    // Save Button
+    if (settingSaveButton) {
+        settingSaveButton.addEventListener('click', (event) => {
+            const btn = event.currentTarget;
+            btn.classList.add('button-active');
+            // No need to play sound here, saveSettings does it
+            setTimeout(() => {
+                 btn.classList.remove('button-active');
+                 applySettings(currentSettings); // Ensure all settings are applied
+                 saveSettings(currentSettings); // Save the current state
+            }, 200); // Short delay for button feedback
+        });
+    }
+
+    // Reset Button
+    if (settingResetButton) {
+        settingResetButton.addEventListener('click', (event) => {
+             const btn = event.currentTarget;
+             btn.classList.add('button-active');
+             playSound(audioButtonBack); // Use back sound for reset
+             setTimeout(() => {
+                 btn.classList.remove('button-active');
+                 if (confirm("Reset all settings to default?")) { // Confirmation dialog
+                     currentSettings = { ...defaultSettings }; // Reset working copy
+                     applySettings(currentSettings);
+                     updateSettingControls(currentSettings);
+                     saveSettings(currentSettings); // Save the defaults
+                 }
+             }, 200); // Short delay
+        });
+    }
+
+    // --- Initial Load --- 
+    // Load settings *after* all elements are referenced and functions defined
+    loadSettings(); 
+
+    // Ensure settings section is handled by navigation
+    // Add settings section to the list of sections if needed for showSection logic
+    // (Check if showSection/showMenu logic needs update - currently relies on querySelectorAll('main > section'))
+
+
 });

@@ -904,6 +904,102 @@ h1, h2, h3, p, .crt-flicker-text, button {
     font-size: 4vmin;
       padding: 0.8vh 1.2vh;
   }
+
+    /* --- Settings Variable Overrides for Smaller Screens --- */
+    :root { /* Re-declare variables inside the media query */
+        --settings-padding: 10px; /* Reduce padding */
+        --settings-group-margin-bottom: 15px; /* Further reduce */
+        --settings-group-padding-bottom: 8px; /* Further reduce */
+        --settings-h3-font-size: 1em; /* Smaller headings */
+        --settings-h3-margin-bottom: 8px;
+        --settings-item-margin-bottom: 8px;
+        --settings-label-basis: 100px; /* Smaller label area */
+        --settings-label-margin-right: 8px;
+        --settings-control-margin-right: 8px;
+        --settings-value-min-width: 40px;
+        --settings-select-padding: 3px 5px;
+        --settings-slider-height: 5px;
+        --settings-slider-thumb-size: 12px;
+        --settings-system-button-gap: 10px;
+    }
+
+    /* Optional: Adjust base font size for settings section if needed */
+    #settings {
+         font-size: 0.9em; /* Slightly smaller base font */
+         max-height: calc(100% - 20px); /* Adjust max-height */
+    }
+
+    /* Make setting items stack vertically if needed */
+    /* Uncomment below if horizontal space becomes too tight */
+    /*
+    .setting-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+     .setting-item label {
+         flex-basis: auto;
+         margin-bottom: 5px;
+     }
+     .setting-item input[type="range"],
+     .setting-item select.retro-select {
+         width: 100%; 
+         margin-right: 0;
+     }
+     .setting-item .setting-value {
+         text-align: left;
+         margin-top: 5px;
+     }
+    */
+
+
+
+    /* --- Settings Variable Overrides for Smaller Screens --- */
+    :root { /* Re-declare variables inside the media query */
+        --settings-padding: 10px; /* Reduce padding */
+        --settings-group-margin-bottom: 15px; /* Further reduce */
+        --settings-group-padding-bottom: 8px; /* Further reduce */
+        --settings-h3-font-size: 1em; /* Smaller headings */
+        --settings-h3-margin-bottom: 8px;
+        --settings-item-margin-bottom: 8px;
+        --settings-label-basis: 100px; /* Smaller label area */
+        --settings-label-margin-right: 8px;
+        --settings-control-margin-right: 8px;
+        --settings-value-min-width: 40px;
+        --settings-select-padding: 3px 5px;
+        --settings-slider-height: 5px;
+        --settings-slider-thumb-size: 12px;
+        --settings-system-button-gap: 10px;
+    }
+
+    /* Optional: Adjust base font size for settings section if needed */
+    #settings {
+         font-size: 0.9em; /* Slightly smaller base font */
+         max-height: calc(100% - 20px); /* Adjust max-height */
+    }
+
+    /* Make setting items stack vertically if needed */
+    /* Uncomment below if horizontal space becomes too tight */
+    /*
+    .setting-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+     .setting-item label {
+         flex-basis: auto;
+         margin-bottom: 5px;
+     }
+     .setting-item input[type="range"],
+     .setting-item select.retro-select {
+         width: 100%; 
+         margin-right: 0;
+     }
+     .setting-item .setting-value {
+         text-align: left;
+         margin-top: 5px;
+     }
+    */
+
+
 }
 /* --- Project Detail View Pagination Styles --- */
 
@@ -1032,4 +1128,279 @@ h1, h2, h3, p, .crt-flicker-text, button {
   bottom: 4px;
   right: 7px;
   padding: 0px 0px; /* Override base padding */
+}
+/* --- Settings Section Variables (Defaults) --- */
+:root { /* Define defaults on root, can be overridden in media query */
+    --settings-padding: 20px;
+    --settings-group-margin-bottom: 25px; /* Reduced */
+    --settings-group-padding-bottom: 10px; /* Reduced */
+    --settings-h3-font-size: 1.1em;
+    --settings-h3-margin-bottom: 10px; /* Reduced */
+    --settings-item-margin-bottom: 10px; /* Reduced */
+    --settings-label-basis: 140px; /* Slightly reduced */
+    --settings-label-margin-right: 10px; /* Reduced */
+    --settings-control-margin-right: 10px; /* Reduced */
+    --settings-value-min-width: 45px; /* Slightly reduced */
+    --settings-select-padding: 4px 6px; /* Reduced */
+    --settings-slider-height: 6px; /* Reduced */
+    --settings-slider-thumb-size: 14px; /* Reduced */
+    --settings-system-button-gap: 15px; /* Reduced */
+}
+
+/* --- Settings Section --- */
+#settings {
+    padding: var(--settings-padding);
+    /* Add max-height and overflow-y for safety */
+    max-height: calc(100% - 40px); /* Adjust based on header/footer if they are fixed */
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.settings-group {
+    margin-bottom: var(--settings-group-margin-bottom);
+    padding-bottom: var(--settings-group-padding-bottom);
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.3); /* Retro dashed line */
+}
+
+.settings-group:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.settings-group h3 {
+    margin-bottom: var(--settings-h3-margin-bottom);
+    color: #00ff00; /* Or your primary text color */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: var(--settings-h3-font-size);
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--settings-item-margin-bottom);
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.setting-item label {
+    flex-basis: var(--settings-label-basis);
+    margin-right: var(--settings-label-margin-right);
+    color: #eee; /* Lighter text for labels */
+    flex-shrink: 0; /* Prevent label from shrinking */
+}
+
+.setting-item input[type="range"],
+.setting-item select.retro-select {
+    flex-grow: 1;
+    margin-right: var(--settings-control-margin-right);
+    min-width: 100px; /* Prevent controls from becoming too small */
+}
+
+.setting-item .setting-value {
+    min-width: var(--settings-value-min-width);
+    text-align: right;
+    color: #0f0; /* Bright value color */
+    font-family: 'Press Start 2P', cursive; /* Match retro font */
+    flex-shrink: 0; /* Prevent value from shrinking */
+}
+
+/* Retro Range Slider Styling */
+input[type="range"] {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 100%; /* Full width within its container */
+    height: var(--settings-slider-height); /* Track height */
+    background: #555; /* Dark track */
+    outline: none;
+    border: 1px solid #888;
+    cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: var(--settings-slider-thumb-size); /* Thumb size */
+    height: var(--settings-slider-thumb-size);
+    background: #0f0; /* Bright green thumb */
+    border: 1px solid #000;
+    cursor: pointer;
+    box-shadow: 0 0 5px #0f0; /* Glow effect */
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: var(--settings-slider-thumb-size);
+    height: var(--settings-slider-thumb-size);
+    background: #0f0;
+    border: 1px solid #000;
+    cursor: pointer;
+    border-radius: 0; /* Square thumb */
+    box-shadow: 0 0 5px #0f0;
+}
+
+/* Retro Select Dropdown */
+select.retro-select {
+    background-color: #222;
+    color: #0f0;
+    border: 1px solid #0f0;
+    padding: var(--settings-select-padding);
+    font-family: 'Press Start 2P', cursive;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Remove default arrow */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Add custom arrow or leave as is for minimal style */
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%230f0' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 18px;
+    min-width: 150px; /* Ensure decent width */
+}
+
+select.retro-select:focus {
+    box-shadow: 0 0 8px #0f0;
+}
+
+select.retro-select option {
+    background-color: #222;
+    color: #0f0;
+}
+
+/* System Buttons */
+.system-buttons {
+    justify-content: center; /* Center buttons */
+    gap: var(--settings-system-button-gap); /* Space between buttons */
+}
+
+.system-buttons .retro-button {
+    flex-grow: 0; /* Don't let buttons grow */
+    font-size: 0.9em; /* Slightly smaller system buttons */
+    padding: 3px 8px; /* Adjust padding */
+}
+/* --- Color Mode Settings --- */
+
+/* Apply filters to the main screen content wrapper */
+/* Note: Brightness/Contrast are now handled by JS updating this filter string */
+#screen-wrapper.color-mode-monochrome {
+    /* JS will add filter: grayscale(100%) brightness(...) contrast(...) */
+}
+
+#screen-wrapper.color-mode-green-phosphor {
+     /* JS will add filter: grayscale(100%) sepia(100%) hue-rotate(60deg) saturate(200%) brightness(...) contrast(...) */
+}
+
+#screen-wrapper.color-mode-amber-phosphor {
+    /* JS will add filter: grayscale(100%) sepia(100%) hue-rotate(-30deg) saturate(300%) brightness(...) contrast(...) */
+}
+
+
+/* Optional: Adjust text colors for better readability in monochrome modes */
+body.color-mode-green-phosphor,
+body.color-mode-amber-phosphor {
+    /* Example: Make default text slightly brighter if needed */
+    /* color: #ddd; */
+}
+
+body.color-mode-green-phosphor .retro-button,
+body.color-mode-green-phosphor h1,
+body.color-mode-green-phosphor h2,
+body.color-mode-green-phosphor h3,
+body.color-mode-green-phosphor .setting-value,
+body.color-mode-green-phosphor select.retro-select,
+body.color-mode-green-phosphor #page-indicator /* Added page indicator */
+ {
+    /* Keep important elements green */
+    color: #0f0;
+    border-color: #0f0; /* Adjust borders too */
+}
+body.color-mode-green-phosphor input[type="range"]::-webkit-slider-thumb { background: #0f0; box-shadow: 0 0 5px #0f0; }
+body.color-mode-green-phosphor input[type="range"]::-moz-range-thumb { background: #0f0; box-shadow: 0 0 5px #0f0; }
+
+
+body.color-mode-amber-phosphor .retro-button,
+body.color-mode-amber-phosphor h1,
+body.color-mode-amber-phosphor h2,
+body.color-mode-amber-phosphor h3,
+body.color-mode-amber-phosphor .setting-value,
+body.color-mode-amber-phosphor select.retro-select,
+body.color-mode-amber-phosphor #page-indicator /* Added page indicator */
+{
+    /* Make important elements amber */
+    color: #ffb000;
+    border-color: #ffb000;
+}
+body.color-mode-amber-phosphor input[type="range"]::-webkit-slider-thumb { background: #ffb000; box-shadow: 0 0 5px #ffb000; }
+body.color-mode-amber-phosphor input[type="range"]::-moz-range-thumb { background: #ffb000; box-shadow: 0 0 5px #ffb000; }
+
+/* Adjust select arrow color */
+body.color-mode-green-phosphor select.retro-select {
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%230f0' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+}
+body.color-mode-amber-phosphor select.retro-select {
+     background-image: url("data:image/svg+xml;utf8,<svg fill='%23ffb000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+}
+/* --- Settings Section Tabs & Views --- */
+.settings-nav {
+    display: flex;
+    justify-content: center; /* Center the tabs */
+    margin-bottom: var(--settings-group-margin-bottom); /* Use variable for spacing */
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.3); /* Separator line */
+    padding-bottom: var(--settings-group-padding-bottom);
+}
+
+.settings-nav .retro-button {
+    margin: 0 5px; /* Space between tabs */
+    background-color: transparent; /* Default tab background */
+    border: 1px solid transparent; /* Make border transparent by default */
+    border-bottom: 1px solid transparent; /* Ensure bottom border aligns */
+    padding-bottom: 5px; /* Add padding to align text with border */
+    opacity: 0.7; /* Dim inactive tabs */
+}
+
+.settings-nav .retro-button.active-tab {
+    border-color: #0f0; /* Highlight active tab border */
+    border-bottom-color: transparent; /* Make bottom border transparent to "cut" the container border */
+    /* background-color: #222; */ /* Removed background */
+    opacity: 1.0; /* Full opacity for active tab */
+    position: relative;
+    top: 1px; /* Align with container border */
+}
+
+#settings-view-container {
+    border: 1px dashed rgba(255, 255, 255, 0.3); /* Border around the content */
+    padding: var(--settings-padding); /* Use variable */
+    margin-bottom: var(--settings-group-margin-bottom); /* Space before system buttons */
+    min-height: 150px; /* Ensure container has some height */
+    /* background-color: #222; */ /* Removed background */
+}
+
+.settings-view {
+    display: none; /* Hide views by default */
+}
+
+.settings-view.active-settings-view {
+    display: block; /* Show the active view */
+}
+
+/* Adjust system buttons margin */
+#settings .system-buttons {
+    margin-top: var(--settings-group-margin-bottom); /* Add space above system buttons */
+    border-top: 1px dashed rgba(255, 255, 255, 0.3); /* Separator line */
+    padding-top: var(--settings-group-padding-bottom);
+}
+
+/* Responsive adjustments for tabs */
+@media (max-height: 800px) or (max-width: 1200px) {
+    .settings-nav .retro-button {
+        font-size: 0.9em; /* Slightly smaller tab text */
+        padding: 3px 8px;
+    }
+    #settings-view-container {
+         padding: var(--settings-padding); /* Use responsive padding */
+         margin-bottom: var(--settings-group-margin-bottom);
+    }
+     #settings .system-buttons {
+         margin-top: var(--settings-group-margin-bottom);
+         padding-top: var(--settings-group-padding-bottom);
+     }
 }
