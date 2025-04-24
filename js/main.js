@@ -821,10 +821,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('load', centerButtonInWrapper);
     window.addEventListener('resize', centerButtonInWrapper);
 
-    // Might need to run it after initial animations/transitions complete too
-    // setTimeout(centerButtonInWrapper, 1000); // Example delay
-    //
-
     if (powerOnButton) {
         powerOnButton.addEventListener('click', (event) => {
             event.preventDefault(); // Prevent default button behavior
@@ -992,14 +988,5 @@ document.addEventListener('DOMContentLoaded', () => {
              }, 200); // Short delay
         });
     }
-
-    // --- Initial Load --- 
-    // Load settings *after* all elements are referenced and functions defined
     loadSettings(); 
-
-    // Ensure settings section is handled by navigation
-    // Add settings section to the list of sections if needed for showSection logic
-    // (Check if showSection/showMenu logic needs update - currently relies on querySelectorAll('main > section'))
-
-
 });

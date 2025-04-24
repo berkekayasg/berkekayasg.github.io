@@ -420,7 +420,7 @@ footer p {
 }
 
 #main-menu li {
-  margin-bottom: max(10px, min(20px, 4vh)); /* Responsive margins */
+  margin-bottom: max(5px, min(10px, 2vh)); /* Responsive margins */
   flex-shrink: 0; /* Prevent items from shrinking too much */
 }
 
@@ -904,9 +904,8 @@ h1, h2, h3, p, .crt-flicker-text, button {
     font-size: 4vmin;
       padding: 0.8vh 1.2vh;
   }
-
     /* --- Settings Variable Overrides for Smaller Screens --- */
-    :root { /* Re-declare variables inside the media query */
+    :root {
         --settings-padding: 10px; /* Reduce padding */
         --settings-group-margin-bottom: 15px; /* Further reduce */
         --settings-group-padding-bottom: 8px; /* Further reduce */
@@ -922,84 +921,6 @@ h1, h2, h3, p, .crt-flicker-text, button {
         --settings-slider-thumb-size: 12px;
         --settings-system-button-gap: 10px;
     }
-
-    /* Optional: Adjust base font size for settings section if needed */
-    #settings {
-         font-size: 0.9em; /* Slightly smaller base font */
-         max-height: calc(100% - 20px); /* Adjust max-height */
-    }
-
-    /* Make setting items stack vertically if needed */
-    /* Uncomment below if horizontal space becomes too tight */
-    /*
-    .setting-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-     .setting-item label {
-         flex-basis: auto;
-         margin-bottom: 5px;
-     }
-     .setting-item input[type="range"],
-     .setting-item select.retro-select {
-         width: 100%; 
-         margin-right: 0;
-     }
-     .setting-item .setting-value {
-         text-align: left;
-         margin-top: 5px;
-     }
-    */
-
-
-
-    /* --- Settings Variable Overrides for Smaller Screens --- */
-    :root { /* Re-declare variables inside the media query */
-        --settings-padding: 10px; /* Reduce padding */
-        --settings-group-margin-bottom: 15px; /* Further reduce */
-        --settings-group-padding-bottom: 8px; /* Further reduce */
-        --settings-h3-font-size: 1em; /* Smaller headings */
-        --settings-h3-margin-bottom: 8px;
-        --settings-item-margin-bottom: 8px;
-        --settings-label-basis: 100px; /* Smaller label area */
-        --settings-label-margin-right: 8px;
-        --settings-control-margin-right: 8px;
-        --settings-value-min-width: 40px;
-        --settings-select-padding: 3px 5px;
-        --settings-slider-height: 5px;
-        --settings-slider-thumb-size: 12px;
-        --settings-system-button-gap: 10px;
-    }
-
-    /* Optional: Adjust base font size for settings section if needed */
-    #settings {
-         font-size: 0.9em; /* Slightly smaller base font */
-         max-height: calc(100% - 20px); /* Adjust max-height */
-    }
-
-    /* Make setting items stack vertically if needed */
-    /* Uncomment below if horizontal space becomes too tight */
-    /*
-    .setting-item {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-     .setting-item label {
-         flex-basis: auto;
-         margin-bottom: 5px;
-     }
-     .setting-item input[type="range"],
-     .setting-item select.retro-select {
-         width: 100%; 
-         margin-right: 0;
-     }
-     .setting-item .setting-value {
-         text-align: left;
-         margin-top: 5px;
-     }
-    */
-
-
 }
 /* --- Project Detail View Pagination Styles --- */
 
@@ -1147,19 +1068,9 @@ h1, h2, h3, p, .crt-flicker-text, button {
     --settings-system-button-gap: 15px; /* Reduced */
 }
 
-/* --- Settings Section --- */
-#settings {
-    padding: var(--settings-padding);
-    /* Add max-height and overflow-y for safety */
-    max-height: calc(100% - 40px); /* Adjust based on header/footer if they are fixed */
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-
 .settings-group {
     margin-bottom: var(--settings-group-margin-bottom);
     padding-bottom: var(--settings-group-padding-bottom);
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.3); /* Retro dashed line */
 }
 
 .settings-group:last-child {
@@ -1274,33 +1185,10 @@ select.retro-select option {
 
 .system-buttons .retro-button {
     flex-grow: 0; /* Don't let buttons grow */
-    font-size: 0.9em; /* Slightly smaller system buttons */
-    padding: 3px 8px; /* Adjust padding */
+    font-size: 1.2em; /* Slightly smaller system buttons */
+    padding: 0px 8px; /* Adjust padding */
 }
 /* --- Color Mode Settings --- */
-
-/* Apply filters to the main screen content wrapper */
-/* Note: Brightness/Contrast are now handled by JS updating this filter string */
-#screen-wrapper.color-mode-monochrome {
-    /* JS will add filter: grayscale(100%) brightness(...) contrast(...) */
-}
-
-#screen-wrapper.color-mode-green-phosphor {
-     /* JS will add filter: grayscale(100%) sepia(100%) hue-rotate(60deg) saturate(200%) brightness(...) contrast(...) */
-}
-
-#screen-wrapper.color-mode-amber-phosphor {
-    /* JS will add filter: grayscale(100%) sepia(100%) hue-rotate(-30deg) saturate(300%) brightness(...) contrast(...) */
-}
-
-
-/* Optional: Adjust text colors for better readability in monochrome modes */
-body.color-mode-green-phosphor,
-body.color-mode-amber-phosphor {
-    /* Example: Make default text slightly brighter if needed */
-    /* color: #ddd; */
-}
-
 body.color-mode-green-phosphor .retro-button,
 body.color-mode-green-phosphor h1,
 body.color-mode-green-phosphor h2,
@@ -1350,20 +1238,13 @@ body.color-mode-amber-phosphor select.retro-select {
 
 .settings-nav .retro-button {
     margin: 0 5px; /* Space between tabs */
-    background-color: transparent; /* Default tab background */
-    border: 1px solid transparent; /* Make border transparent by default */
-    border-bottom: 1px solid transparent; /* Ensure bottom border aligns */
     padding-bottom: 5px; /* Add padding to align text with border */
-    opacity: 0.7; /* Dim inactive tabs */
 }
 
 .settings-nav .retro-button.active-tab {
-    border-color: #0f0; /* Highlight active tab border */
-    border-bottom-color: transparent; /* Make bottom border transparent to "cut" the container border */
-    /* background-color: #222; */ /* Removed background */
-    opacity: 1.0; /* Full opacity for active tab */
+    color: var(--color-accent);
     position: relative;
-    top: 1px; /* Align with container border */
+    top: 1px;
 }
 
 #settings-view-container {
@@ -1371,7 +1252,6 @@ body.color-mode-amber-phosphor select.retro-select {
     padding: var(--settings-padding); /* Use variable */
     margin-bottom: var(--settings-group-margin-bottom); /* Space before system buttons */
     min-height: 150px; /* Ensure container has some height */
-    /* background-color: #222; */ /* Removed background */
 }
 
 .settings-view {
@@ -1385,7 +1265,6 @@ body.color-mode-amber-phosphor select.retro-select {
 /* Adjust system buttons margin */
 #settings .system-buttons {
     margin-top: var(--settings-group-margin-bottom); /* Add space above system buttons */
-    border-top: 1px dashed rgba(255, 255, 255, 0.3); /* Separator line */
     padding-top: var(--settings-group-padding-bottom);
 }
 
@@ -1403,4 +1282,26 @@ body.color-mode-amber-phosphor select.retro-select {
          margin-top: var(--settings-group-margin-bottom);
          padding-top: var(--settings-group-padding-bottom);
      }
+}
+/* --- Settings Page Navigation Footer --- */
+#settings-page-nav {
+    position: absolute; /* Position at the bottom of the section */
+    bottom: 5px;
+    width: 90%; /* Match project nav width */
+    padding: 0px 0px; /* Match project nav padding */
+    border-top: var(--border-pixel);
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space out buttons */
+    margin-top: auto; /* Push to bottom if content is short */
+}
+
+/* Specific styling for the back button within settings nav */
+#settings-page-nav .retro-button {
+    position: relative; /* Override absolute positioning */
+    top: auto;
+    bottom: 4px; /* Match project nav back button alignment */
+    right: 7px; /* Match project nav back button alignment */
+    padding: 25px 0px; /* Match project nav back button padding */
+    font-size: 1.3em; /* Match project nav button size */
 }
