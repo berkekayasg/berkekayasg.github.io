@@ -167,8 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
             console.log("Settings saved:", settings);
-            // Optional: Play a confirmation sound - reusing button click for now
-            playSound(audioButtonClick, true); // Pass flag to ignore SFX volume for this sound
         } catch (error) {
             console.error("Failed to save settings:", error);
         }
@@ -595,7 +593,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      btn.classList.remove('button-active');
                      currentPage++;
                      updatePageView();
-                }, 200); // Shorter delay for page turns
+                }, 300); // Shorter delay for page turns
             }
         });
     }
@@ -610,7 +608,7 @@ document.addEventListener('DOMContentLoaded', () => {
                      btn.classList.remove('button-active');
                      currentPage--;
                      updatePageView();
-                 }, 200); // Shorter delay for page turns
+                 }, 300); // Shorter delay for page turns
             }
         });
     }
@@ -872,21 +870,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // --- Settings View Switching ---
     function switchSettingsView(targetViewId) {
-        allSettingsViews.forEach(view => {
-            if (view) {
-                view.classList.toggle('active-settings-view', view.id === targetViewId);
-            }
-        });
-        allSettingsNavButtons.forEach(button => {
-             if (button) {
-                 // Check if the button's ID corresponds to the target view
-                 // Extract view type (e.g., 'display') from targetViewId
-                 const targetType = targetViewId.replace('settings-', '').replace('-view', '');
-                 const isActive = (button.id === `settings-nav-${targetType}`);
-                 button.classList.toggle('active-tab', isActive);
-             }
-        });
-         // Optional: Play tab switch sound
+        setTimeout(() => {
+            allSettingsViews.forEach(view => {
+                if (view) {
+                    view.classList.toggle('active-settings-view', view.id === targetViewId);
+                }
+            });
+            allSettingsNavButtons.forEach(button => {
+                if (button) {
+                    const targetType = targetViewId.replace('settings-', '').replace('-view', '');
+                    const isActive = (button.id === `settings-nav-${targetType}`);
+                    button.classList.toggle('active-tab', isActive);
+                }
+            });
+        }, 300);
          playSound(audioButtonClick); // Reuse button click sound
     }
 
@@ -895,26 +892,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (settingsNavAudio) {
         settingsNavAudio.addEventListener('click', () => switchSettingsView('settings-audio-view'));
-    }
-
-    // --- Settings View Switching ---
-    function switchSettingsView(targetViewId) {
-        allSettingsViews.forEach(view => {
-            if (view) {
-                view.classList.toggle('active-settings-view', view.id === targetViewId);
-            }
-        });
-        allSettingsNavButtons.forEach(button => {
-             if (button) {
-                 // Check if the button's ID corresponds to the target view
-                 // Extract view type (e.g., 'display') from targetViewId
-                 const targetType = targetViewId.replace('settings-', '').replace('-view', '');
-                 const isActive = (button.id === `settings-nav-${targetType}`);
-                 button.classList.toggle('active-tab', isActive);
-             }
-        });
-         // Optional: Play tab switch sound
-         playSound(audioButtonClick); // Reuse button click sound
     }
     // --- Settings Event Listeners ---
 
@@ -962,7 +939,7 @@ document.addEventListener('DOMContentLoaded', () => {
         settingSaveButton.addEventListener('click', (event) => {
             const btn = event.currentTarget;
             btn.classList.add('button-active');
-            // No need to play sound here, saveSettings does it
+            playSound(audioButtonClick);
             setTimeout(() => {
                  btn.classList.remove('button-active');
                  applySettings(currentSettings); // Ensure all settings are applied
@@ -976,15 +953,15 @@ document.addEventListener('DOMContentLoaded', () => {
         settingResetButton.addEventListener('click', (event) => {
              const btn = event.currentTarget;
              btn.classList.add('button-active');
-             playSound(audioButtonBack); // Use back sound for reset
+             playSound(audioButtonClick);
              setTimeout(() => {
                  btn.classList.remove('button-active');
-                 if (confirm("Reset all settings to default?")) { // Confirmation dialog
+                //  if (confirm("Reset all settings to default?")) { // Confirmation dialog
                      currentSettings = { ...defaultSettings }; // Reset working copy
                      applySettings(currentSettings);
                      updateSettingControls(currentSettings);
                      saveSettings(currentSettings); // Save the defaults
-                 }
+                //  }
              }, 200); // Short delay
         });
     }
