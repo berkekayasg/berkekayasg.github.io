@@ -921,6 +921,19 @@ h1, h2, h3, p, .crt-flicker-text, button {
         --settings-slider-thumb-size: 12px;
         --settings-system-button-gap: 10px;
     }
+
+    .settings-nav .retro-button {
+      font-size: 0.9em; /* Slightly smaller tab text */
+      padding: 3px 8px;
+    }
+    #settings-view-container {
+        padding: var(--settings-padding); /* Use responsive padding */
+        margin-bottom: var(--settings-group-margin-bottom);
+    }
+    #settings .system-buttons {
+        margin-top: var(--settings-group-margin-bottom);
+        padding-top: var(--settings-group-padding-bottom);
+    }
 }
 /* --- Project Detail View Pagination Styles --- */
 
@@ -1268,21 +1281,6 @@ body.color-mode-amber-phosphor select.retro-select {
     padding-top: var(--settings-group-padding-bottom);
 }
 
-/* Responsive adjustments for tabs */
-@media (max-height: 800px) or (max-width: 1200px) {
-    .settings-nav .retro-button {
-        font-size: 0.9em; /* Slightly smaller tab text */
-        padding: 3px 8px;
-    }
-    #settings-view-container {
-         padding: var(--settings-padding); /* Use responsive padding */
-         margin-bottom: var(--settings-group-margin-bottom);
-    }
-     #settings .system-buttons {
-         margin-top: var(--settings-group-margin-bottom);
-         padding-top: var(--settings-group-padding-bottom);
-     }
-}
 /* --- Settings Page Navigation Footer --- */
 #settings-page-nav {
     position: absolute; /* Position at the bottom of the section */
@@ -1305,3 +1303,59 @@ body.color-mode-amber-phosphor select.retro-select {
     padding: 25px 0px; /* Match project nav back button padding */
     font-size: 1.3em; /* Match project nav button size */
 }
+/* --- New Settings Control Styles --- */
+.setting-control {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Adjust as needed */
+    flex-grow: 1; /* Allow it to take space */
+    margin-left: 10px; /* Space after label */
+}
+
+.setting-value-display {
+    min-width: 150px; /* Increased width for longer color names */
+    text-align: center;
+    color: var(--color-accent); /* Use accent color for value */
+    font-family: var(--font-family-pixel);
+    margin: 0 10px; /* Space around the value */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.setting-button {
+    padding: 0px 8px; /* Smaller padding */
+    font-size: 1.5em; /* Adjust size */
+    line-height: 1;
+    text-transform: none; /* Keep < and > as is */
+    flex-shrink: 0; /* Prevent buttons from shrinking */
+}
+
+/* Ensure setting items still align correctly */
+.setting-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--settings-item-margin-bottom);
+    flex-wrap: wrap; /* Allow wrapping if needed */
+}
+
+.setting-item label {
+    flex-basis: var(--settings-label-basis);
+    margin-right: var(--settings-label-margin-right);
+    color: #eee;
+    flex-shrink: 0;
+}
+
+/* Optional: Adjust hover/active for new buttons if needed */
+.setting-button:hover {
+    color: var(--color-primary); /* Example hover */
+}
+
+.setting-button:active {
+    transform: scale(0.95); /* Example active press */
+}
+
+/* Adjust color mode overrides for the new display span */
+body.color-mode-green-phosphor .setting-value-display { color: #0f0; }
+body.color-mode-amber-phosphor .setting-value-display { color: #ffb000; }
+
+/* Remove or comment out old slider/select styles if they conflict */
+/* (Keeping them for now as they might not interfere) */

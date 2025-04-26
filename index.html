@@ -9,7 +9,6 @@
         content="Portfolio website for Berke Kaya, showcasing game development projects and skills.">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <!-- TODO: Consider adding a CSS Reset or Normalize.css -->
 </head>
 
 <body onresize="posWindows();">
@@ -138,22 +137,27 @@
                             <div id="settings-display-view" class="settings-view active-settings-view">
                                 <div class="setting-item">
                                     <label for="setting-brightness"><span class="crt-flicker-text">Brightness:</span></label>
-                                    <input type="range" id="setting-brightness" name="brightness" min="50" max="150" value="100">
-                                    <span class="setting-value"><span class="crt-flicker-text">100%</span></span>
+                                    <div class="setting-control">
+                                        <button class="retro-button setting-button setting-prev" data-setting="brightness" data-direction="-1"><</button>
+                                        <span class="setting-value-display" id="brightness-value">100%</span>
+                                        <button class="retro-button setting-button setting-next" data-setting="brightness" data-direction="1">></button>
+                                    </div>
                                 </div>
                                 <div class="setting-item">
                                     <label for="setting-contrast"><span class="crt-flicker-text">Contrast:</span></label>
-                                    <input type="range" id="setting-contrast" name="contrast" min="50" max="150" value="100">
-                                    <span class="setting-value"><span class="crt-flicker-text">100%</span></span>
+                                    <div class="setting-control">
+                                        <button class="retro-button setting-button setting-prev" data-setting="contrast" data-direction="-1"><</button>
+                                        <span class="setting-value-display" id="contrast-value">100%</span>
+                                        <button class="retro-button setting-button setting-next" data-setting="contrast" data-direction="1">></button>
+                                    </div>
                                 </div>
                                 <div class="setting-item">
                                     <label for="setting-color-mode"><span class="crt-flicker-text">Color Mode:</span></label>
-                                    <select id="setting-color-mode" name="color-mode" class="retro-select">
-                                        <option value="full-color">Full Color</option>
-                                        <option value="monochrome">Monochrome</option>
-                                        <option value="green-phosphor">Green Phosphor</option>
-                                        <option value="amber-phosphor">Amber Phosphor</option>
-                                    </select>
+                                    <div class="setting-control">
+                                        <button class="retro-button setting-button setting-prev" data-setting="colorMode" data-direction="-1"><</button>
+                                        <span class="setting-value-display" id="colorMode-value">Full Color</span>
+                                        <button class="retro-button setting-button setting-next" data-setting="colorMode" data-direction="1">></button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -161,13 +165,19 @@
                             <div id="settings-audio-view" class="settings-view">
                                 <div class="setting-item">
                                     <label for="setting-master-volume"><span class="crt-flicker-text">Master Volume:</span></label>
-                                    <input type="range" id="setting-master-volume" name="master-volume" min="0" max="100" value="100">
-                                    <span class="setting-value"><span class="crt-flicker-text">100%</span></span>
+                                    <div class="setting-control">
+                                        <button class="retro-button setting-button setting-prev" data-setting="masterVolume" data-direction="-1"><</button>
+                                        <span class="setting-value-display" id="masterVolume-value">100%</span>
+                                        <button class="retro-button setting-button setting-next" data-setting="masterVolume" data-direction="1">></button>
+                                    </div>
                                 </div>
                                 <div class="setting-item">
                                     <label for="setting-sfx-volume"><span class="crt-flicker-text">SFX Volume:</span></label>
-                                    <input type="range" id="setting-sfx-volume" name="sfx-volume" min="0" max="100" value="100">
-                                    <span class="setting-value"><span class="crt-flicker-text">100%</span></span>
+                                    <div class="setting-control">
+                                        <button class="retro-button setting-button setting-prev" data-setting="sfxVolume" data-direction="-1"><</button>
+                                        <span class="setting-value-display" id="sfxVolume-value">100%</span>
+                                        <button class="retro-button setting-button setting-next" data-setting="sfxVolume" data-direction="1">></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

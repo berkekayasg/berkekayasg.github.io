@@ -48,18 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Settings Section Elements
-    const settingsSection = document.getElementById('settings');
-    const settingBrightnessSlider = document.getElementById('setting-brightness');
-    const settingContrastSlider = document.getElementById('setting-contrast');
-    const settingColorModeSelect = document.getElementById('setting-color-mode');
-    const settingMasterVolumeSlider = document.getElementById('setting-master-volume');
     const settingSfxVolumeSlider = document.getElementById('setting-sfx-volume');
     const settingSaveButton = document.getElementById('setting-save');
     const settingResetButton = document.getElementById('setting-reset');
-    // Value display spans (optional, but good for immediate feedback)
-    const brightnessValueSpan = settingBrightnessSlider?.nextElementSibling;
-    const contrastValueSpan = settingContrastSlider?.nextElementSibling;
-    const masterVolumeValueSpan = settingMasterVolumeSlider?.nextElementSibling;
     // Settings Navigation & View Elements
     const settingsNavDisplay = document.getElementById('settings-nav-display');
     const settingsNavAudio = document.getElementById('settings-nav-audio');
@@ -72,6 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Settings Logic ---
     const SETTINGS_STORAGE_KEY = 'berkeKayaPortfolioSettings';
 
+    // Define constants for settings
+    const COLOR_MODES = ['full-color', 'monochrome', 'green-phosphor', 'amber-phosphor'];
+    const COLOR_MODE_NAMES = { // For display
+        'full-color': 'Full Color',
+        'monochrome': 'Monochrome',
+        'green-phosphor': 'Green Phosphor',
+        'amber-phosphor': 'Amber Phosphor'
+    };
+    const SETTING_CONFIG = {
+        brightness: { min: 50, max: 150, step: 10 },
+        contrast: { min: 50, max: 150, step: 10 },
+        masterVolume: { min: 0, max: 100, step: 10 },
+        sfxVolume: { min: 0, max: 100, step: 10 },
+        colorMode: { modes: COLOR_MODES, names: COLOR_MODE_NAMES }
+    };
+
+
     const defaultSettings = {
         brightness: 100,
         contrast: 100,
@@ -82,8 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let currentSettings = { ...defaultSettings }; // Working copy
 
-    // Function to apply settings visually and functionally
-    // Function to apply settings visually and functionally
+    // Function to apply settings visually and functionally (remains largely the same)
     function applySettings(settings) {
         // --- Apply Visual Settings ---
         // Color Mode (using body classes for CSS targeting)
@@ -139,30 +146,36 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Applied settings:", settings);
     }
 
-    // Function to update the settings UI controls
-    function updateSettingControls(settings) {
-        if (settingBrightnessSlider) {
-            settingBrightnessSlider.value = settings.brightness;
-            if (brightnessValueSpan) brightnessValueSpan.textContent = `${settings.brightness}%`;
+    // Function to update the display value for a specific setting
+    function updateSettingDisplay(settingKey) {
+        const displayElement = document.getElementById(`${settingKey}-value`); // Assumes ID convention from HTML changes
+        if (!displayElement || !currentSettings) return;
+
+        const config = SETTING_CONFIG[settingKey];
+        let displayValue = '';
+
+        if (settingKey === 'colorMode') {
+            displayValue = config.names[currentSettings.colorMode] || currentSettings.colorMode;
+        } else {
+            // Ensure the key exists in currentSettings before accessing it
+            const value = currentSettings[settingKey] !== undefined ? currentSettings[settingKey] : defaultSettings[settingKey];
+            displayValue = `${value}%`;
         }
-        if (settingContrastSlider) {
-            settingContrastSlider.value = settings.contrast;
-            if (contrastValueSpan) contrastValueSpan.textContent = `${settings.contrast}%`;
-        }
-        if (settingColorModeSelect) {
-            settingColorModeSelect.value = settings.colorMode;
-        }
-        if (settingMasterVolumeSlider) {
-            settingMasterVolumeSlider.value = settings.masterVolume;
-            if (masterVolumeValueSpan) masterVolumeValueSpan.textContent = `${settings.masterVolume}%`;
-        }
-        if (settingSfxVolumeSlider) {
-            settingSfxVolumeSlider.value = settings.sfxVolume;
-            if (sfxVolumeValueSpan) sfxVolumeValueSpan.textContent = `${settings.sfxVolume}%`;
-        }
+        displayElement.textContent = displayValue;
     }
 
-    // Function to save settings to localStorage
+
+    // Function to update ALL settings UI controls (now uses updateSettingDisplay)
+    function updateSettingControls(settings) {
+        // Iterate through the keys in SETTING_CONFIG to update all displays
+        Object.keys(SETTING_CONFIG).forEach(key => {
+            updateSettingDisplay(key);
+        });
+        // Note: We no longer set .value for sliders/selects here
+    }
+
+
+    // Function to save settings to localStorage (remains the same)
     function saveSettings(settings) {
         try {
             localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
@@ -893,48 +906,71 @@ document.addEventListener('DOMContentLoaded', () => {
     if (settingsNavAudio) {
         settingsNavAudio.addEventListener('click', () => switchSettingsView('settings-audio-view'));
     }
-    // --- Settings Event Listeners ---
+    // --- Settings Event Listeners (New Button Logic) ---
 
-    // Function to handle slider input and update display
-    function handleSliderInput(slider, settingKey, valueSpan) {
-        if (slider && currentSettings) {
-            const newValue = parseInt(slider.value, 10);
-            currentSettings[settingKey] = newValue;
-            if (valueSpan) valueSpan.textContent = `${newValue}%`;
-            // Apply *some* settings immediately for feedback (e.g., volume, maybe brightness/contrast)
-            if (settingKey === 'masterVolume' || settingKey === 'sfxVolume') {
-                applySettings(currentSettings); // Apply audio changes live
+    // Function to handle changes from the new '<' and '>' buttons
+    function handleSettingChange(settingKey, direction) {
+        if (!currentSettings) return;
+        const config = SETTING_CONFIG[settingKey];
+        if (!config) {
+            console.error("Invalid setting key:", settingKey);
+            return;
+        }
+        let changed = false;
+
+        if (settingKey === 'colorMode') {
+            const currentIndex = config.modes.indexOf(currentSettings.colorMode);
+            let nextIndex = currentIndex + direction;
+            // Wrap around logic
+            if (nextIndex < 0) {
+                nextIndex = config.modes.length - 1;
+            } else if (nextIndex >= config.modes.length) {
+                nextIndex = 0;
             }
-             if (settingKey === 'brightness' || settingKey === 'contrast') {
-                 applySettings(currentSettings); // Apply visual changes live
-             }
+            // Update if index actually changed
+            if (nextIndex !== currentIndex) {
+                currentSettings.colorMode = config.modes[nextIndex];
+                changed = true;
+            }
+        } else { // Handle numeric settings (Volume, Brightness, Contrast)
+            const currentValue = currentSettings[settingKey];
+            let newValue = currentValue + (config.step * direction);
+            newValue = Math.max(config.min, Math.min(config.max, newValue)); // Clamp value
+
+            if (newValue !== currentValue) {
+                currentSettings[settingKey] = newValue;
+                changed = true;
+            }
+        }
+
+        if (changed) {
+            updateSettingDisplay(settingKey);
+            applySettings(currentSettings); // Apply change immediately
+            playSound(audioButtonClick); // Play feedback sound
         }
     }
 
-    if (settingBrightnessSlider) {
-        settingBrightnessSlider.addEventListener('input', () => handleSliderInput(settingBrightnessSlider, 'brightness', brightnessValueSpan));
-    }
-    if (settingContrastSlider) {
-        settingContrastSlider.addEventListener('input', () => handleSliderInput(settingContrastSlider, 'contrast', contrastValueSpan));
-    }
-    if (settingMasterVolumeSlider) {
-        settingMasterVolumeSlider.addEventListener('input', () => handleSliderInput(settingMasterVolumeSlider, 'masterVolume', masterVolumeValueSpan));
-    }
-    if (settingSfxVolumeSlider) {
-        settingSfxVolumeSlider.addEventListener('input', () => handleSliderInput(settingSfxVolumeSlider, 'sfxVolume', sfxVolumeValueSpan));
-    }
+    // Add event listeners to all new setting buttons
+    document.querySelectorAll('.setting-button').forEach(button => {
+        button.addEventListener('click', (event) => {
+            const btn = event.currentTarget;
+            const settingKey = btn.dataset.setting;
+            const direction = parseInt(btn.dataset.direction, 10);
 
-    // Color Mode Select
-    if (settingColorModeSelect) {
-        settingColorModeSelect.addEventListener('change', () => {
-            if (currentSettings) {
-                currentSettings.colorMode = settingColorModeSelect.value;
-                 applySettings(currentSettings); // Apply color mode change live
+            if (!settingKey || isNaN(direction)) {
+                console.error("Missing data-setting or data-direction on button:", btn);
+                return;
             }
-        });
-    }
 
-    // Save Button
+            // Add button active visual feedback
+            btn.classList.add('button-active');
+            setTimeout(() => btn.classList.remove('button-active'), 200); // Short visual feedback
+
+            handleSettingChange(settingKey, direction);
+        });
+    });
+
+    // Save Button (remains the same)
     if (settingSaveButton) {
         settingSaveButton.addEventListener('click', (event) => {
             const btn = event.currentTarget;
