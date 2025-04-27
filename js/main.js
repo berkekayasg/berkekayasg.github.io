@@ -2,6 +2,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     // Variable to hold fetched project data
     let projectsData = [];
+    let colorModeBeforeVideo = null; // To store color mode before video plays
 
     // --- Element References ---
     const introScreen = document.getElementById('intro-screen');
@@ -756,11 +757,21 @@ document.addEventListener('DOMContentLoaded', () => {
     function closeVideoPlayer() {
         if (projectVideoView) projectVideoView.classList.add('hidden');
         stopAndDestroyVideoPlayer();
+
+        // Restore original color mode if it was changed
+        if (colorModeBeforeVideo !== null) {
+            currentSettings.colorMode = colorModeBeforeVideo;
+            applySettings(currentSettings); // Apply the restored settings
+            colorModeBeforeVideo = null; // Reset the temporary storage
+        }
+
         // Show detail view again
         if (projectDetailView) projectDetailView.classList.remove('hidden');
         const activeSection = document.querySelector('main > section.active-section');
         updateMainHeading(null, projectDetailTitle.textContent); // Restore project title in header
-        activeSection.style.zIndex = '';
+        if (activeSection) { // Check if activeSection exists before setting zIndex
+             activeSection.style.zIndex = '';
+        }
     }
 
     // Event listeners moved to the end of DOMContentLoaded
@@ -859,13 +870,24 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 button.classList.remove('button-active');
                 if (youtubeId) {
+                    // Store current color mode and set to default before playing video
+                    if (currentSettings.colorMode !== 'full-color') {
+                        colorModeBeforeVideo = currentSettings.colorMode;
+                        currentSettings.colorMode = 'full-color';
+                        applySettings(currentSettings); // Apply 'full-color' mode
+                    } else {
+                        colorModeBeforeVideo = null; // Ensure it's null if already full color
+                    }
+
                     if (projectDetailView) projectDetailView.classList.add('hidden');
                     if (projectVideoView) projectVideoView.classList.remove('hidden');
                     loadAndPlayVideo(youtubeId);
                 } else {
                     console.error("No YouTube ID found for this project.");
                 }
-                activeSection.style.zIndex = '900';
+                if (activeSection) { // Check if activeSection exists before setting zIndex
+                    activeSection.style.zIndex = '900';
+                }
             }, 1000);
         });
     }
