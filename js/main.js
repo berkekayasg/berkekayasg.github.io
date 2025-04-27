@@ -49,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Settings Section Elements
-    const settingSfxVolumeSlider = document.getElementById('setting-sfx-volume');
     const settingSaveButton = document.getElementById('setting-save');
     const settingResetButton = document.getElementById('setting-reset');
     // Settings Navigation & View Elements
@@ -204,9 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSettingControls(currentSettings);
         console.log("Settings loaded:", currentSettings);
     }
-
-
-    const sfxVolumeValueSpan = settingSfxVolumeSlider?.nextElementSibling;
 
     // --- Pagination State ---
     let currentPage = 1;

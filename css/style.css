@@ -1106,90 +1106,6 @@ h1, h2, h3, p, .crt-flicker-text, button {
     flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
-.setting-item label {
-    flex-basis: var(--settings-label-basis);
-    margin-right: var(--settings-label-margin-right);
-    color: #eee; /* Lighter text for labels */
-    flex-shrink: 0; /* Prevent label from shrinking */
-}
-
-.setting-item input[type="range"],
-.setting-item select.retro-select {
-    flex-grow: 1;
-    margin-right: var(--settings-control-margin-right);
-    min-width: 100px; /* Prevent controls from becoming too small */
-}
-
-.setting-item .setting-value {
-    min-width: var(--settings-value-min-width);
-    text-align: right;
-    color: #0f0; /* Bright value color */
-    font-family: 'Press Start 2P', cursive; /* Match retro font */
-    flex-shrink: 0; /* Prevent value from shrinking */
-}
-
-/* Retro Range Slider Styling */
-input[type="range"] {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 100%; /* Full width within its container */
-    height: var(--settings-slider-height); /* Track height */
-    background: #555; /* Dark track */
-    outline: none;
-    border: 1px solid #888;
-    cursor: pointer;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: var(--settings-slider-thumb-size); /* Thumb size */
-    height: var(--settings-slider-thumb-size);
-    background: #0f0; /* Bright green thumb */
-    border: 1px solid #000;
-    cursor: pointer;
-    box-shadow: 0 0 5px #0f0; /* Glow effect */
-}
-
-input[type="range"]::-moz-range-thumb {
-    width: var(--settings-slider-thumb-size);
-    height: var(--settings-slider-thumb-size);
-    background: #0f0;
-    border: 1px solid #000;
-    cursor: pointer;
-    border-radius: 0; /* Square thumb */
-    box-shadow: 0 0 5px #0f0;
-}
-
-/* Retro Select Dropdown */
-select.retro-select {
-    background-color: #222;
-    color: #0f0;
-    border: 1px solid #0f0;
-    padding: var(--settings-select-padding);
-    font-family: 'Press Start 2P', cursive;
-    cursor: pointer;
-    outline: none;
-    appearance: none; /* Remove default arrow */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    /* Add custom arrow or leave as is for minimal style */
-    background-image: url("data:image/svg+xml;utf8,<svg fill='%230f0' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
-    background-size: 18px;
-    min-width: 150px; /* Ensure decent width */
-}
-
-select.retro-select:focus {
-    box-shadow: 0 0 8px #0f0;
-}
-
-select.retro-select option {
-    background-color: #222;
-    color: #0f0;
-}
-
 /* System Buttons */
 .system-buttons {
     justify-content: center; /* Center buttons */
@@ -1201,56 +1117,19 @@ select.retro-select option {
     font-size: 1.2em; /* Slightly smaller system buttons */
     padding: 0px 8px; /* Adjust padding */
 }
-/* --- Color Mode Settings --- */
-body.color-mode-green-phosphor .retro-button,
-body.color-mode-green-phosphor h1,
-body.color-mode-green-phosphor h2,
-body.color-mode-green-phosphor h3,
-body.color-mode-green-phosphor .setting-value,
-body.color-mode-green-phosphor select.retro-select,
-body.color-mode-green-phosphor #page-indicator /* Added page indicator */
- {
-    /* Keep important elements green */
-    color: #0f0;
-    border-color: #0f0; /* Adjust borders too */
-}
-body.color-mode-green-phosphor input[type="range"]::-webkit-slider-thumb { background: #0f0; box-shadow: 0 0 5px #0f0; }
-body.color-mode-green-phosphor input[type="range"]::-moz-range-thumb { background: #0f0; box-shadow: 0 0 5px #0f0; }
 
-
-body.color-mode-amber-phosphor .retro-button,
-body.color-mode-amber-phosphor h1,
-body.color-mode-amber-phosphor h2,
-body.color-mode-amber-phosphor h3,
-body.color-mode-amber-phosphor .setting-value,
-body.color-mode-amber-phosphor select.retro-select,
-body.color-mode-amber-phosphor #page-indicator /* Added page indicator */
-{
-    /* Make important elements amber */
-    color: #ffb000;
-    border-color: #ffb000;
-}
-body.color-mode-amber-phosphor input[type="range"]::-webkit-slider-thumb { background: #ffb000; box-shadow: 0 0 5px #ffb000; }
-body.color-mode-amber-phosphor input[type="range"]::-moz-range-thumb { background: #ffb000; box-shadow: 0 0 5px #ffb000; }
-
-/* Adjust select arrow color */
-body.color-mode-green-phosphor select.retro-select {
-    background-image: url("data:image/svg+xml;utf8,<svg fill='%230f0' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-}
-body.color-mode-amber-phosphor select.retro-select {
-     background-image: url("data:image/svg+xml;utf8,<svg fill='%23ffb000' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
-}
 /* --- Settings Section Tabs & Views --- */
 .settings-nav {
+  padding-top: 5px;
     display: flex;
     justify-content: center; /* Center the tabs */
     margin-bottom: var(--settings-group-margin-bottom); /* Use variable for spacing */
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.3); /* Separator line */
+    border-bottom: 2px dashed rgba(255, 255, 255, 0.7); /* Separator line */
     padding-bottom: var(--settings-group-padding-bottom);
 }
 
 .settings-nav .retro-button {
-    margin: 0 5px; /* Space between tabs */
+    margin: 0 10px; /* Space between tabs */
     padding-bottom: 5px; /* Add padding to align text with border */
 }
 
@@ -1261,7 +1140,6 @@ body.color-mode-amber-phosphor select.retro-select {
 }
 
 #settings-view-container {
-    border: 1px dashed rgba(255, 255, 255, 0.3); /* Border around the content */
     padding: var(--settings-padding); /* Use variable */
     margin-bottom: var(--settings-group-margin-bottom); /* Space before system buttons */
     min-height: 150px; /* Ensure container has some height */
@@ -1307,22 +1185,20 @@ body.color-mode-amber-phosphor select.retro-select {
 .setting-control {
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Adjust as needed */
+    justify-content: center; /* Group items centrally */
     flex-grow: 1; /* Allow it to take space */
-    margin-left: 10px; /* Space after label */
+    margin-left: 0px; /* Space after label */
 }
 
 .setting-value-display {
-    min-width: 150px; /* Increased width for longer color names */
     text-align: center;
     color: var(--color-accent); /* Use accent color for value */
-    font-family: var(--font-family-pixel);
     margin: 0 10px; /* Space around the value */
     flex-shrink: 0; /* Prevent shrinking */
 }
 
 .setting-button {
-    padding: 0px 8px; /* Smaller padding */
+    padding: 15px 50px; /* Smaller padding */
     font-size: 1.5em; /* Adjust size */
     line-height: 1;
     text-transform: none; /* Keep < and > as is */
@@ -1338,10 +1214,11 @@ body.color-mode-amber-phosphor select.retro-select {
 }
 
 .setting-item label {
-    flex-basis: var(--settings-label-basis);
     margin-right: var(--settings-label-margin-right);
     color: #eee;
     flex-shrink: 0;
+    width: 200px; /* Add fixed width */
+    text-align: left; /* Align text to the right */
 }
 
 /* Optional: Adjust hover/active for new buttons if needed */
@@ -1352,10 +1229,3 @@ body.color-mode-amber-phosphor select.retro-select {
 .setting-button:active {
     transform: scale(0.95); /* Example active press */
 }
-
-/* Adjust color mode overrides for the new display span */
-body.color-mode-green-phosphor .setting-value-display { color: #0f0; }
-body.color-mode-amber-phosphor .setting-value-display { color: #ffb000; }
-
-/* Remove or comment out old slider/select styles if they conflict */
-/* (Keeping them for now as they might not interfere) */
