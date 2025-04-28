@@ -999,12 +999,9 @@ h1, h2, h3, p, .crt-flicker-text, button {
     padding: 12px 18px; /* Increased padding for links */
     font-size: 1.1em; /* Increased base font size */
     text-align: left; /* Align text left */
-    border: 2px solid var(--color-border); /* Add border */
-    background-color: rgba(0, 255, 255, 0.1); /* Subtle background */
 }
 
 #project-detail-links a.retro-button.external-link:hover {
-    background-color: rgba(0, 255, 255, 0.2);
     color: var(--color-accent);
 }
 
@@ -1228,4 +1225,23 @@ h1, h2, h3, p, .crt-flicker-text, button {
 
 .setting-button:active {
     transform: scale(0.95); /* Example active press */
+}
+/* --- Social Links in About Section --- */
+.social-links {
+  display: flex; /* Arrange buttons horizontally */
+  justify-content: center; /* Center the buttons within the div */
+  gap: 20px; /* Add space between buttons */
+  margin-top: 25px; /* Add space above the buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+}
+
+.social-links .retro-button {
+  padding: 5px 10px; /* Slightly smaller padding than default */
+  font-size: 1em; /* Slightly smaller font size */
+}
+
+.skills-categories h3 {
+  font-size: 1.5em; /* Adjusted size for category headers */
+  margin-bottom: 10px; /* Space below category headers */
+  color: var(--color-accent); /* Use accent color for category headers */
 }
