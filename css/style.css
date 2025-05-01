@@ -41,11 +41,11 @@ body {
 /* --- Screen Wrapper for Box Effect --- */
 #screen-wrapper {
   position: absolute;
-  top: 37.3%;
-  left: 41.65%;
+  top: 350px;
+  left: 785px;
   transform: translate(-50%, -50%);
-  width: 45.3%;
-  height: 60%; 
+  width: 900px;
+  height: 580px; 
   background-color: var(--color-background);
   overflow: hidden;
 }
@@ -577,15 +577,16 @@ h1, h2, h3, p, .crt-flicker-text, button {
 }
 
 .crt-frame {
-  position: absolute;
-  top: 42.5%;
-  left: 50%;
+  position:fixed;
+  top: 400px;
+  left: 950px;
   transform: translate(-50%, -50%);  /* Centers the image */
-  width: 90%;
-  height: 115%;
+  width: 1800px;
+  height: 1100px;
   z-index: 8000;
   opacity: 1;
   pointer-events: none;
+  overflow: hidden;
 }
 
 /* === Vignette Overlay === */

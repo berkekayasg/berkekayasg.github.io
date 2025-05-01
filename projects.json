@@ -1,24 +1,25 @@
 [
   {
-    "id": "project-1",
-    "title": "Example Project 1",
-    "thumbnail": "images/placeholder-thumb.png",
-    "summary": "A brief summary of Example Project 1.",
-    "description": "This is the first example project description. Replace with real details.",
-    "youtubeId": "Od4ipg_NaqY",
-    "status": "Completed",
-    "platform": ["PC", "Web"],
-    "technologies": ["Engine", "Language"],
-    "features": ["Feature 1", "Feature 2"],
-    "links": [
-      {"name": "GitHub", "url": "#"},
-      {"name": "Itch.io", "url": "#"}
-    ]
-  },
+  "id": "first-project",
+  "title": "First Project",
+  "summary": "A 4v4 multiplayer zombie strategy game where Traitors try to eliminate Guardians and Humans within a protected zone, featuring 16 unique characters with customizable abilities.",
+  "description": "This was my first game developed using Unity. Although it started as a small project, my enthusiasm for game development and learning new things led me to constantly add new features. At some point, I couldn't stop myself, and the game started to grow uncontrollably. I began to feel like I couldn't see the end of the project and decided to halt development. While working on this first project, I learned a great deal, both technically and about the game development process itself.",
+  "youtubeId": "",
+  "status": "On Hold",
+  "platform": ["PC"],
+  "technologies": ["Unity", "C#", "Netcode for GameObjects", "Steamworks Facepunch"],
+  "features": [
+    "16 Playable Characters with Deep Customization & Unique Abilities",
+    "Active Ragdoll Physics for Realistic NPC Reactions",
+    "Destructible Glass & Water Effects",
+    "Diverse Zombie Threats with Varied Animations & Behaviors"
+  ],
+  "links": [
+  ]
+},
   {
     "id": "project-2",
     "title": "Another Cool Game",
-    "thumbnail": "images/placeholder-thumb.png",
     "summary": "A short overview of Another Cool Game.",
     "description": "Details about the second project go here. Replace with real details.",
     "youtubeId": "VIDEO_ID_HERE",
