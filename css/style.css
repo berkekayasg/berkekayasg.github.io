@@ -1241,7 +1241,7 @@ h1, h2, h3, p, .crt-flicker-text, button {
 }
 
 .skills-categories h3 {
-  font-size: 1.5em; /* Adjusted size for category headers */
-  margin-bottom: 10px; /* Space below category headers */
+  font-size: 1.2em; /* Adjusted size for category headers */
+  margin-bottom: 2px; /* Space below category headers */
   color: var(--color-accent); /* Use accent color for category headers */
 }
