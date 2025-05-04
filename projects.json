@@ -4,7 +4,7 @@
   "title": "First Project",
   "summary": "A 4v4 multiplayer zombie strategy game where Traitors try to eliminate Guardians and Humans within a protected zone, featuring 16 unique characters with customizable abilities.",
   "description": "This was my first game developed using Unity. Although it started as a small project, my enthusiasm for game development and learning new things led me to constantly add new features. At some point, I couldn't stop myself, and the game started to grow uncontrollably. I began to feel like I couldn't see the end of the project and decided to halt development. While working on this first project, I learned a great deal, both technically and about the game development process itself.",
-  "youtubeId": "",
+  "youtubeId": "J-Ch-j5_29M",
   "status": "On Hold",
   "platform": ["PC"],
   "technologies": ["Unity", "C#", "Netcode for GameObjects", "Steamworks Facepunch"],
@@ -15,20 +15,27 @@
     "Diverse Zombie Threats with Varied Animations & Behaviors"
   ],
   "links": [
-  ]
+      {"name": "YouTube", "url": "https://youtu.be/J-Ch-j5_29M"}
+    ]
 },
   {
-    "id": "project-2",
-    "title": "Another Cool Game",
-    "summary": "A short overview of Another Cool Game.",
-    "description": "Details about the second project go here. Replace with real details.",
-    "youtubeId": "VIDEO_ID_HERE",
-    "status": "In Progress",
-    "platform": ["PC"],
-    "technologies": ["Another Engine", "Another Language"],
-    "features": ["Cool Feature", "Online Multiplayer"],
-    "links": [
-      {"name": "Dev Blog", "url": "#"}
+  "id": "spike-master",
+  "title": "Spike Master",
+  "summary": "A simple, fast-paced Android game where players defend a boundary by throwing balls at incoming enemies. Developed as a first Android learning project.",
+  "description": "This was my first Android game, created with the goal of learning how to develop games for the Android platform using Unity. The game offers a fast and relaxing experience. Its core mechanic involves preventing approaching enemies from crossing a boundary line. To do this, players quickly grab and throw balls that appear in front of them, aiming to hit and eliminate the enemies before they breach the line. It served as a valuable learning exercise in mobile game development, including implementing monetization with AdMob.",
+  "youtubeId": "kPqh9AuZLZk",
+  "status": "Completed",
+  "platform": ["Android"],
+  "technologies": ["Unity", "C#", "AdMob"],
+  "features": [
+    "Fast-paced Defensive Gameplay",
+    "Simple Ball-Throwing Mechanic",
+    "Enemy Wave Survival",
+    "Designed for Quick, Relaxing Sessions",
+    "Ad Monetization"
+  ],
+  "links": [
+      {"name": "YouTube", "url": "https://youtu.be/kPqh9AuZLZk"}
     ]
-  }
+}
 ]

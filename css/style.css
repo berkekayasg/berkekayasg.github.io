@@ -42,7 +42,7 @@ body {
 #screen-wrapper {
   position: absolute;
   top: 350px;
-  left: 785px;
+  left: 735px;
   transform: translate(-50%, -50%);
   width: 900px;
   height: 580px; 
@@ -579,7 +579,7 @@ h1, h2, h3, p, .crt-flicker-text, button {
 .crt-frame {
   position:fixed;
   top: 400px;
-  left: 950px;
+  left: 900px;
   transform: translate(-50%, -50%);  /* Centers the image */
   width: 1800px;
   height: 1100px;
