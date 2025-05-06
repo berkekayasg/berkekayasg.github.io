@@ -29,6 +29,9 @@
 
 }
 
+html {
+  font-size: 16px; /* Base for rem unit calculations */
+}
 body {
   font-family: var(--font-family-pixel); /* Use pixel font for body text */
   background-color: var(--color-page-background); /* Different color outside the box */
@@ -709,14 +712,13 @@ h1, h2, h3, p, .crt-flicker-text, button {
     display: flex; /* Use flexbox for layout */
     flex-wrap: wrap; /* Allow items to wrap */
     justify-content: center; /* Center items */
-    padding: 5px 0; /* Add some padding */
 }
 
 #project-select-view > * {
   /* Two items per row */
   /* width: calc(50% - 20px); */
   width: 100%;
-  margin: 10px; /* Add margin around each item */
+  margin: 5px; /* Add margin around each item */
   box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
@@ -799,151 +801,6 @@ h1, h2, h3, p, .crt-flicker-text, button {
   font-size: 1.5em; /* Keep specific font size */
 }
 
-
-/* Handle landscape orientation on devices with limited height */
-@media (max-height: 800px) or (max-width: 1200px) {
-  /* --- Hide frame and make wrapper full screen --- */
-  .crt-frame {
-    display: none;
-  }
-
-  #screen-wrapper {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: none;
-  }
-
-  /* --- Adjust element sizes using viewport units --- */
-
-  /* General Text */
-  p {
-    font-size: 3.6vmin; /* Slightly reduce base paragraph size */
-    line-height: 1.5; /* Adjust line height accordingly */
-    margin-bottom: 1.5vh;
-  }
-
-  /* Header */
-  header h1 {
-    font-size: 4vh;
-    padding-bottom: 1vh;
-  }
-
-  /* Main Menu */
-  #main-menu a.retro-button {
-    font-size: 5vmin;
-    padding: 1vh 1.5vh;
-  }
-
-  #main-menu li {
-    margin-bottom: 1.5vh;
-  }
-
-  /* Sections */
-  main > section {
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    padding-left: 5vw; /* Adjust horizontal padding too if needed */
-    padding-right: 5vw;
-  }
-  main h2 { /* Section titles */
-      font-size: 5.6vmin;
-      padding-bottom: 0.5vh;
-      margin-bottom: 1.5vh;
-  }
-
-
-  /* Intro Prompt */
-  #intro-prompt {
-    font-size: 4.4vmin;
-    padding: 1.5vh 2vh;
-  }
-
-  /* Project Selection */
-  #project-select-view {
-      padding: 1vh 0; /* Reduce vertical padding */
-  }
-  .project-select-button.retro-button {
-    font-size: 4.4vmin;
-    padding: 1vh 1.5vh;
-    min-width: 25vw; /* Adjust min-width based on viewport width */
-    margin: 0.5vh; /* Add small margin for spacing */
-  }
-
-  /* --- NEW: Project Detail Pagination Responsive Styles --- */
-  .project-page h2 { /* Main title on page 1 */
-      font-size: 5.5vmin; /* Larger responsive title */
-  }
-  .project-page h3 { /* Subheadings on pages 2 & 3 */
-      font-size: 5vmin;
-  }
-  .project-page p { /* Text within pages */
-      font-size: 3.8vmin; /* Slightly larger responsive text */
-  }
-  #project-detail-links a.retro-button.external-link { /* Links on page 3 */
-      font-size: 4vmin;
-      padding: 1vh 1.5vh;
-  }
-   #project-play-button {
-      font-size: 4.4vmin;
-      padding: 1vh 1.5vh;
-  }
-
-  /* Pagination Navigation Footer Responsive */
-  #project-page-nav {
-      padding: 1vh 2vw; /* Adjust padding */
-  }
-  #project-page-nav .retro-button { /* Prev/Next/Back buttons */
-      font-size: 4vmin;
-      padding: 0.8vh 1.2vh;
-  }
-  #page-indicator {
-      font-size: 3.5vmin;
-  }
-
-  /* Video Close Button */
-   #project-close-video-button.retro-button {
-      font-size: 6vmin; /* Adjust size */
-      padding: 0.5vh 1vh; /* Adjust padding */
-      top: 1vh; /* Adjust position */
-      right: 1vh;
-   }
-   .back-button.retro-button {
-    font-size: 4vmin;
-      padding: 0.8vh 1.2vh;
-  }
-    /* --- Settings Variable Overrides for Smaller Screens --- */
-    :root {
-        --settings-padding: 10px; /* Reduce padding */
-        --settings-group-margin-bottom: 15px; /* Further reduce */
-        --settings-group-padding-bottom: 8px; /* Further reduce */
-        --settings-h3-font-size: 1em; /* Smaller headings */
-        --settings-h3-margin-bottom: 8px;
-        --settings-item-margin-bottom: 8px;
-        --settings-label-basis: 100px; /* Smaller label area */
-        --settings-label-margin-right: 8px;
-        --settings-control-margin-right: 8px;
-        --settings-value-min-width: 40px;
-        --settings-select-padding: 3px 5px;
-        --settings-slider-height: 5px;
-        --settings-slider-thumb-size: 12px;
-        --settings-system-button-gap: 10px;
-    }
-
-    .settings-nav .retro-button {
-      font-size: 0.9em; /* Slightly smaller tab text */
-      padding: 3px 8px;
-    }
-    #settings-view-container {
-        padding: var(--settings-padding); /* Use responsive padding */
-        margin-bottom: var(--settings-group-margin-bottom);
-    }
-    #settings .system-buttons {
-        margin-top: var(--settings-group-margin-bottom);
-        padding-top: var(--settings-group-padding-bottom);
-    }
-}
 /* --- Project Detail View Pagination Styles --- */
 
 #project-detail-view {
@@ -1257,5 +1114,361 @@ h1, h2, h3, p, .crt-flicker-text, button {
 
 #page-details p{
   margin-bottom: 10px; /* Space below project details */
+}
+
+/* --- Responsive Styles --- */
+
+/* Tablet and Smaller (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .crt-frame {
+    display: none;
+  }
+
+  #screen-wrapper {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: none;
+    /* Ensure position is fixed or absolute if it needs to cover the whole viewport */
+    position: fixed; /* Or absolute, depending on body/html setup */
+  }
+
+  /* General Text */
+  p {
+    font-size: clamp(0.7rem, 2.5vmin + 0.1rem, 1.05rem); /* Adjusted for more dynamic scaling */
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Header */
+  header h1 {
+    font-size: clamp(1.3rem, 4vmin + 0.4rem, 2.1rem); /* Adjusted */
+    padding-bottom: 0.4rem;
+  }
+
+  /* Main Menu */
+  #main-menu a.retro-button {
+    font-size: clamp(0.85rem, 3vmin + 0.25rem, 1.4rem); /* Adjusted */
+    padding: 0.7rem 0.9rem;
+  }
+
+  #main-menu li {
+    margin-bottom: 0.7rem;
+  }
+
+  /* Sections */
+  main > section {
+    padding: 0.8rem 1.2rem; /* Adjusted */
+  }
+
+  main h2 { /* Section titles */
+    font-size: clamp(1rem, 3.5vmin + 0.25rem, 1.9rem); /* Adjusted */
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  /* Intro Prompt */
+  #intro-prompt {
+    font-size: clamp(0.85rem, 2.8vmin + 0.15rem, 1.25rem); /* Adjusted */
+    padding: 0.9rem 1.1rem;
+  }
+
+  /* Project Selection */
+  #project-select-view {
+    padding: 0.4rem 0;
+  }
+
+  .project-select-button.retro-button {
+    font-size: clamp(0.75rem, 2.6vmin + 0.15rem, 1.15rem); /* Adjusted */
+    padding: 0.7rem 0.9rem;
+    min-width: auto;
+    width: calc(50% - 0.8rem); /* Adjusted gap */
+    margin: 0.4rem;
+  }
+
+  /* Project Detail Pagination */
+  .project-page h2 { /* Main title on page 1 */
+    font-size: clamp(0.9rem, 3.8vmin + 0.1rem, 1.6rem); /* More aggressive vmin scaling */
+  }
+
+  .project-page h3 { /* Subheadings on pages 2 & 3 */
+    font-size: clamp(0.8rem, 3.5vmin + 0.1rem, 1.45rem); /* More aggressive vmin scaling */
+  }
+
+  .project-page p { /* Text within pages */
+    font-size: clamp(0.65rem, 3vmin + 0.05rem, 1.05rem); /* More aggressive vmin scaling, smaller min */
+    line-height: 1.4;
+  }
+
+  #project-detail-links a.retro-button.external-link {
+    font-size: clamp(0.7rem, 2.8vmin + 0.05rem, 1rem);
+    padding: 0.6rem 0.8rem;
+  }
   
+  /* Styles for specific prev/next buttons if they are directly inside #page-nav-buttons */
+  #page-nav-buttons .retro-button {
+    font-size: clamp(1.2rem, 3.7vmin + 0.15rem, 1.5rem); /* Increased size */
+  }
+  
+  /* Back button specifically within project page navigation */
+  #project-page-nav > .retro-button {
+    font-size: clamp(0.8rem, 3vmin + 0.1rem, 1.3rem);
+  }
+
+  #page-indicator {
+    font-size: clamp(0.85rem, 3vmin + 0.1rem, 1.2rem); /* Increased size */
+  }
+
+  /* Video Close Button */
+  #project-close-video-button.retro-button {
+    font-size: clamp(0.9rem, 3.8vmin + 0.15rem, 1.6rem);
+  }
+
+  .back-button.retro-button { /* General Back Buttons (not in #project-page-nav) - Larger */
+    font-size: clamp(1.2rem, 3.8vmin + 0.2rem, 1.7rem); /* Significantly larger */
+    padding: 0.8rem 1.2rem;
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  /* Settings Nav & View Container */
+  .settings-nav .retro-button {
+    font-size: clamp(1.35rem, 2vmin + 0.05rem, 1.4rem);
+    padding: 0.15rem 0.35rem;
+  }
+
+  #settings-view-container {
+    padding: 0.9rem;
+    margin-bottom: 0.9rem;
+  }
+
+  #settings .system-buttons {
+    margin-top: 0.9rem;
+    padding-top: 0.4rem;
+  }
+  
+  /* Settings specific items */
+  .setting-item label {
+    width: auto;
+    flex-basis: 110px; /* Slightly adjusted */
+    margin-right: 0.4rem;
+    font-size: clamp(0.7rem, 2.2vmin + 0.05rem, 0.95rem); /* Adjusted */
+  }
+  .setting-control {
+    margin-left: 0;
+  }
+  .setting-button { /* +/- buttons for settings */
+    padding: 0.4rem 0.9rem; /* Adjusted */
+    font-size: clamp(0.75rem, 2.2vmin + 0.15rem, 1.05rem); /* Adjusted */
+  }
+  .setting-value-display {
+     font-size: clamp(0.75rem, 2.2vmin + 0.1rem, 1.05rem); /* Adjusted */
+  }
+
+  /* Footer */
+  footer p {
+    font-size: clamp(0.65rem, 2vmin + 0.05rem, 0.85rem); /* Adjusted */
+  }
+  footer {
+    padding: 0.4rem 0.9rem;
+  }
+
+  /* Skills Section */
+  .skills-categories h3 {
+    font-size: clamp(0.85rem, 2.8vmin + 0.15rem, 1.35rem); /* Adjusted */
+    margin-bottom: 0.2rem;
+  }
+  .skills-categories span {
+    font-size: clamp(0.7rem, 2.2vmin + 0.05rem, 0.95rem); /* Adjusted */
+    line-height: 1.35;
+  }
+
+  /* Social Links */
+  .social-links {
+    gap: 10px; /* Adjusted space between buttons */
+    margin-top: 40px; /* Adjusted space above the buttons */
+  }
+  .social-links .retro-button {
+    font-size: clamp(0.9rem, 2.4vmin + 0.05rem, 1.2rem); /* Adjusted */
+  }
+  .social-links p {
+    margin: 0px; /* Space below project details */
+    padding: 0px 0px; /* Space below project details */
+  }
+}
+
+/* Mobile (max-width: 767px) */
+@media (max-width: 767px) {
+  p {
+    font-size: clamp(0.65rem, 3vmin + 0.05rem, 0.95rem); /* Further refined for smaller screens */
+    margin-bottom: 0.6rem;
+  }
+
+  header h1 {
+    font-size: clamp(1.1rem, 5vmin + 0.2rem, 1.8rem); /* Further refined */
+  }
+
+  #main-menu a.retro-button {
+    font-size: clamp(0.75rem, 3.5vmin + 0.15rem, 1.2rem); /* Further refined */
+    padding: 0.5rem 0.7rem;
+  }
+  #main-menu li {
+    margin-bottom: 0.5rem;
+  }
+
+  main > section {
+    padding: 0.6rem 0.8rem; /* Further refined */
+  }
+
+  main h2 { /* Section titles */
+    font-size: clamp(0.9rem, 4vmin + 0.15rem, 1.7rem); /* Further refined */
+  }
+
+  #intro-prompt {
+    font-size: clamp(0.75rem, 3.2vmin + 0.1rem, 1.15rem); /* Further refined */
+    padding: 0.6rem 0.9rem;
+  }
+
+  .project-select-button.retro-button {
+    width: calc(100% - 0.8rem);
+    margin: 0.4rem;
+    font-size: clamp(0.7rem, 3vmin + 0.1rem, 1.05rem); /* Further refined */
+  }
+
+  /* Project Detail View on Mobile */
+  .project-page h2 {
+    font-size: clamp(0.8rem, 3.8vmin + 0.1rem, 1.4rem); /* More aggressive vmin */
+  }
+  .project-page h3 {
+    font-size: clamp(0.7rem, 3.5vmin + 0.1rem, 1.25rem); /* More aggressive vmin */
+  }
+  .project-page p {
+    font-size: clamp(0.6rem, 3vmin + 0.05rem, 0.95rem); /* More aggressive vmin, smaller min */
+    line-height: 1.35;
+  }
+  #project-detail-links a.retro-button.external-link {
+    font-size: clamp(0.65rem, 3vmin + 0.05rem, 0.9rem);
+  }
+
+  #page-nav-buttons .retro-button {
+    font-size: clamp(1.0rem, 3.7vmin + 0.1rem, 1.5rem); /* Increased size */
+  }
+  
+  /* Back button specifically within project page navigation */
+  #project-page-nav > .retro-button {
+    font-size: clamp(0.7rem, 3.2vmin + 0.1rem, 1.2rem);
+  }
+
+  #page-indicator {
+    font-size: clamp(0.85rem, 3.1vmin + 0.05rem, 1.2rem); /* Increased size */
+  }
+  #project-close-video-button.retro-button {
+    font-size: clamp(0.8rem, 4.2vmin + 0.1rem, 1.45rem);
+  }
+
+  .back-button.retro-button { /* General Back Buttons (not in #project-page-nav) - Larger */
+    font-size: clamp(1.1rem, 3.5vmin + 0.15rem, 1.5rem); /* Further increased */
+    padding: 0.65rem 0.9rem;
+    bottom: 0.7rem;
+    right: 0.7rem;
+  }
+
+  /* Settings Page Specific Button Sizes - Kept small as requested */
+  .settings-nav .retro-button {
+    font-size: clamp(1.15rem, 2.8vmin + 0.05rem, 1.2rem);
+    padding: 0.15rem 0.35rem;
+  }
+  #settings-view-container {
+    padding: 0.6rem;
+  }
+  .setting-item label {
+    flex-basis: 90px;
+    font-size: clamp(0.85rem, 2.7vmin + 0.05rem, 1.1rem);
+  }
+  .setting-button {
+    padding: 0.25rem 0.5rem;
+    font-size: clamp(0.95rem, 3vmin + 0.05rem, 1.25rem);
+  }
+  .setting-value-display {
+     font-size: clamp(0.85rem, 2.6vmin + 0.05rem, 1.1rem);
+  }
+  
+  #settings-page-nav {
+    gap: 0.2rem;
+  }
+  #settings-page-nav .retro-button {
+    font-size: clamp(0.85rem, 2.75vmin + 0.05rem, 1.1rem);
+    padding: 0.35rem 0.5rem;
+    position: relative;
+    bottom: auto;
+    right: auto;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  .social-links .retro-button {
+    font-size: clamp(0.85rem, 2.7vmin + 0.05rem, 1.1rem);
+  }
+}
+/* Optional: Specific adjustments for short, wide screens */
+@media (max-height: 700px) and (orientation: landscape) and (min-width: 768px) {
+  main > section {
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+  }
+
+  #main-menu a.retro-button {
+    font-size: clamp(0.7rem, 3vmin + 0.05rem, 1rem); /* Adjusted for height constraint */
+    padding: 0.3rem 0.5rem;
+  }
+   #main-menu li {
+    margin-bottom: 0.3rem;
+  }
+
+  p {
+    font-size: clamp(0.55rem, 2.5vmin + 0.05rem, 0.8rem); /* Even more aggressive for short height */
+    line-height: 1.3;
+  }
+  main h2 {
+    font-size: clamp(0.75rem, 3.2vmin + 0.1rem, 1.35rem);
+  }
+  header h1 {
+     font-size: clamp(0.9rem, 4vmin + 0.15rem, 1.7rem);
+  }
+
+  /* Project Detail View in landscape height constraint */
+  .project-page h2 {
+    font-size: clamp(0.8rem, 3.5vmin + 0.1rem, 1.4rem);
+  }
+  .project-page h3 {
+    font-size: clamp(0.7rem, 3.2vmin + 0.05rem, 1.2rem);
+  }
+  .project-page p {
+    font-size: clamp(0.55rem, 2.6vmin + 0.05rem, 0.85rem);
+    line-height: 1.25;
+  }
+  
+  #page-indicator { /* Added #page-indicator for landscape short height */
+    font-size: clamp(0.7rem, 2.8vmin + 0.05rem, 1rem); /* Increased size */
+  }
+  
+  #page-nav-buttons .retro-button {
+    font-size: clamp(0.9rem, 3.1vmin + 0.05rem, 1.2rem); /* Increased size */
+  }
+  #project-page-nav > .back-button.retro-button {
+     font-size: clamp(0.9rem, 3vmin + 0.1rem, 1.2rem);
+     padding: 0.4rem 0.6rem;
+  }
+
+
+  .back-button.retro-button { /* General back buttons */
+    font-size: clamp(1rem, 3vmin + 0.15rem, 1.3rem);
+    padding: 0.5rem 0.75rem;
+  }
+
+  #settings-page-nav .retro-button {
+    font-size: clamp(1.65rem, 2.8vmin + 0.05rem, 0.85rem);
+    padding: 0.25rem 0.45rem;
+  }
 }

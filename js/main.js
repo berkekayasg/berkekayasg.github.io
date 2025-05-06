@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectDetailTitle = document.getElementById('project-detail-title');
     const projectDetailDescription = document.getElementById('project-detail-description');
     const projectDetailSummary = document.getElementById('project-detail-summary'); // New summary element
+    const projectDetailTimeline = document.getElementById('project-detail-timeline'); // Added for project dates
     // New Detail View Elements
     const projectPageOverview = document.getElementById('page-overview');
     const projectPageDetails = document.getElementById('page-details');
@@ -256,6 +257,29 @@ document.addEventListener('DOMContentLoaded', () => {
             // audioElement.play().catch(error => console.error("Audio play failed:", error));
         }
     }
+
+    // --- Date Formatting Helper ---
+    function formatProjectDate(dateString) {
+        if (!dateString || dateString.toLowerCase() === 'present') {
+            return 'Present';
+        }
+        const parts = dateString.split('-');
+        if (parts.length !== 3) {
+            return dateString; // Return original if format is unexpected
+        }
+        const day = parts[0] == "00" ? "" : parts[0];
+        const monthIndex = parseInt(parts[1], 10) - 1; // Month is 0-indexed in JS Date
+        const year = parts[2];
+
+        const monthNames = ["January", "February", "March", "April", "May", "June",
+                            "July", "August", "September", "October", "November", "December"];
+
+        if (monthIndex >= 0 && monthIndex < 12) {
+            return `${day} ${monthNames[monthIndex]} ${year}`;
+        }
+        return dateString; // Fallback for invalid month
+    }
+
     // --- Power On Effect ---
     function powerOnEffect() {
         console.log("Executing Power On Effect...");
@@ -635,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!projectDetailView || !projectSelectView || !projectDetailTitle || !projectDetailSummary || !projectDetailDescription ||
             !projectDetailStatus || !projectDetailPlatform || !projectDetailTech || !projectDetailFeatures ||
             !projectDetailLinks || !projectPlayButton || !projectPageNav || !projectPageOverview || !projectPageFullDescription ||
-            !projectPageDetails || !projectPageLinksMedia) {
+            !projectPageDetails || !projectPageLinksMedia || !projectDetailTimeline) { // Added projectDetailTimeline check
             console.error("Missing required elements for project detail view or its pages.");
             return;
         }
@@ -644,6 +668,19 @@ document.addEventListener('DOMContentLoaded', () => {
         projectDetailTitle.textContent = project.title || 'N/A';
         projectDetailSummary.textContent = project.summary || 'No summary available.'; // Populate new summary
         projectDetailStatus.textContent = project.status || 'N/A';
+
+        // New: Populate Timeline
+        if (projectDetailTimeline) { // Check if the element exists
+            const startDateFormatted = formatProjectDate(project.startDate);
+            const endDateFormatted = formatProjectDate(project.endDate);
+            if (project.startDate && project.endDate) {
+                projectDetailTimeline.textContent = `${startDateFormatted} - ${endDateFormatted}`;
+            } else if (project.startDate) {
+                projectDetailTimeline.textContent = `${startDateFormatted} - Present`; // Or handle as needed
+            } else {
+                projectDetailTimeline.textContent = 'N/A';
+            }
+        }
 
         // --- Populate Page 2: Full Description ---
         // The description element is now on this page, but the variable still points to it.
@@ -686,6 +723,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (projectVideoView) projectVideoView.classList.add('hidden');
 
         projectsBackButton.classList.add('hidden'); // Hide the back button in the project selection view
+
+        // GoatCounter: Track project detail view
+        if (window.goatcounter && typeof window.goatcounter.count === 'function') {
+            window.goatcounter.count({
+                path: '/project/' + project.id, // Using project.id for a unique path
+                title: project.title + ' - Project Detail', // Optional: provide a custom title
+                event: true // Mark as an event for virtual page views
+            });
+        }
     }
 
     // --- YouTube Video Handling ---
