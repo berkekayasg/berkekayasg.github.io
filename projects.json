@@ -37,5 +37,104 @@
   "links": [
       {"name": "YouTube", "url": "https://youtu.be/kPqh9AuZLZk"}
     ]
-}
+},
+{
+  "id": "battledge",
+  "title": "BattlEdge",
+  "summary": "A fast-paced 3v3 fantasy MOBA for Android where players customize skill loadouts. Built securely with Unity and UGS, focusing on anti-cheat.",
+  "description": "Developing BattlEdge was a deep dive into secure, competitive mobile MOBA creation using Unity Gaming Services. I focused on implementing server-authoritative gameplay (Netcode/Multiplay) and secure backend operations via Cloud Code for validations, transactions, and rewards. Core MOBA features like customizable skill loadouts, matchmaking, leaderboards, and social systems were integrated with UGS. This project was a challenging yet rewarding experience centered on robust technical implementation and player security.",
+  "youtubeId": "hyaQJ3DNKqI",
+  "status": "Completed",
+  "platform": ["Android"],
+  "technologies": [
+    "Unity",
+    "C#",
+    "UGS (Multiplayer, Cloud Code, LiveOps, Auth, Monetization)",
+    "Google Services (AdMob, IAP, Play Services, Firebase)",
+    "Game Client Security Practices"
+  ],
+  "features": [
+    "Fast-Paced 3v3 Online MOBA Gameplay",
+    "Customizable Character Skill Loadouts",
+    "Competitive Systems (Matchmaking, Leaderboards)",
+    "Social Features & Character Cosmetics",
+    "Secure Server-Authoritative Architecture (Anti-Cheat, UGS)",
+    "Monetization (Secure IAP & Ads)"
+  ],
+  "links": [
+      {"name": "YouTube", "url": "https://youtu.be/hyaQJ3DNKqI"},
+      {"name": "Google Play", "url": "https://play.google.com/store/apps/details?id=com.BerkeKaya.BattlEdge"}
+    ]
+},
+  {
+    "id": "fluid-simulation",
+    "title": "Fluid Simulation",
+    "summary": "A Unity-based fluid simulation project focused on mastering Compute Shaders. Built upon SebLague's foundation, it features dynamic particle creation/destruction, particle guidance, and complex CPU-GPU interactions for realistic object-water dynamics.",
+    "description": "My goal was mastering Compute Shaders in Unity, extending SebLague's Fluid-Sim. I focused on custom kernel development and effective CPU-GPU data exchange. Key additions I implemented were dynamic particle instantiation/destruction, interactive particle steering, and a challenging yet rewarding bidirectional interaction: GPU fluid data (velocity, density) influences CPU-side game objects, and CPU object states affect the GPU fluid. This project was a deeply rewarding dive into GPU programming.",
+    "youtubeId": "9aKQSsYYfwQ",
+    "status": "Completed",
+    "platform": ["PC"],
+    "technologies": ["Unity", "C#", "Compute Shaders", "HLSL"],
+    "features": [
+      "GPU-Accelerated Fluid Dynamics via Compute Shaders",
+      "Dynamic Water Particle Instantiation and Destruction at Runtime",
+      "User-Controlled Particle Placement and Removal",
+      "Interactive Particle Guidance System",
+      "Bidirectional CPU-GPU Data Exchange for Object-Water Interactions",
+      "Reading GPU Particle Data (Velocity, Density) on CPU for Game Object Physics",
+      "Influencing GPU Water Simulation with Game Object Data from CPU"
+    ],
+    "links": [
+      {"name": "YouTube", "url": "https://youtu.be/9aKQSsYYfwQ"},
+      {"name": "Base GitHub Project (SebLague)", "url": "https://github.com/SebLague/Fluid-Sim"}
+
+    ]
+  },
+  {
+    "id": "tower-defense",
+    "title": "Tower Defense",
+    "summary": "A classic tower defense game built in Unity as a C# portfolio piece, featuring strategic tower placement, enemy waves, currency management, and custom editor tools.",
+    "description": "This project was a focused effort to build a complete tower defense game loop in Unity/C# for my portfolio. Beyond standard gameplay, I concentrated on enhancing the development process by creating custom editor tools: a visual Level Designer and an automated Tower Icon Generator. This allowed me to explore Unity's editor scripting capabilities more deeply and streamline content creation.",
+    "youtubeId": "HF--o58POnA",
+    "status": "Completed",
+    "platform": ["PC"],
+    "technologies": ["Unity Engine", "C#", "Unity Editor Scripting"],
+    "features": [
+      "Strategic Tower Placement and Upgrade System",
+      "Wave-Based Enemy Progression and Survival",
+      "In-Game Currency and Resource Management",
+      "Intuitive Click-Based Controls for Tower Interaction",
+      "Custom Editor Tool: Level Designer for Grid-Based Level Creation & Modification",
+      "Custom Editor Tool: Automated Tower Icon Generator from 3D Models"
+    ],
+    "links": [
+      {"name": "YouTube", "url": "https://youtu.be/HF--o58POnA"},
+      {"name": "GitHub", "url": "https://github.com/berkekayasg/TowerDefence"}
+    ]
+  },
+  {
+    "id": "mesh-fragmentation",
+    "title": "Mesh Fragmentation",
+    "summary": "A Unity tech demo showcasing runtime mesh fragmentation via iterative plane slicing, optimized with Job System and Burst.",
+    "description": "In this Unity tech demo, I focused on high-performance runtime mesh fragmentation using iterative plane slicing. My implementation heavily utilized local-space geometry calculations, Unity's Job System and Burst compiler for optimization, and a deferred processing pipeline. I also managed native memory with reference counting and worked directly with the Mesh.MeshData API. The demo showcases recursive destruction and physics integration.",
+    "youtubeId": "Od4ipg_NaqY",
+    "status": "Completed",
+    "platform": ["PC"],
+    "technologies": ["Unity", "C#", "Job System", "Burst", "Unity.Mathematics"],
+    "features": [
+      "Runtime Mesh Fragmentation via Iterative Plane Slicing",
+      "Local-Space Geometry Calculations",
+      "Job System & Burst Optimization",
+      "Deferred Processing Pipeline (SliceIterationManager, MeshCreationManager)",
+      "Reference Counting for Native Memory (SliceResultReference)",
+      "Object Pooling",
+      "Mesh.MeshData API Usage",
+      "Recursive Destruction",
+      "Physics Integration"
+    ],
+    "links": [
+      { "name": "YouTube Showcase", "url": "https://youtu.be/Od4ipg_NaqY"},
+      {"name": "GitHub", "url": "https://github.com/berkekayasg/ControlledDemolition"}
+    ]
+  }
 ]

@@ -1246,3 +1246,8 @@ h1, h2, h3, p, .crt-flicker-text, button {
   margin-bottom: 2px; /* Space below category headers */
   color: var(--color-accent); /* Use accent color for category headers */
 }
+
+#page-details p{
+  margin-bottom: 10px; /* Space below project details */
+  
+}
