@@ -712,10 +712,18 @@ h1, h2, h3, p, .crt-flicker-text, button {
     padding: 5px 0; /* Add some padding */
 }
 
+#project-select-view > * {
+  /* Two items per row */
+  /* width: calc(50% - 20px); */
+  width: 100%;
+  margin: 10px; /* Add margin around each item */
+  box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
 .project-select-button.retro-button {
     font-size: 1.2em;              /* Specific font size */
-    min-width: 150px;            /* Specific min-width */
     transition: color 0.2s, border-color 0.2s; /* Add border transition */
+    padding: 10px 10px;           /* Specific padding */
 }
 
 /* Extend base hover */
