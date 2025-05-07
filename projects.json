@@ -125,8 +125,8 @@
   {
     "id": "mesh-fragmentation",
     "title": "Mesh Fragmentation",
-    "summary": "A Unity tech demo showcasing runtime mesh fragmentation via iterative plane slicing, optimized with Job System and Burst.",
-    "description": "In this Unity tech demo, I focused on high-performance runtime mesh fragmentation using iterative plane slicing. My implementation heavily utilized local-space geometry calculations, Unity's Job System and Burst compiler for optimization, and a deferred processing pipeline. I also managed native memory with reference counting and worked directly with the Mesh.MeshData API. The demo showcases recursive destruction and physics integration.",
+    "summary": "A Unity project implementing runtime mesh fragmentation via iterative plane slicing, optimized with Job System and Burst.",
+    "description": "In this Unity project, I focused on high-performance runtime mesh fragmentation using iterative plane slicing. My implementation heavily utilized local-space geometry calculations, Unity's Job System and Burst compiler for optimization, and a deferred processing pipeline. I also managed native memory with reference counting and worked directly with the Mesh.MeshData API.",
     "youtubeId": "Od4ipg_NaqY",
     "startDate": "03-04-2025",
     "endDate": "06-04-2025",
@@ -145,7 +145,7 @@
       "Physics Integration"
     ],
     "links": [
-      { "name": "YouTube Showcase", "url": "https://youtu.be/Od4ipg_NaqY"},
+      { "name": "YouTube", "url": "https://youtu.be/Od4ipg_NaqY"},
       {"name": "GitHub", "url": "https://github.com/berkekayasg/ControlledDemolition"}
     ]
   }
