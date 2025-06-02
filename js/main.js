@@ -79,6 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
         sfxVolume: { min: 0, max: 100, step: 10 },
         colorMode: { modes: COLOR_MODES, names: COLOR_MODE_NAMES }
     };
+const INITIAL_SOUND_VOLUMES = {
+        'audio-crt-hum': 0.7,
+        'audio-intro-confirm': 1,
+        'audio-button-click': 0.7,
+        'audio-button-back': 0.75,
+        'audio-project-play': 1,
+        'audio-power-off': 0.8,
+        'audio-power-on': 1,
+        'audio-power-on-off': 0.8
+    };
 
 
     const defaultSettings = {
@@ -127,21 +137,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const masterVolValue = settings.masterVolume / 100;
         [audioCrtHum, audioIntroConfirm, audioButtonClick, audioButtonBack, audioProjectPlay, audioPowerOff, audioPowerOn, audioPowerOnOff].forEach(audio => {
             if (audio) {
-                // Store base volume if not already stored
-                if (audio.dataset.baseVolume === undefined) {
-                    // Use 1.0 as base if volume isn't set, otherwise use current volume
-                    audio.dataset.baseVolume = audio.volume > 0 ? audio.volume : 1.0;
+                // Get or set the sound's specific initial/base volume from INITIAL_SOUND_VOLUMES
+                let soundInitialVolume = parseFloat(audio.dataset.soundInitialVolume); // Using a new attribute name for clarity
+                if (isNaN(soundInitialVolume)) { // If not already cached on the element
+                    soundInitialVolume = INITIAL_SOUND_VOLUMES[audio.id];
+                    if (typeof soundInitialVolume !== 'number' || isNaN(soundInitialVolume) || soundInitialVolume < 0 || soundInitialVolume > 1) {
+                        console.warn(`Initial volume for ${audio.id} not found or invalid in INITIAL_SOUND_VOLUMES (value: ${INITIAL_SOUND_VOLUMES[audio.id]}), defaulting to 0.7. Ensure it's a number between 0.0 and 1.0.`);
+                        soundInitialVolume = 0.7; // Default if not specified or invalid
+                    }
+                    audio.dataset.soundInitialVolume = soundInitialVolume; // Cache it on the element
                 }
-                // Apply master volume relative to base
-                let baseVol = parseFloat(audio.dataset.baseVolume);
-                // Ensure base volume is valid, default to 1 if not
-                if (isNaN(baseVol) || baseVol < 0 || baseVol > 1) {
-                    baseVol = 1.0;
-                }
-                audio.volume = Math.max(0, Math.min(1, baseVol * masterVolValue));
+
+                // Apply master volume relative to this sound's specific initial volume
+                audio.volume = Math.max(0, Math.min(1, soundInitialVolume * masterVolValue));
             }
         });
-
         // SFX Volume is handled within playSound
 
         console.log("Applied settings:", settings);
@@ -229,32 +239,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Sound Playback Helper ---
     // Added ignoreSfxVolume flag for sounds like save confirmation
     function playSound(audioElement, ignoreSfxVolume = false) {
-        if (audioElement && currentSettings) { // Check if currentSettings is available
+        if (audioElement && currentSettings) {
             audioElement.currentTime = 0; // Reset playback
 
-            // Determine the volume to play at
-            const masterVol = currentSettings.masterVolume / 100;
-            let finalVolume = masterVol; // Start with master volume
-
-            // Apply SFX volume only if it's an SFX sound and not ignored
-            const sfxSounds = [audioIntroConfirm, audioButtonClick, audioButtonBack, audioProjectPlay, audioPowerOff, audioPowerOn, audioPowerOnOff];
-            if (!ignoreSfxVolume && sfxSounds.includes(audioElement)) {
-                const sfxVol = currentSettings.sfxVolume / 100;
-                // Make SFX volume relative to master volume
-                finalVolume = masterVol * sfxVol;
+            // Get the sound's specific initial volume (should be cached by applySettings)
+            let soundInitialVolume = parseFloat(audioElement.dataset.soundInitialVolume);
+            if (isNaN(soundInitialVolume)) {
+                // Fallback: try to get directly from config if not cached (e.g., if playSound is called before applySettings for some reason)
+                soundInitialVolume = INITIAL_SOUND_VOLUMES[audioElement.id];
+                if (typeof soundInitialVolume !== 'number' || isNaN(soundInitialVolume) || soundInitialVolume < 0 || soundInitialVolume > 1) {
+                    console.warn(`Initial volume for ${audioElement.id} not found/invalid in playSound (value: ${INITIAL_SOUND_VOLUMES[audioElement.id]}), defaulting to 0.7. Ensure it's a number between 0.0 and 1.0.`);
+                    soundInitialVolume = 0.7;
+                }
+                audioElement.dataset.soundInitialVolume = soundInitialVolume; // Cache it now
             }
 
-            // Ensure volume is within the valid range [0.0, 1.0]
+            const masterVolFactor = currentSettings.masterVolume / 100;
+            let sfxVolFactor = 1.0; // Default: no SFX modification
+
+            // Check if this sound is an SFX sound and if SFX volume should be applied
+            const sfxSounds = [audioIntroConfirm, audioButtonClick, audioButtonBack, audioProjectPlay, audioPowerOff, audioPowerOn, audioPowerOnOff];
+            if (!ignoreSfxVolume && sfxSounds.includes(audioElement)) {
+                sfxVolFactor = currentSettings.sfxVolume / 100;
+            }
+
+            // Calculate final volume based on its initial volume, master volume, and SFX volume (if applicable)
+            const finalVolume = soundInitialVolume * masterVolFactor * sfxVolFactor;
             audioElement.volume = Math.max(0, Math.min(1, finalVolume));
 
             audioElement.play().catch(error => console.error("Audio play failed:", error));
         } else if (!audioElement) {
             console.warn("playSound called with null audioElement");
-        } else {
-            console.warn("playSound called before currentSettings initialized");
-            // Optionally play at default volume if settings aren't ready?
-            // audioElement.currentTime = 0;
-            // audioElement.play().catch(error => console.error("Audio play failed:", error));
         }
     }
 
