@@ -81,13 +81,13 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 const INITIAL_SOUND_VOLUMES = {
         'audio-crt-hum': 0.45,
-        'audio-intro-confirm': 0.8,
-        'audio-button-click': 0.7,
-        'audio-button-back': 0.75,
-        'audio-project-play': 1,
-        'audio-power-off': 0.8,
-        'audio-power-on': 1,
-        'audio-power-on-off': 0.8
+        'audio-intro-confirm': 0.5,
+        'audio-button-click': 0.5,
+        'audio-button-back': 0.55,
+        'audio-project-play': 0.8,
+        'audio-power-off': 0.5,
+        'audio-power-on': 0.8,
+        'audio-power-on-off': 0.6
     };
 
 
