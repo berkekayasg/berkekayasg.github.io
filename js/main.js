@@ -80,8 +80,8 @@ document.addEventListener('DOMContentLoaded', () => {
         colorMode: { modes: COLOR_MODES, names: COLOR_MODE_NAMES }
     };
 const INITIAL_SOUND_VOLUMES = {
-        'audio-crt-hum': 0.7,
-        'audio-intro-confirm': 1,
+        'audio-crt-hum': 0.45,
+        'audio-intro-confirm': 0.8,
         'audio-button-click': 0.7,
         'audio-button-back': 0.75,
         'audio-project-play': 1,
